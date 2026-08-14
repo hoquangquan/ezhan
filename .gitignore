@@ -1,0 +1,22 @@
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/
+
+# Logs
+*.log
+logs/
+Robot Central Dispatch System Project/Robot central control system/mariadb/data/
+Robot Central Dispatch System Project/Robot central control system/nginx/logs/
+
+# Optional: Ignore heavy binaries if they hit Git limits. 
+# You can comment these out if you are using a Git host that allows large files.
+# *.jar
+# Robot Central Dispatch System Project/Robot central control system/jdk-17/
+# Robot Central Dispatch System Project/Robot central control system/mariadb/
+# Robot Central Dispatch System Project/Robot central control system/Redis-x64-3.0.504/
+
+*.apk
+*.pdb
