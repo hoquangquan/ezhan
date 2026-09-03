@@ -71,18 +71,26 @@ Dưới đây là tóm tắt quy trình thực hành nhanh nhất cho kỹ thu�
 2. Kiểm tra các nút E-Stop: Xoay nhả theo chiều kim đồng hồ để đảm bảo nút E-Stop không bị nhấn kẹt.
 3. Chờ màn hình tải hoàn tất giao diện ứng dụng **Ezhan AMR**.
 
-### 2.2. Bắt buộc Cấu hình IP Tĩnh (Static IP) - Ngăn ngừa 100% Lỗi Mất Kết Nối
-Hệ thống AGV công nghiệp bắt buộc phải hoạt động theo địa chỉ IP cố định. Nếu dùng DHCP tự động đổi IP mỗi ngày, hệ thống sẽ bị tê liệt!
+### 2.2. Quy Tắc Thiết Lập Mạng IP Tĩnh (Static IP) & Bộ Phát Wi-Fi Riêng
 
-* **Thiết lập IP tĩnh trên màn hình xe:**
+> [!IMPORTANT]
+> **LƯU Ý CỐT LÕI VỀ ĐỊA CHỈ IP KHI TRIỂN KHAI THỰC TẾ TẠI NHÀ MÁY:**  
+> Toàn bộ các địa chỉ IP được nêu trong tài liệu này (như `192.168.1.61`, `192.168.1.100`, `192.168.1.35`...) **HOÀN TOÀN CHỈ LÀ VÍ DỤ THAM KHẢO MINH HỌA**.  
+> Khi đến nhà máy lắp đặt thực tế, đội ngũ kỹ thuật sẽ **sử dụng 01 Bộ phát Wi-Fi chuyên dụng riêng** (hoặc dải mạng riêng do IT nhà máy cấp phát).
+>
+> **Nguyên tắc kỹ thuật bắt buộc phải tuân thủ:**
+> 1. **Cùng chung Dải mạng (Subnet):** Cả 3 thiết bị gồm **Máy tính Server điều phối RCS, Robot AGV E300 và Hộp gọi Callbox** bắt buộc phải kết nối vào **cùng một Bộ phát Wi-Fi** (chung dải mạng, ví dụ dải `192.168.68.x`, `192.168.0.x`, `10.10.x.x`...).
+> 2. **Phải đặt IP Tĩnh (Static IP):** Không được để chế độ cấp phát động DHCP tự đổi IP mỗi ngày. Phải đặt IP tĩnh cố định cho từng thiết bị theo dải IP của bộ phát Wi-Fi đó.
+
+* **Ví dụ mẫu thiết lập IP tĩnh trên màn hình HMI của Robot:**
   1. Vào màn hình chính ➔ Chọn **System Settings ➔ Network Settings**.
-  2. Kết nối vào Wi-Fi nhà máy (chọn băng tần 5GHz hoặc 2.4GHz sóng khỏe).
+  2. Kết nối vào SSID của **Bộ phát Wi-Fi riêng** mang theo (ưu tiên băng tần 5GHz hoặc 2.4GHz công nghiệp).
   3. Chuyển từ chế độ `DHCP` sang **`Static IP`**:
-     * **IP Address:** `192.168.1.61` *(hoặc dải IP quy hoạch của nhà máy)*
-     * **Gateway:** `192.168.1.1`
+     * **IP Address:** `192.168.1.61` *(Ví dụ minh họa - Trên thực tế sẽ đặt theo dải IP của Bộ phát Wi-Fi, ví dụ `192.168.68.61`)*
+     * **Gateway:** `192.168.1.1` *(Địa chỉ IP của chính Bộ phát Wi-Fi)*
      * **Netmask:** `255.255.255.0`
-     * **DNS:** `8.8.8.8`
-  4. Bấm **Save (Lưu)** và ghi nhớ địa chỉ IP này.
+     * **DNS:** `8.8.8.8` hoặc `1.1.1.1`
+  4. Bấm **Save (Lưu)** và ghi chép lại địa chỉ IP này để nhập vào phần mềm điều phối RCS.
 
 ---
 
@@ -241,16 +249,20 @@ Hộp gọi Callbox giao tiếp thời gian thực với Máy tính Server PC qu
 
 ```text
 [HỘP GỌI CALLBOX] ──(WebSocket 8765)──> [SERVER PC EZHAN RCS] ──(HTTP POST 8068)──> [ROBOT E300]
-   IP: 192.168.1.35                           IP: 192.168.1.100                         IP: 192.168.1.61
+  (VD: 192.168.X.35)                     (VD: 192.168.X.100)                     (VD: 192.168.X.61)
+  └────────────────────── CÙNG DẢI MẠNG BỘ PHÁT WI-FI RIÊNG NHÀ MÁY ─────────────────────┘
 ```
+
+> [!NOTE]
+> *(Các IP trên chỉ là ví dụ tham khảo. Khi triển khai tại nhà máy, bạn sử dụng dải IP thực tế của Bộ phát Wi-Fi mang theo, chỉ cần đảm bảo Callbox, Server và Robot cùng lớp mạng).*
 
 ### 8.1. Quy tắc Cấu hình Bảng nút Hộp gọi trên Web RCS
 Vào Web RCS: **Quản lý thiết bị ➔ Cấu hình hộp gọi ➔ Bấm Sửa (Edit)**:
 
 1. **Thông tin chung:**
    * **`Tên hộp gọi`:** `callbox7`
-   * **`IP thiết bị`:** Điền đúng IP tĩnh của Robot (Ví dụ: `192.168.1.61`).
-   * **`ICCID/IP`:** Điền đúng IP tĩnh của Hộp gọi hiển thị trên màn hình OLED (Ví dụ: `192.168.1.35`).
+   * **`IP thiết bị`:** Điền đúng IP tĩnh của Robot trên Bộ phát Wi-Fi (Ví dụ minh họa: `192.168.1.61`).
+   * **`ICCID/IP`:** Điền đúng IP tĩnh của Hộp gọi hiển thị trên màn hình OLED (Ví dụ minh họa: `192.168.1.35`).
    * **`Tự động gán`:** Gạt sang **BẬT (Màu xanh)**.
 2. **Cấu hình chi tiết 3 nút bấm:**
    * **Nút 1 (Giao hàng tiêu chuẩn):**
