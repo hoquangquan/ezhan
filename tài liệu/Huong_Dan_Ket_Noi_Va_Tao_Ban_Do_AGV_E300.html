@@ -323,30 +323,32 @@
   </div>
 
   <!-- PHẦN 2 -->
-  <h2>2. Cấu hình Mạng IP Tĩnh Cố định (Ngăn Ngừa Đứt Mạng)</h2>
-  <p>Hệ thống bắt buộc phải được cài đặt <strong>IP tĩnh (Static IP)</strong> để ngăn chặn 100% tình trạng Router Wi-Fi tự đổi IP khiến Server và Hộp gọi bị mất liên lạc:</p>
+  <h2>2. Cấu hình Mạng IP Tĩnh Cố định & Bộ Phát Wi-Fi Riêng Nhà Máy</h2>
+  <div class="alert alert-tip">
+    <strong>💡 NGUYÊN TẮC MẠNG KHI ĐI NHÀ MÁY:</strong> Các địa chỉ IP nêu trong tài liệu (như <code>192.168.1.61</code>, <code>192.168.1.100</code>, <code>192.168.1.35</code>) <strong>HOÀN TOÀN LÀ VÍ DỤ THAM KHẢO MINH HỌA</strong>. Khi đến nhà máy triển khai thực tế, kỹ thuật viên sẽ mang theo <strong>01 Bộ phát Wi-Fi chuyên dụng riêng</strong>. Bạn chỉ cần đảm bảo 3 thiết bị (Server PC, Robot AGV, Hộp gọi Callbox) kết nối vào cùng Bộ phát Wi-Fi đó và được gán <strong>IP Tĩnh cố định</strong> theo dải Subnet của Router (ví dụ dải <code>192.168.68.x</code> hoặc <code>192.168.0.x</code>).
+  </div>
   <table>
     <thead>
       <tr>
         <th>Thiết bị</th>
-        <th>IP Cố Định Đề Xuất</th>
+        <th>IP Ví Dụ Minh Họa (Thay đổi theo Router)</th>
         <th>Nơi Cài Đặt</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><strong>1. Máy tính Server PC</strong></td>
-        <td><code>192.168.1.100</code></td>
+        <td><code>192.168.1.100</code> <em>(Ví dụ)</em></td>
         <td>Cài Static IPv4 trong Network Connections của Windows.</td>
       </tr>
       <tr>
         <td><strong>2. Robot AMR E300</strong></td>
-        <td><code>192.168.1.61</code></td>
+        <td><code>192.168.1.61</code> <em>(Ví dụ)</em></td>
         <td>Trên màn hình xe: <code>System Settings ➔ Network Settings ➔ Static IP</code>.</td>
       </tr>
       <tr>
         <td><strong>3. Hộp gọi Callbox</strong></td>
-        <td><code>192.168.1.35</code></td>
+        <td><code>192.168.1.35</code> <em>(Ví dụ)</em></td>
         <td>Bắt Wi-Fi <code>Callbox_xxxx</code>, truy cập <code>192.168.4.1</code> gán IP tĩnh.</td>
       </tr>
     </tbody>
