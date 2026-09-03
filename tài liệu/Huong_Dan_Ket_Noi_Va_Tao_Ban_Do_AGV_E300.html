@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hướng Dẫn Kết Nối, Tạo Bản Đồ & Vận Hành AGV E300</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    
+    :root {
+      --primary: #1e40af;
+      --primary-light: #3b82f6;
+      --primary-bg: #eff6ff;
+      --secondary: #0f172a;
+      --accent: #059669;
+      --accent-bg: #ecfdf5;
+      --warning: #d97706;
+      --warning-bg: #fffbeb;
+      --danger: #dc2626;
+      --danger-bg: #fef2f2;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --gray-900: #0f172a;
+      --border: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--gray-800);
+      background-color: #f1f5f9;
+      line-height: 1.65;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 48px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    }
+
+    .header-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: var(--primary-bg);
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 13px;
+      border-radius: 9999px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--gray-900);
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--gray-600);
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 40px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    p, li {
+      font-size: 14.5px;
+      color: var(--gray-700);
+    }
+
+    ul, ol {
+      margin-left: 24px;
+      margin-bottom: 16px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .cheat-sheet {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+      color: white;
+      padding: 24px;
+      border-radius: 12px;
+      margin: 24px 0 36px 0;
+    }
+
+    .cheat-sheet h3 {
+      color: #93c5fd;
+      font-size: 18px;
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+
+    .grid-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .step-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .step-num {
+      display: inline-block;
+      background: #3b82f6;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+
+    .step-title {
+      font-weight: 700;
+      font-size: 14.5px;
+      margin-bottom: 6px;
+      color: #ffffff;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid var(--gray-200);
+      padding: 12px 14px;
+      text-align: left;
+    }
+
+    th {
+      background-color: var(--gray-100);
+      color: var(--gray-800);
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background-color: var(--gray-50);
+    }
+
+    .alert {
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      display: flex;
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .alert-tip {
+      background-color: var(--accent-bg);
+      border-left: 4px solid var(--accent);
+      color: #065f46;
+    }
+
+    .alert-warning {
+      background-color: var(--warning-bg);
+      border-left: 4px solid var(--warning);
+      color: #92400e;
+    }
+
+    .alert-danger {
+      background-color: var(--danger-bg);
+      border-left: 4px solid var(--danger);
+      color: #991b1b;
+    }
+
+    code {
+      background-color: var(--gray-100);
+      color: #b91c1c;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 13.5px;
+    }
+
+    pre {
+      background: var(--gray-900);
+      color: #f8fafc;
+      padding: 16px 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: monospace;
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin: 16px 0;
+    }
+
+    .footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--gray-200);
+      text-align: center;
+      font-size: 13px;
+      color: var(--gray-600);
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background: white;
+      }
+      .container {
+        box-shadow: none;
+        padding: 24px;
+      }
+      h2 {
+        page-break-after: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header-badge">Tài liệu Kỹ thuật Chuẩn hóa 2026</div>
+  <h1>HƯỚNG DẪN KẾT NỐI, TẠO BẢN ĐỒ VÀ VẬN HÀNH ROBOT AGV E300 SERIES</h1>
+  <div class="subtitle">
+    Quy trình tích hợp hoàn chỉnh: Khởi động, Đặt IP tĩnh cố định, Quét SLAM bản đồ, Cấu hình Sạc tự động, Nhận diện Kích nâng kệ hàng (Jacking) và Điều phối qua Hộp gọi Callbox / Ezhan RCS V2.
+  </div>
+
+  <!-- CHEAT SHEET -->
+  <div class="cheat-sheet">
+    <h3>🚀 CHEAT SHEET: 6 BƯỚC THAO TÁC CỤ THỂ ĐỂ XE TỰ CHẠY</h3>
+    <div class="grid-steps">
+      <div class="step-card">
+        <span class="step-num">BƯỚC 1</span>
+        <div class="step-title">Khởi Động & Đặt IP Tĩnh</div>
+        <div class="step-desc">Bật nguồn, nhả E-Stop. Vào <code>Network Settings</code> gán Static IP (VD: <code>192.168.1.61</code>) để không bao giờ bị đổi mạng.</div>
+      </div>
+      <div class="step-card">
+        <span class="step-num">BƯỚC 2</span>
+        <div class="step-title">Quét Bản Đồ SLAM</div>
+        <div class="step-desc">Tạo <code>New Map</code> (tên <code>Esa_1</code>). Gạt cần ảo <code>Remote Ctrl</code> trên màn hình xe để lái quanh xưởng. Bấm <code>Save ➔ End ➔ Enter Map</code> chốt định vị.</div>
+      </div>
+      <div class="step-card">
+        <span class="step-num">BƯỚC 3</span>
+        <div class="step-title">Cài Điểm Dừng & Trạm Sạc</div>
+        <div class="step-desc">Lưu điểm làm việc vào <code>Work Locations</code>. Lùi xe cách chấu sạc 2-5cm lưu vào <code>Special Locations ➔ Charge</code>.</div>
+      </div>
+      <div class="step-card">
+        <span class="step-num">BƯỚC 4</span>
+        <div class="step-title">Đồng Bộ Lên Server RCS V2</div>
+        <div class="step-desc">Vào Web <code>http://127.0.0.1</code> thêm map <code>Esa_1</code> ➔ Bấm <code>Đồng bộ bản đồ</code> ➔ Thêm xe <code>AMR003</code> với IP tĩnh.</div>
+      </div>
+      <div class="step-card">
+        <span class="step-num">BƯỚC 5</span>
+        <div class="step-title">Cấu Hình Hộp Gọi Callbox</div>
+        <div class="step-desc">Vào <code>Cấu hình hộp gọi</code> gán Nút 1 (Giao hàng: BZ), Nút 3 (Sạc: BZ), Nút nâng kệ (GT) ➔ Bật Tự động gán.</div>
+      </div>
+      <div class="step-card">
+        <span class="step-num">BƯỚC 6</span>
+        <div class="step-title">Vận Hành Hoàn Hảo</div>
+        <div class="step-desc">Bấm nút trên Hộp gọi hoặc Web ➔ Xe tự động chạy giao hàng, cõng nâng kệ hàng và tự lùi về cắm sạc khi hết pin!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHẦN 1 -->
+  <h2>1. Tổng quan Thiết bị & Quy tắc An toàn Vận hành</h2>
+  <p>Robot AGV/AMR E300 Series là dòng xe tự hành thông minh ứng dụng công nghệ định vị <strong>Laser SLAM 2D/3D</strong> kết hợp <strong>Camera 3D</strong> và thanh cảm biến va chạm <strong>Safety Bumper</strong>.</p>
+  <ul>
+    <li><strong>Cơ cấu di chuyển vi sai:</strong> Cho phép xe xoay tròn 360° tại chỗ với đường kính quay chỉ <code>840 mm</code>.</li>
+    <li><strong>Cảm biến Laser Lidar:</strong> Đặt ở mũi xe, độ cao <code>180 mm</code>, góc quét <code>240°</code>, tầm quét xa <code>25 mét</code>.</li>
+    <li><strong>Mâm kích nâng (Jacking Option):</strong> Nâng tối đa <code>55 mm</code>, tải trọng <code>300 kg</code>. Chiều cao khi hạ là <code>210 mm</code>, khi nâng đạt <code>265 mm</code> cách sàn.</li>
+    <li><strong>Chấu sạc tự động:</strong> 2 bản cực đồng ở đuôi xe bên phải tiếp xúc trực tiếp trạm sạc <code>E-YLH-10A</code>.</li>
+  </ul>
+  <div class="alert alert-warning">
+    <strong>⚠️ LƯU Ý MẶT SÀN & ĐIỂM MÙ:</strong> Tuyệt đối không đánh bóng sáp (waxing) mặt sàn vì sẽ làm trượt bánh xe gây mất định vị. Cảm biến Lidar nằm ở đầu xe nên phía sau đuôi xe là điểm mù, xe chỉ được phép lùi chậm (&lt; 0.1 m/s) khi lùi vào sạc hoặc lùi rút khỏi kệ hàng.
+  </div>
+
+  <!-- PHẦN 2 -->
+  <h2>2. Cấu hình Mạng IP Tĩnh Cố định (Ngăn Ngừa Đứt Mạng)</h2>
+  <p>Hệ thống bắt buộc phải được cài đặt <strong>IP tĩnh (Static IP)</strong> để ngăn chặn 100% tình trạng Router Wi-Fi tự đổi IP khiến Server và Hộp gọi bị mất liên lạc:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Thiết bị</th>
+        <th>IP Cố Định Đề Xuất</th>
+        <th>Nơi Cài Đặt</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Máy tính Server PC</strong></td>
+        <td><code>192.168.1.100</code></td>
+        <td>Cài Static IPv4 trong Network Connections của Windows.</td>
+      </tr>
+      <tr>
+        <td><strong>2. Robot AMR E300</strong></td>
+        <td><code>192.168.1.61</code></td>
+        <td>Trên màn hình xe: <code>System Settings ➔ Network Settings ➔ Static IP</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>3. Hộp gọi Callbox</strong></td>
+        <td><code>192.168.1.35</code></td>
+        <td>Bắt Wi-Fi <code>Callbox_xxxx</code>, truy cập <code>192.168.4.1</code> gán IP tĩnh.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- PHẦN 3 -->
+  <h2>3. Quy trình Quét SLAM & Tạo Bản Đồ Mới</h2>
+  <p>Trên màn hình xe, vào <code>System Settings ➔ Map Settings ➔ New Map</code> (nhập tên <code>Esa_1</code>) và chọn 1 trong các phương pháp sau để lái xe đi quét:</p>
+  <ul>
+    <li><strong>Phương pháp 1 (Tiện nhất - Cần gạt ảo HMI):</strong> Gạt nút <code>Remote Ctrl</code> ở góc trên bên phải sang <strong>ON</strong> ➔ Chạm ngón tay vào vòng tròn Joystick ảo kéo rê để lái xe chạy vòng quanh xưởng.</li>
+    <li><strong>Phương pháp 2 (Dùng chuột máy tính USB):</strong> Cắm đầu thu USB của Chuột không dây vào cổng USB dưới màn hình xe ➔ Dùng chuột kéo giữ cần gạt Joystick ảo để lái xe.</li>
+    <li><strong>Phương pháp 3 (Dùng Remote Joystick):</strong> Bấm nút trắng trên tay cầm điều khiển để ghép nối ➔ Gạt Joystick trên tay cầm để lái xe đi quét.</li>
+  </ul>
+  <p>Lái xe quét kín các mép tường về lại điểm xuất phát ➔ Bấm <strong><code>Save Map ➔ End Mapping ➔ Enter Map</code></strong> để xe tự động chốt định vị.</p>
+
+  <!-- PHẦN 4 -->
+  <h2>4. Cấu hình Cơ chế Sạc Tự Động (Auto-Charging)</h2>
+  <p>Để xe tự động lùi cắm chấu sạc chính xác 100% mà không bị lệch góc:</p>
+  <ol>
+    <li><strong>Cài điểm sạc chính (Type 10):</strong> Đẩy đuôi xe cách chấu sạc 2-5cm ➔ Vào <code>Location ➔ Special Locations ➔ Update</code> tại dòng <code>Charge</code>. Ra màn hình chính bấm <code>Return to charge</code> cho xe tự lùi cắm sạc thật ➔ Vào lại bấm <code>Update</code> lần 2 để chốt tọa độ tiếp xúc tuyệt đối.</li>
+    <li><strong>Cài điểm tiền trạm sạc (Type 11):</strong> Tạo 1 điểm cách trước mặt trạm sạc <code>0.8m - 1.0m</code> với mũi tên hướng vào trạm sạc. Xe chạy tới đây trước ➔ xoay 180° quay đuôi lại ➔ lùi thẳng tắp vào chấu sạc.</li>
+    <li><strong>Bật tự động về sạc:</strong> Vào <code>System Settings ➔ Basic Settings</code>, gạt <code>Autonomous Charging = ON</code>, cài đặt <code>Automatic Charging Threshold = 20%</code>.</li>
+  </ol>
+
+  <!-- PHẦN 5 -->
+  <h2>5. Cơ chế Nhận diện & Nâng/Hạ Kệ Hàng (Jacking Mode)</h2>
+  <p>Áp dụng cho dòng xe có kích nâng gầm 55mm (chịu tải 300kg):</p>
+  <ul>
+    <li><strong>Đo đạc giá kệ (Shelf Settings - Trang 72-75 User Manual):</strong> Vào <code>System Settings ➔ Shelf</code> đo thực tế: Chiều rộng/dài kệ, khoảng cách tâm 2 chân trái-phải, trước-sau. Đặt <code>Insertion Depth = -0.40m</code> và <code>Leg Expansion = 0.25m - 0.30m</code> (để 4 ô vuông xanh ôm trọn các chấm đỏ của chân kệ). Bấm <code>Used</code>.</li>
+    <li><strong>Tạo chuỗi tác vụ nâng hạ (Lift Mode):</strong>
+      <br>• Dòng 1 (Điểm A): Hành động <code>Recognizing lifting</code> (Nhận diện nâng) | Dừng <code>0s</code> hoặc <code>3s</code>.
+      <br>• Dòng 2 (Điểm B): Hành động <code>Recognizing lowering</code> (Nhận diện hạ) | Dừng <code>0s</code> hoặc <code>3s</code>.
+      <br>• Dòng 3 (Điểm C): Hành động <code>Rời đi (Move)</code> | Dừng <code>0s</code> (xe tự động thoát khỏi gầm kệ ra sàn trống).
+    </li>
+  </ul>
+
+  <!-- PHẦN 6 -->
+  <h2>6. Cấu hình Hộp Gọi Không Dây Callbox</h2>
+  <p>Vào Web RCS (<code>http://127.0.0.1</code>) ➔ <code>Cấu hình hộp gọi ➔ Sửa</code>:</p>
+  <ul>
+    <li><strong>Nút 1 (Giao hàng tiêu chuẩn):</strong> <code>Tên nút: giao</code> | <code>Tác vụ liên kết: Esa_1_ahuy</code> | <code>Loại thiết bị: BZ</code> | Bật Tự động phân bổ.</li>
+    <li><strong>Nút 2 (Kích nâng kệ hàng):</strong> <code>Tên nút: nangke</code> | <code>Tác vụ liên kết: Tên tác vụ nâng (VD: NangKe_1)</code> | <code>Loại thiết bị: GT</code> | Bật Tự động phân bổ.</li>
+    <li><strong>Nút 3 (Tự động về sạc):</strong> <code>Tên nút: sac</code> | <code>Tác vụ liên kết: Esa_1_sac</code> | <code>Loại thiết bị: BZ</code> | Bật Tự động phân bổ.</li>
+  </ul>
+
+  <!-- PHẦN 7 -->
+  <h2>7. Sổ Tay Chẩn Đoán & Xử Lý Sự Cố Nhanh</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 30%;">Hiện Tượng</th>
+        <th style="width: 35%;">Nguyên Nhân</th>
+        <th style="width: 35%;">Cách Khắc Phục Tức Thì</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Bấm Hộp gọi xe đứng im</strong></td>
+        <td>Lệch IP hoặc ô <code>Tác vụ liên kết</code> điền sai chữ <code>delivery</code>/<code>Charge</code>.</td>
+        <td>Đổi đúng IP cố định; xóa trống ô Tác vụ liên kết hoặc điền trùng tên trạm.</td>
+      </tr>
+      <tr>
+        <td><strong>Vừa xong việc bấm lệnh mới xe khựng lại (đèn xanh dương)</strong></td>
+        <td><code>Delivery Stay Duration</code> trên xe đang đếm ngược chờ bốc hàng (30s-60s).</td>
+        <td>Vào <code>System Settings ➔ Basic Settings</code> chỉnh <code>Delivery Stay Duration = 0s</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Gặp cản xe bật đèn ĐỎ, cản đi ra vẫn khóa đèn ĐỎ</strong></td>
+        <td>Thanh cản Bumper chân xe bị chạm hoặc bị Route Timeout.</td>
+        <td>Nhấn nút <strong>E-Stop trên trụ rồi xoay nhả lên để Reset</strong> (hoặc bấm <code>Resume</code> trên Web).</td>
+      </tr>
+      <tr>
+        <td><strong>Xe né cản chui vào khe hẹp rồi kẹt</strong></td>
+        <td>Bản đồ chưa vẽ Tường ảo ở các ngách hẹp giữa máy móc.</td>
+        <td>Dùng công cụ <code>Virtual Wall</code> vẽ vạch đỏ bịt kín ngách hẹp, hoặc chuyển sang <code>FIXED PATH MODE</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Nâng kệ lên rồi nhưng xe đứng im không chạy</strong></td>
+        <td>4 ô vuông xanh trong Cấu hình kệ chưa ôm trọn chân kệ, xe tưởng chân kệ là vật cản.</td>
+        <td>Tăng <code>Mở rộng chân = 0.30m</code> trong Shelf Settings để nuốt trọn chấm đỏ chân kệ.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    Tài liệu Kỹ thuật Chuẩn hóa & Quy trình Vận hành AGV E300 Series<br>
+    <strong>ESATECH Automation Systems © 2026. Mọi quyền được bảo lưu.</strong>
+  </div>
+</div>
+
+</body>
+</html>

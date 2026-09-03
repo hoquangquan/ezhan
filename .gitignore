@@ -1,0 +1,17 @@
+# Bỏ qua các file nhị phân lớn vượt quá giới hạn 100MB của GitHub
+*.apk
+*.pdb
+*.zip
+*.rdb
+*.tar.gz
+*.log
+Update/
+.vscode/
+
+# Bỏ qua dữ liệu runtime MariaDB
+**/mariadb/data/
+**/Redis-x64-3.0.504/*.rdb
+
+# Bỏ qua log và file tạm
+logs/
+*.tmp

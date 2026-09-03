@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Box User Manual V1.0 - Bản Tiếng Việt</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', 'Segoe UI', Tahoma, sans-serif;
+            color: #111;
+            line-height: 1.5;
+            background-color: #e5e5e5;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm 20mm 15mm 20mm;
+            margin: 10mm auto;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            position: relative;
+            page-break-after: always;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 4px;
+            margin-bottom: 20px;
+        }
+
+        .header-logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0056b3;
+            text-decoration: none;
+        }
+
+        .header-title {
+            font-size: 14px;
+            color: #0056b3;
+            font-weight: 500;
+        }
+
+        .footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #ccc;
+            padding-top: 5px;
+            font-size: 11px;
+            color: #444;
+        }
+
+        /* Cover Page */
+        .cover-page {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30mm 20mm;
+        }
+
+        .cover-title {
+            font-size: 34px;
+            font-weight: bold;
+            color: #000;
+            margin-top: 40px;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .cover-version {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .box-diagram {
+            width: 200px;
+            height: 260px;
+            border: 2px solid #bbb;
+            border-radius: 25px;
+            margin: 20px auto 40px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 35px 20px 25px;
+        }
+
+        .box-screen {
+            width: 75px;
+            height: 55px;
+            background: #1a1a1a;
+            border-radius: 4px;
+            border: 1px solid #555;
+        }
+
+        .box-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        .btn-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #0056b3;
+            background: #fff;
+            box-shadow: 0 0 6px rgba(0,86,179,0.3);
+            position: relative;
+        }
+
+        .btn-circle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #e6f0fa;
+        }
+
+        .btn-label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 4px;
+            text-align: center;
+        }
+
+        .cover-border-box {
+            border: 1px solid #444;
+            padding: 18px 22px;
+            max-width: 520px;
+            text-align: left;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #222;
+            margin-top: 20px;
+        }
+
+        /* Typography & Section Styles */
+        h1.section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 12px;
+        }
+
+        h2.subsection-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #000;
+            margin-top: 10px;
+            margin-bottom: 8px;
+        }
+
+        p, li {
+            font-size: 13px;
+            color: #222;
+            text-align: justify;
+            margin-bottom: 6px;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 8px;
+        }
+
+        .notice-box {
+            border: 1px solid #333;
+            padding: 12px 15px;
+            margin: 10px 0 15px 0;
+            font-size: 12.5px;
+        }
+
+        .notice-title {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        /* Tables */
+        table.spec-table, table.toc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 12.5px;
+        }
+
+        table.spec-table th, table.spec-table td {
+            border: 1px solid #666;
+            padding: 6px 10px;
+        }
+
+        table.spec-table th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+
+        table.toc-table td {
+            padding: 4px 0;
+            border: none;
+        }
+
+        /* Diagrams & Mockups */
+        .diagram-container {
+            border: 1px solid #ddd;
+            background: #fafafa;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .mockup-img {
+            max-width: 90%;
+            height: auto;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 10px auto;
+            display: block;
+        }
+
+        .screen-data-box {
+            background: #111;
+            color: #00ffcc;
+            font-family: 'Consolas', monospace;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            line-height: 1.5;
+            display: inline-block;
+            text-align: left;
+            border: 2px solid #444;
+            margin: 10px 0;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TRANG 1 (PAGE 1): BÌA -->
+    <div class="page cover-page">
+        <div style="flex: 1;"></div>
+        <div class="cover-title">HƯỚNG DẪN SỬ DỤNG HỘP GỌI</div>
+        <div class="cover-version">V1.0</div>
+
+        <div class="box-diagram">
+            <div class="box-screen"></div>
+            <div class="box-buttons">
+                <div>
+                    <div class="btn-label">K1</div>
+                    <div class="btn-circle"></div>
+                </div>
+                <div>
+                    <div class="btn-label">K2</div>
+                    <div class="btn-circle"></div>
+                </div>
+                <div>
+                    <div class="btn-label">K3</div>
+                    <div class="btn-circle"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cover-border-box">
+            Xin chân thành cảm ơn quý khách hàng đã mua sản phẩm của chúng tôi.<br>
+            Sách hướng dẫn này mô tả các hướng dẫn vận hành và các biện pháp phòng ngừa an toàn của sản phẩm.<br>
+            Vui lòng đọc kỹ tài liệu này và chú ý đến an toàn trong suốt quá trình vận hành.<br>
+            Hãy lưu giữ sách hướng dẫn này ở nơi thích hợp để tham khảo trong tương lai.
+        </div>
+        <div style="flex: 1;"></div>
+    </div>
+
+    <!-- TRANG 2 (PAGE 2): MỤC LỤC -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Mục Lục</span>
+        </div>
+
+        <h1 class="section-title" style="text-align: center; font-size: 18px; margin-bottom: 20px;">Mục Lục</h1>
+
+        <table class="toc-table">
+            <tr>
+                <td><strong>一、 Hướng dẫn An toàn</strong></td>
+                <td style="text-align: right;"><strong>1</strong></td>
+            </tr>
+            <tr>
+                <td style="padding-left: 20px;">1.1 Các biện pháp phòng ngừa an toàn</td>
+                <td style="text-align: right;">1</td>
+            </tr>
+            <tr>
+                <td><strong>二、 Tổng quan Sản phẩm</strong></td>
+                <td style="text-align: right;"><strong>1</strong></td>
+            </tr>
+            <tr>
+                <td><strong>三、 Thông số Kỹ thuật Sản phẩm</strong></td>
+                <td style="text-align: right;"><strong>2</strong></td>
+            </tr>
+            <tr>
+                <td style="padding-left: 20px;">3.1 Bảng thông số kỹ thuật</td>
+                <td style="text-align: right;">2</td>
+            </tr>
+            <tr>
+                <td style="padding-left: 20px;">3.2 Kích thước sản phẩm</td>
+                <td style="text-align: right;">2</td>
+            </tr>
+            <tr>
+                <td><strong>四、 Cấu hình Thông số Hộp gọi</strong></td>
+                <td style="text-align: right;"><strong>4</strong></td>
+            </tr>
+            <tr>
+                <td style="padding-left: 20px;">4.1 Cấu hình Hộp gọi</td>
+                <td style="text-align: right;">5</td>
+            </tr>
+            <tr>
+                <td style="padding-left: 20px;">4.2 Đổi tên Hộp gọi</td>
+                <td style="text-align: right;">7</td>
+            </tr>
+            <tr>
+                <td style="padding-left: 20px;">4.3 Cấu hình Địa chỉ Máy chủ Đám mây (Cloud Server Address)</td>
+                <td style="text-align: right;">8</td>
+            </tr>
+            <tr>
+                <td style="padding-left: 20px;">4.4 Cấu hình Tín hiệu Mạng của Hộp gọi hiện tại</td>
+                <td style="text-align: right;">8</td>
+            </tr>
+            <tr>
+                <td><strong>五、 Thao tác Bật nguồn và Quản lý Hộp gọi</strong></td>
+                <td style="text-align: right;"><strong>10</strong></td>
+            </tr>
+            <tr>
+                <td style="padding-left: 20px;">5.1 Cấp nguồn qua cáp dữ liệu</td>
+                <td style="text-align: right;">10</td>
+            </tr>
+            <tr>
+                <td style="padding-left: 20px;">5.2 Giới thiệu thông tin màn hình</td>
+                <td style="text-align: right;">11</td>
+            </tr>
+            <tr>
+                <td style="padding-left: 20px;">5.3 Cài đặt các nút tác vụ</td>
+                <td style="text-align: right;">11</td>
+            </tr>
+            <tr>
+                <td><strong>六、 Xử lý Sự cố</strong></td>
+                <td style="text-align: right;"><strong>17</strong></td>
+            </tr>
+            <tr>
+                <td><strong>七、 Dịch vụ Sau Bán hàng</strong></td>
+                <td style="text-align: right;"><strong>17</strong></td>
+            </tr>
+            <tr>
+                <td style="padding-left: 20px;">7.1 Thời hạn bảo hành</td>
+                <td style="text-align: right;">17</td>
+            </tr>
+            <tr>
+                <td style="padding-left: 20px;">7.2 Phạm vi bảo hành</td>
+                <td style="text-align: right;">17</td>
+            </tr>
+            <tr>
+                <td style="padding-left: 20px;">7.3 Các trường hợp loại trừ khỏi bảo hành</td>
+                <td style="text-align: right;">18</td>
+            </tr>
+        </table>
+
+        <div class="footer">
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <!-- TRANG 3 (PAGE 3): AN TOÀN & TỔNG QUAN -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <h1 class="section-title">一、 Hướng dẫn An toàn</h1>
+        <h2 class="subsection-title">1.1 Các biện pháp phòng ngừa an toàn</h2>
+        <p>Các biện pháp phòng ngừa được chỉ định ở đây nhằm đảm bảo việc sử dụng sản phẩm an toàn và đúng cách, ngăn ngừa các mối nguy hiểm tiềm ẩn nhằm tránh gây thương tích cho bản thân bạn và những người khác. Vui lòng hiểu đầy đủ các nội dung này trước khi sử dụng sản phẩm này.</p>
+
+        <div class="notice-box">
+            <div class="notice-title">⚠️ Lưu ý (Notice)</div>
+            <ul>
+                <li>Không sử dụng sản phẩm này trong môi trường có khí dễ nổ, khí dễ cháy, môi trường ăn mòn, những nơi dễ bị tiếp xúc với nước hoặc gần các chất dễ cháy. Việc không tuân thủ có thể dẫn đến trục trặc sản phẩm, hỏa hoạn hoặc thương tích cá nhân.</li>
+                <li>Để tránh nguy cơ hỏa hoạn và điện giật, chỉ vận hành sản phẩm dưới điện áp định mức.</li>
+                <li>Thực hiện nối dây nghiêm ngặt theo đúng sơ đồ đấu nối; nếu không, nguy cơ hỏa hoạn có thể xảy ra.</li>
+                <li>Luôn ngắt nguồn điện trước khi bảo trì và kiểm tra, nếu không có thể gây thương tích cá nhân.</li>
+                <li>Không tháo rời hoặc sửa đổi sản phẩm này. Những hành động như vậy có thể dẫn đến thương tích cá nhân hoặc hư hỏng thiết bị. Vui lòng liên hệ với công ty chúng tôi nếu cần kiểm tra hoặc sửa chữa bên trong.</li>
+            </ul>
+        </div>
+
+        <h1 class="section-title">二、 Tổng quan Sản phẩm</h1>
+        <ul>
+            <li><strong>Giới thiệu sản phẩm:</strong> Một thiết bị đầu cuối gọi công nghiệp được phát triển dựa trên các chip chuyên dụng. Thiết bị được thiết kế đặc biệt cho các kịch bản vận hành di động của robot AMR với việc triển khai không cần dây dẫn, thích hợp cho việc liên lạc khẩn cấp và tương tác lập lịch của các cụm AMR trong các nhà máy thông minh và nhà kho không người lái.</li>
+            <li><strong>Định vị cốt lõi:</strong> Một thiết bị liên lạc khẩn cấp không dây chuyên dụng phù hợp cho các AMR. Thiết bị thay thế các thiết bị gọi cố định có dây truyền thống, giải quyết các vấn đề ngắt kết nối thường xuyên và hiệu suất chống nhiễu kém của các thiết bị không dây thông thường trong môi trường công nghiệp, đồng thời lấp đầy khoảng trống liên lạc nội bộ từ xa và báo cáo lỗi cho các hoạt động AMR không người lái.</li>
+            <li><strong>Giám sát trạng thái trực tuyến:</strong> Giám sát trạng thái trực tuyến, ngoại tuyến và tín hiệu của thiết bị suốt ngày đêm. Thiết bị có thể phát hiện kịp thời tình trạng mất liên lạc và các bất thường của thiết bị nhằm đảm bảo các liên kết vận hành AMR ổn định và đáng tin cậy.</li>
+        </ul>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>1</span>
+        </div>
+    </div>
+
+    <!-- TRANG 4 (PAGE 4): TỔNG QUAN TIẾP THEO & THÔNG SỐ KỸ THUẬT -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <ul>
+            <li><strong>Truy vết bản ghi cảnh báo:</strong> Tự động lưu trữ các cảnh báo lỗi và các bản ghi bất thường. Hỗ trợ truy vấn và truy xuất nguồn gốc trong nền để tạo điều kiện thuận lợi cho việc bảo trì thiết bị, xem xét lỗi và quản lý vận hành.</li>
+            <li><strong>Triển khai không dây linh hoạt:</strong> Áp dụng phương thức truyền thông WebSocket độc lập. Không yêu cầu cáp mạng nhà máy hoặc đường dây điện thoại, thích ứng với các kịch bản vận hành động, quy mô lớn và xuyên khu vực của các AMR.</li>
+            <li><strong>Chống nhiễu công nghiệp & Hiệu suất ổn định:</strong> Được trang bị chip điều khiển chính cấp công nghiệp, được tối ưu hóa sâu sắc để chống lại nhiễu điện từ do động cơ nhà máy và biến tần tạo ra. Thiết bị có tính năng ổn định phần cứng mạnh mẽ, đảm bảo liên lạc không bị mất gói tin, ngắt kết nối và giật lag trong quá trình vận hành.</li>
+            <li><strong>Các kịch bản áp dụng:</strong> Được phát triển dựa trên hệ sinh thái mã nguồn mở, Hộp gọi AMR hỗ trợ gọi và truyền dữ liệu an toàn, đáng tin cậy. Các kịch bản áp dụng: Được áp dụng rộng rãi cho việc phân loại và xử lý AMR trong các kho thông minh, vận chuyển vật liệu AMR trên các dây chuyền sản xuất nhà máy, các xưởng sản xuất thông minh không người lái và các hoạt động cụm AMR phân tán quy mô lớn trong nhà máy.</li>
+        </ul>
+
+        <h1 class="section-title" style="margin-top: 20px;">三、 Thông số Kỹ thuật Sản phẩm</h1>
+        <h2 class="subsection-title">3.1 Bảng thông số kỹ thuật (Specification Parameters)</h2>
+
+        <table class="spec-table">
+            <tr>
+                <th style="width: 40%;">Chế độ kết nối (Connection Mode)</th>
+                <td>Kết nối tín hiệu (Signal Connection)</td>
+            </tr>
+            <tr>
+                <th>Khoảng cách truyền (Transmission Distance)</th>
+                <td>Liên lạc khả dụng trong khu vực phủ sóng tín hiệu.</td>
+            </tr>
+            <tr>
+                <th>Phương pháp cấu hình (Configuration Method)</th>
+                <td>Cấu hình trang Web (Web Page Configuration)</td>
+            </tr>
+            <tr>
+                <th>Điện áp định mức (Rated Voltage)</th>
+                <td>DC5V</td>
+            </tr>
+            <tr>
+                <th>Số lượng nút bấm (Number of Buttons)</th>
+                <td>3 cái (3 pcs)</td>
+            </tr>
+            <tr>
+                <th>Công suất định mức (Rated Power)</th>
+                <td>2W</td>
+            </tr>
+            <tr>
+                <th>Chất liệu vỏ (Housing Material)</th>
+                <td>Nhựa Resin (Resin)</td>
+            </tr>
+            <tr>
+                <th>Nhiệt độ hoạt động (Operating Temperature)</th>
+                <td>-10℃ ~ +55℃</td>
+            </tr>
+            <tr>
+                <th>Độ ẩm hoạt động (Operating Humidity)</th>
+                <td>85%RH (Không ngưng tụ / No condensation)</td>
+            </tr>
+            <tr>
+                <th>Tiêu chuẩn không dây (Wireless Standard)</th>
+                <td>802.11 b/g/n</td>
+            </tr>
+            <tr>
+                <th>Tần số không dây (Wireless Frequency)</th>
+                <td>2.4 GHz / 5.8GHz</td>
+            </tr>
+        </table>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>2</span>
+        </div>
+    </div>
+
+    <!-- TRANG 5 (PAGE 5): KÍCH THƯỚC SẢN PHẨM -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <h2 class="subsection-title">3.2 Kích thước Sản phẩm (Product Dimensions)</h2>
+        <p><strong>Mặt trước của hộp gọi:</strong> Được trang bị 3 nút bấm (K1, K2, K3 tương ứng với Tác vụ 1, Tác vụ 2, Tác vụ 3).</p>
+
+        <div class="diagram-container">
+            <div class="box-diagram" style="margin: 10px auto;">
+                <div class="box-screen"></div>
+                <div class="box-buttons">
+                    <div>
+                        <div class="btn-label">K1</div>
+                        <div class="btn-circle"></div>
+                    </div>
+                    <div>
+                        <div class="btn-label">K2</div>
+                        <div class="btn-circle"></div>
+                    </div>
+                    <div>
+                        <div class="btn-label">K3</div>
+                        <div class="btn-circle"></div>
+                    </div>
+                </div>
+            </div>
+            <p style="font-size: 12px; color: #555;">(Mặt trước Hộp gọi)</p>
+        </div>
+
+        <p><strong>Mặt bên của Hộp gọi:</strong></p>
+        <div class="diagram-container">
+            <div style="border: 2px solid #ccc; border-radius: 12px; padding: 20px; max-width: 320px; margin: 0 auto; background: #fff; text-align: left;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <span style="border: 1px solid #999; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Cổng sạc Type-C</span> ➔ [ Cổng Type-C ]
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="border: 1px solid #999; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Lưới tản nhiệt loa</span> ➔ [ Khe Loa ]
+                </div>
+            </div>
+            <p style="font-size: 12px; color: #555; margin-top: 8px;">(Type-C charging port / Speaker grille)</p>
+        </div>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>3</span>
+        </div>
+    </div>
+
+    <!-- TRANG 6 (PAGE 6): MẶT SAU HỘP GỌI -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <p><strong>Mặt sau của Hộp gọi (Rear of Call Box):</strong></p>
+
+        <div class="diagram-container" style="padding: 40px 20px;">
+            <div style="width: 220px; height: 320px; border: 2px solid #999; border-radius: 15px; background: #eee; margin: 0 auto; position: relative;">
+                <div style="position: absolute; top: 15px; left: 15px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #333;"></div>
+                <div style="position: absolute; top: 15px; right: 15px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #333;"></div>
+                <div style="position: absolute; top: 50%; left: 15px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #333;"></div>
+                <div style="position: absolute; top: 50%; right: 15px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #333;"></div>
+                <div style="position: absolute; bottom: 15px; left: 15px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #333;"></div>
+                <div style="position: absolute; bottom: 15px; right: 15px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #333;"></div>
+
+                <div style="position: absolute; top: 35%; left: 50%; transform: translate(-50%, -50%); font-weight: bold; font-size: 14px; width: 100%;">
+                    Lỗ bắt vít gắn tường<br>(Screw mounting holes)
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>4</span>
+        </div>
+    </div>
+
+    <!-- TRANG 7 (PAGE 7): CẤU HÌNH THÔNG SỐ HỘP GỌI -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <h1 class="section-title">四、 Cấu hình Thông số Hộp gọi (Call Box Parameter Configuration)</h1>
+        <h2 class="subsection-title">4.1 Cấu hình Hộp gọi (Configure the Call Box)</h2>
+        <p>(1) Bật cài đặt trên điện thoại di động của bạn hoặc sử dụng máy tính để kết nối với tín hiệu của hộp gọi. Tìm tên hộp gọi trên trang kết nối; tên này được hiển thị trên màn hình của hộp gọi.</p>
+
+        <div class="diagram-container">
+            <div style="max-width: 320px; border: 1px solid #ccc; background: #fff; margin: 0 auto; border-radius: 8px; padding: 15px; text-align: left; font-size: 12px;">
+                <div style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 10px; font-weight: bold;">
+                    ← WLAN
+                </div>
+                <div style="margin-bottom: 8px; color: #666;">DANH SÁCH MẠNG KHẢ DỤNG:</div>
+                <div style="padding: 8px; background: #e6f7ff; border-radius: 4px; border: 1px solid #91d5ff; margin-bottom: 6px;">
+                    📶 <strong>callbox1-SETUP</strong> / <strong>callbox7-SETUP</strong> (Không bảo mật)
+                </div>
+                <div style="padding: 6px; color: #888;">📶 EzhanNet_5G</div>
+                <div style="padding: 6px; color: #888;">📶 ChinaNet-Hzts</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>5</span>
+        </div>
+    </div>
+
+    <!-- TRANG 8 (PAGE 8): TRUY CẬP 192.168.4.1 -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <p>(2) Mở trình duyệt và nhập URL: <strong><code>http://192.168.4.1/</code></strong>. Giao diện sau sẽ xuất hiện. Lưu cài đặt trước khi chuyển sang bước tiếp theo sau mỗi lần cấu hình.</p>
+
+        <div class="diagram-container">
+            <div style="max-width: 420px; border: 1px solid #ccc; background: #fff; margin: 0 auto; border-radius: 6px; padding: 15px; text-align: left; font-size: 12px;">
+                <h3 style="text-align: center; margin-bottom: 12px;">Callbox Setup</h3>
+                <div style="background: #f0f5ff; padding: 10px; border-radius: 4px; margin-bottom: 12px; font-family: monospace; font-size: 11px;">
+                    Setup AP: callbox7-SETUP<br>
+                    URL: http://192.168.4.1/<br>
+                    Name: callbox7<br>
+                    Server IP: 192.168.0.20<br>
+                    ICCID: 0.0.0.0<br>
+                    STA: Connected EzhanNet
+                </div>
+                
+                <label>Callbox name</label>
+                <input type="text" value="callbox7" style="width: 100%; padding: 4px; margin: 4px 0 10px 0; border: 1px solid #ccc;" disabled>
+                
+                <button style="width: 100%; background: #1890ff; color: #fff; border: none; padding: 6px; border-radius: 4px; margin-bottom: 15px;">Save name</button>
+
+                <label>Cloud server IP</label>
+                <input type="text" value="192.168.0.17" style="width: 100%; padding: 4px; margin: 4px 0 10px 0; border: 1px solid #ccc;" disabled>
+                
+                <button style="width: 100%; background: #1890ff; color: #fff; border: none; padding: 6px; border-radius: 4px; margin-bottom: 15px;">Save server IP</button>
+
+                <label>network</label>
+                <select style="width: 100%; padding: 4px; margin: 4px 0 10px 0; border: 1px solid #ccc;" disabled><option>Manual input</option></select>
+
+                <label>SSID</label>
+                <input type="text" style="width: 100%; padding: 4px; margin: 4px 0 10px 0; border: 1px solid #ccc;" disabled>
+
+                <label>password</label>
+                <input type="password" style="width: 100%; padding: 4px; margin: 4px 0 10px 0; border: 1px solid #ccc;" disabled>
+
+                <button style="width: 100%; background: #1890ff; color: #fff; border: none; padding: 6px; border-radius: 4px; margin-top: 5px;">Connect</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>6</span>
+        </div>
+    </div>
+
+    <!-- TRANG 9 (PAGE 9): ĐỔI TÊN HỘP GỌI -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <h2 class="subsection-title">4.2 Đổi tên Hộp gọi (Rename the Call Box)</h2>
+        <p>Bạn có thể sửa đổi tên hộp gọi trong trường <strong>Callbox name</strong>. Sau khi sửa đổi, hãy kết nối lại với mạng bằng tên mới và truy cập lại trang này.</p>
+
+        <div class="diagram-container">
+            <div style="max-width: 420px; border: 1px solid #ccc; background: #fff; margin: 0 auto; border-radius: 6px; padding: 15px; text-align: left; font-size: 12px;">
+                <h3 style="text-align: center; margin-bottom: 12px;">Callbox Setup</h3>
+                <label>Callbox name</label>
+                <div style="display: flex; gap: 8px; margin: 4px 0 10px 0;">
+                    <input type="text" value="callbox7" style="flex: 1; padding: 4px; border: 1px solid #ff4d4f; background: #fff1f0;">
+                </div>
+                <p style="color: #ff4d4f; font-size: 11px; margin-bottom: 8px;">Tên mặc định của hộp gọi (có thể chỉnh sửa / Default name of the call box (editable))</p>
+                <p style="color: #888; font-size: 11px; margin-bottom: 10px;">Chỉ các chữ cái, số và dấu gạch dưới, từ 1-16 ký tự.</p>
+
+                <button style="width: 100%; background: #1890ff; color: #fff; border: none; padding: 6px; border-radius: 4px; border: 2px solid #ff4d4f;">Save name</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>7</span>
+        </div>
+    </div>
+
+    <!-- TRANG 10 (PAGE 10): ĐỊA CHỈ SERVER & TÍN HIỆU MẠNG -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <h2 class="subsection-title">4.3 Cấu hình Địa chỉ Máy chủ Đám mây (Configure Cloud Server Address)</h2>
+        <p>Điền địa chỉ IPv4 của robot trên cùng mạng cục bộ với hộp gọi vào trường <strong>Cloud server IP</strong>: <code>120.76.142.163</code> (Điền theo điều kiện thực tế).</p>
+
+        <h2 class="subsection-title" style="margin-top: 20px;">4.4 Cấu hình Tín hiệu Mạng của Hộp gọi hiện tại (Configure Network Signal of Current Call Box)</h2>
+        <p>Trong ô Nhập thủ công (Manual input) nằm ở dưới cùng của giao diện cấu hình, hãy chọn cùng một mạng mà robot được kết nối, nhập mật khẩu và lưu cài đặt.</p>
+
+        <div class="diagram-container">
+            <div style="max-width: 420px; border: 1px solid #ccc; background: #fff; margin: 0 auto; border-radius: 6px; padding: 15px; text-align: left; font-size: 12px;">
+                <label>Cloud server IP</label>
+                <input type="text" value="192.168.0.17" style="width: 100%; padding: 4px; margin: 4px 0 6px 0; border: 1px solid #ff4d4f;">
+                <p style="color: #ff4d4f; font-size: 11px; margin-bottom: 8px;">Địa chỉ IP Máy chủ Đích (Target Host IP Address)</p>
+
+                <button style="width: 100%; background: #1890ff; color: #fff; border: none; padding: 6px; border-radius: 4px; margin-bottom: 15px;">Save server IP</button>
+
+                <label>network</label>
+                <select style="width: 100%; padding: 4px; margin: 4px 0 10px 0; border: 1px solid #ccc;"><option>Manual input</option></select>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>8</span>
+        </div>
+    </div>
+
+    <!-- TRANG 11 (PAGE 11): CHỌN MẠNG RSSI & MÀN HÌNH -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <p><strong>Chọn mạng có RSSI tối ưu. RSSI là số âm: càng gần 0 thì tín hiệu càng mạnh.</strong></p>
+        <p style="font-size: 12px; color: #666;">(Choose the network with optimal RSSI. RSSI is negative: the nearer to 0, the stronger signal.)</p>
+
+        <div class="diagram-container">
+            <div style="max-width: 380px; border: 1px solid #ccc; background: #fff; margin: 0 auto; border-radius: 6px; padding: 10px; font-size: 12px; text-align: left;">
+                <div style="padding: 4px; background: #e6f7ff;">EzhanNet_test RSSI:-46 CH:1 WPA/WPA2 (Tối ưu nhất)</div>
+                <div style="padding: 4px;">EzhanNet_test RSSI:-49 CH:40 WPA/WPA2</div>
+                <div style="padding: 4px;">EzhanNetA RSSI:-63 CH:36 WPA/WPA2</div>
+                <div style="padding: 4px;">ChinaNet-Hzts RSSI:-75 CH:11 WPA2</div>
+            </div>
+        </div>
+
+        <p style="margin-top: 15px;">Sau khi lưu thành công, IP của robot và IP cục bộ của hộp gọi sẽ được hiển thị trên hộp gọi, như thể hiện trong hình bên dưới.</p>
+
+        <div class="diagram-container">
+            <div class="screen-data-box">
+                Name: callbox7<br>
+                WiFi: EzhanNet<br>
+                MQTT: [1--]<br>
+                IP: 192.168.70.44<br>
+                CLOUD: OK<br>
+                1: none<br>
+                2: none<br>
+                3: none
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>9</span>
+        </div>
+    </div>
+
+    <!-- TRANG 12 (PAGE 12): CẤP NGUỒN CÁP TYPE-C -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <h1 class="section-title">五、 Thao tác Bật nguồn và Quản lý Hộp gọi (Power-on Operation and Call Box Management)</h1>
+        <h2 class="subsection-title">5.1 Chuẩn bị cáp dữ liệu Type-C (Prepare Type-C data cable)</h2>
+        <p>Cắm cáp dữ liệu Type-C vào giao diện của hộp gọi. Sau khi bật nguồn, đèn báo nút của hộp gọi và màn hình sẽ bật sáng.</p>
+
+        <div class="diagram-container" style="padding: 30px;">
+            <div style="max-width: 320px; margin: 0 auto; border: 1px solid #ccc; padding: 20px; background: #fff; border-radius: 8px;">
+                <div style="width: 120px; height: 30px; border: 2px solid #0056b3; border-radius: 6px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; color: #0056b3;">
+                    [ Cáp Type-C ]
+                </div>
+                <div style="font-size: 13px; color: #333;">
+                    Cắm vào cổng sạc bên hông Hộp gọi
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>10</span>
+        </div>
+    </div>
+
+    <!-- TRANG 13 (PAGE 13): THÔNG TIN MÀN HÌNH & CÀI ĐẶT NÚT -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <h2 class="subsection-title">5.2 Giới thiệu Tổng quan Màn hình (Screen Information Overview)</h2>
+        <div class="diagram-container">
+            <div class="screen-data-box">
+                Name: callbox7<br>
+                WiFi: EzhanNet<br>
+                MQTT: [1--]<br>
+                IP: 192.168.70.44<br>
+                CLOUD: OK<br>
+                1: none<br>
+                2: none<br>
+                3: none
+            </div>
+            <p style="font-size: 12px; color: #555;">(Hiển thị Tên hộp gọi, Sóng Wi-Fi, Trạng thái kết nối, IP cục bộ, Trạng thái máy chủ và Trạng thái nút tác vụ)</p>
+        </div>
+
+        <h2 class="subsection-title">5.3 Cài đặt các nút tác vụ (Set Task Buttons)</h2>
+        <p>5.3.1 Sau khi chạy hệ thống điều phối, nhập URL <strong><code>http://127.0.0.1/device/callbox</code></strong> vào trình duyệt (điều chỉnh theo điều kiện thực tế) để truy cập giao diện như hình bên dưới:</p>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>11</span>
+        </div>
+    </div>
+
+    <!-- TRANG 14 (PAGE 14): ĐĂNG NHẬP HỆ THỐNG -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <h2 class="subsection-title">5.3.2 Nhập tài khoản và mật khẩu người dùng (Enter the user account and password)</h2>
+
+        <div class="diagram-container" style="padding: 40px 20px;">
+            <div style="max-width: 320px; border: 1px solid #ccc; background: #fff; margin: 0 auto; border-radius: 8px; padding: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 22px; font-weight: bold; color: #1890ff;">Ezhan</div>
+                    <div style="font-size: 12px; color: #888;">Hệ thống Điều phối Robot</div>
+                </div>
+                
+                <input type="text" value="admin" style="width: 100%; padding: 6px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px;" disabled>
+                <input type="password" value="******" style="width: 100%; padding: 6px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px;" disabled>
+                <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+                    <input type="text" value="4691" style="width: 60%; padding: 6px; border: 1px solid #ccc; border-radius: 4px;" disabled>
+                    <div style="width: 40%; background: #eee; display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: monospace;">4691</div>
+                </div>
+                <button style="width: 100%; background: #1890ff; color: #fff; border: none; padding: 8px; border-radius: 4px; font-weight: bold;">Đăng nhập (Log in)</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>12</span>
+        </div>
+    </div>
+
+    <!-- TRANG 15 (PAGE 15): LẤY IP ROBOT & VÀO CẤU HÌNH -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <p>5.3.3 Sau khi vào trang chủ, nhấp vào <strong>Trạng thái thiết bị (Device Status)</strong> để lấy và sao chép địa chỉ IP thiết bị của robot.</p>
+        <p>5.3.4 Nhấp vào <strong>Cấu hình Hộp gọi (Configure Call Box)</strong>.</p>
+
+        <div class="diagram-container">
+            <div style="max-width: 420px; border: 1px solid #ccc; background: #fff; margin: 0 auto; border-radius: 6px; padding: 15px; text-align: left; font-size: 12px;">
+                <div style="border-bottom: 1px solid #eee; padding-bottom: 6px; margin-bottom: 10px; font-weight: bold;">
+                    AMR003 <span style="color: #52c41a; font-weight: normal;">Normal</span>
+                </div>
+                <div>Device Alias: 三号机器人</div>
+                <div style="background: #fff1f0; border: 1px solid #ff4d4f; padding: 4px; margin: 4px 0;">
+                    <strong>Device IP:</strong> 192.168.0.71 (Sao chép địa chỉ IP này)
+                </div>
+                <div>Current Status: Offline</div>
+                <div>Current Position: Not Positioned</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>13</span>
+        </div>
+    </div>
+
+    <!-- TRANG 16 (PAGE 16): THÊM HỘP GỌI MỚI & THÔNG TIN -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <p>5.3.5 Sau khi vào giao diện cấu hình hộp gọi, nhấp vào <strong>Thêm Hộp gọi mới (New Call Box)</strong>.</p>
+        
+        <h2 class="subsection-title">5.3.6 Điền Thông tin Hộp gọi cho Cấu hình Đám mây (Fill in Call Box Information for Cloud Configuration)</h2>
+        <ul>
+            <li>Nhập tên của hộp gọi cần liên kết vào trường <strong>Call Box Name</strong>;</li>
+            <li>Nhập địa chỉ IP thiết bị robot thu được trong Mục 4.4 vào cột <strong>Device IP</strong>;</li>
+            <li>Điền địa chỉ IP tương ứng của hộp gọi vào mục <strong>ICCID/IP</strong>;</li>
+            <li>Chọn phòng ban <em>Yizhan Zhihui</em> (chọn theo tình hình thực tế);</li>
+            <li>Nhấp vào <strong>Lưu (Save)</strong> sau khi hoàn thành tất cả thông tin.</li>
+        </ul>
+
+        <div class="diagram-container">
+            <div style="border: 1px solid #ccc; background: #fff; padding: 10px; border-radius: 4px; font-size: 11px;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr style="background: #fafafa;">
+                        <th style="border: 1px solid #ddd; padding: 4px;">Call Box Name</th>
+                        <th style="border: 1px solid #ddd; padding: 4px;">Device IP</th>
+                        <th style="border: 1px solid #ddd; padding: 4px;">ICCID/IP</th>
+                        <th style="border: 1px solid #ddd; padding: 4px;">Department</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 4px;">callbox1</td>
+                        <td style="border: 1px solid #ddd; padding: 4px;">192.168.0.120</td>
+                        <td style="border: 1px solid #ddd; padding: 4px;">192.168.0.11</td>
+                        <td style="border: 1px solid #ddd; padding: 4px;">Ezhan</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>14</span>
+        </div>
+    </div>
+
+    <!-- TRANG 17 (PAGE 17): CẤU HÌNH NÚT BẤM -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <h2 class="subsection-title">5.3.7 Cấu hình Nút bấm (Button Configuration)</h2>
+        <p>Nhấp vào nút <strong>Thêm (Add)</strong>, điền tên của nút cần liên kết trên hộp gọi và tên tác vụ kích nâng đã cấu hình. Có thể thêm tối đa 3 nút.</p>
+        <p style="font-size: 12px; color: #666;">(Click the Add button, fill in the name of the button to be bound on the call box and the configured jacking task name. Up to 3 buttons can be added.)</p>
+
+        <div class="diagram-container">
+            <div style="max-width: 480px; border: 1px solid #ccc; background: #fff; margin: 0 auto; border-radius: 6px; padding: 15px; text-align: left; font-size: 11.5px;">
+                <h4 style="border-bottom: 1px solid #eee; padding-bottom: 6px; margin-bottom: 10px;">Thêm cấu hình Hộp gọi (Add Call Box Configuration)</h4>
+                
+                <div style="margin-bottom: 8px;">* Call Box Name: [ Tên hộp gọi trong hệ thống điều phối ]</div>
+                <div style="margin-bottom: 8px;">* Device IP: [ IP của xe AGV ]</div>
+                <div style="margin-bottom: 8px;">* ICCID/IP: [ IP của Hộp gọi ]</div>
+                <div style="margin-bottom: 8px;">* Department: [ Phòng ban ]</div>
+
+                <h4 style="margin-top: 15px; margin-bottom: 8px;">Button Configuration...</h4>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr style="background: #fafafa;">
+                        <th style="border: 1px solid #ddd; padding: 4px;">Button ID</th>
+                        <th style="border: 1px solid #ddd; padding: 4px;">Button Name</th>
+                        <th style="border: 1px solid #ddd; padding: 4px;">Bound Task</th>
+                        <th style="border: 1px solid #ddd; padding: 4px;">Bound Station</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 4px;">1</td>
+                        <td style="border: 1px solid #ddd; padding: 4px;">K1</td>
+                        <td style="border: 1px solid #ddd; padding: 4px;">Delivery Task</td>
+                        <td style="border: 1px solid #ddd; padding: 4px;">Point Name</td>
+                    </tr>
+                </table>
+                <div style="margin-top: 8px;"><button style="background: #1890ff; color: #fff; border: none; padding: 3px 8px; border-radius: 3px;">+ Add Button</button></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>15</span>
+        </div>
+    </div>
+
+    <!-- TRANG 18 (PAGE 18): CẤU HÌNH TRẠM LIÊN KẾT PHÁT LOA -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <h2 class="subsection-title">5.3.8 Giới thiệu và Cấu hình Trạm liên kết (Introduction and Configuration of Station Binding)</h2>
+        <p><strong>Chức năng (Function):</strong></p>
+        <p>Chức năng liên kết trạm cho phép thông báo bằng giọng nói khi robot đến trạm làm việc, cung cấp các lời nhắc bằng giọng nói khi robot đến nơi.</p>
+        <p style="font-size: 12px; color: #666;">(The station binding function enables voice announcement when the robot arrives at the task station, providing voice reminders upon the robot’s arrival.)</p>
+
+        <p style="margin-top: 15px;"><strong>Phương pháp cấu hình (Configuration Method):</strong></p>
+        <ul>
+            <li>Lấy và sao chép vị trí hiện tại của robot từ phần trạng thái thiết bị.</li>
+            <li>Nhấp vào <strong>Sửa (Edit)</strong> trên trang cấu hình hộp gọi.</li>
+            <li>Dán vị trí hiện tại đã sao chép vào trường liên kết trang web (site binding field / Trạm liên kết).</li>
+        </ul>
+
+        <div class="diagram-container">
+            <div style="background: #f6ffed; border: 1px solid #b7eb8f; padding: 12px; border-radius: 6px; text-align: left; font-size: 12px; color: #389e0d;">
+                ✔ <strong>Quy trình:</strong> Copy <em>Vị trí hiện tại</em> từ Device Details ➔ Dán vào <em>Trạm liên kết</em> của Hộp gọi ➔ Khi xe tới nơi, Hộp gọi tự động phát loa thông báo!
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>16</span>
+        </div>
+    </div>
+
+    <!-- TRANG 19 (PAGE 19): XỬ LÝ SỰ CỐ & DỊCH VỤ SAU BÁN HÀNG -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <h1 class="section-title">六、 Xử lý Sự cố (Troubleshooting)</h1>
+
+        <table class="spec-table">
+            <tr>
+                <th style="width: 25%;">Mô tả lỗi (Fault Description)</th>
+                <th style="width: 35%;">Hạng mục kiểm tra (Inspection Items)</th>
+                <th>Hành động khắc phục (Corrective Actions)</th>
+            </tr>
+            <tr>
+                <td rowspan="3"><strong>Không có phản hồi khi gọi (No response on call)</strong></td>
+                <td>Kiểm tra trạng thái cấp nguồn (Check power supply status)</td>
+                <td>Đảm bảo nguồn điện ổn định cho hộp gọi (Ensure stable power supply for call box)</td>
+            </tr>
+            <tr>
+                <td>Cấu hình tín hiệu có bình thường không? (Is signal configuration OK?)</td>
+                <td>Cấu hình lại hộp gọi theo các bước vận hành (Reconfigure call box according to operating steps)</td>
+            </tr>
+            <tr>
+                <td>Tín hiệu hộp gọi có được kết nối bình thường không (Is the call box signal connected normally)</td>
+                <td>Lắp thêm bộ định tuyến hoặc đặt hộp gọi trong môi trường có tín hiệu tốt. (Install an additional router or place the call box in an environment with good signal.)</td>
+            </tr>
+        </table>
+
+        <h1 class="section-title" style="margin-top: 25px;">七、 Dịch vụ Sau Bán hàng (After-sales Service)</h1>
+        <h2 class="subsection-title">7.1 Thời hạn Bảo hành (Warranty Term)</h2>
+        <p>Bảo hành có giới hạn cho hộp gọi: Bảo trì miễn phí cho các hỏng hóc do lỗi chất lượng và lỗi thiết kế trong thời hạn bảo hành.<br>
+        <strong>Thời gian bảo hành:</strong> 1 năm kể từ ngày bán (1 year from the date of sale).</p>
+
+        <h2 class="subsection-title">7.2 Phạm vi Bảo hành (Warranty Coverage)</h2>
+        <p>Các sản phẩm trong thời hạn bảo hành đáp ứng các điều khoản bảo hành sẽ được sửa chữa hoặc thay thế miễn phí:</p>
+        <ul>
+            <li>Trục trặc khi mở gói do hư hỏng trong quá trình vận chuyển (Malfunction upon unpacking caused by damage in transit)</li>
+            <li>Trục trặc do các bộ phận gốc bị hư hỏng (Malfunction caused by damaged original components)</li>
+            <li>Không thể hoạt động do các khiếm khuyết vốn có trong thiết kế (Inoperability resulting from inherent design defects)</li>
+        </ul>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>17</span>
+        </div>
+    </div>
+
+    <!-- TRANG 20 (PAGE 20): GIỚI HẠN TRÁCH NHIỆM -->
+    <div class="page">
+        <div class="header">
+            <span class="header-logo">Ezhan</span>
+            <span class="header-title">Call Box User Manual</span>
+        </div>
+
+        <h2 class="subsection-title">7.3 Giới hạn Trách nhiệm (Limitation of Liability)</h2>
+        <p>Xin lưu ý rằng chúng tôi sẽ không cung cấp dịch vụ hậu mãi hoặc bảo hành miễn phí trong các trường hợp sau trong quá trình vận hành sản phẩm:</p>
+        <ul>
+            <li>Hư hỏng sản phẩm do lắp đặt không đúng cách, không theo đúng hướng dẫn sử dụng; (Product damage caused by improper installation not in accordance with the user manual;)</li>
+            <li>Hư hỏng sản phẩm do vận hành trong điều kiện môi trường không thích hợp; (Product damage resulting from operation under inappropriate environmental conditions;)</li>
+            <li>Hư hỏng sản phẩm phát sinh do vận hành không đạt chuẩn, trái với các thông số kỹ thuật trong hướng dẫn sử dụng; (Product damage incurred due to non-standard operation against the specifications in the user manual;)</li>
+            <li>Tự ý tháo rời hoặc bảo trì sản phẩm mà không có sự chấp thuận bằng văn bản của công ty; (Unauthorized disassembly or maintenance of the product without the company’s written approval;)</li>
+            <li>Hư hỏng sản phẩm do các sự kiện bất khả kháng bao gồm thiên tai, hỏa hoạn và các yếu tố bên ngoài không thể cưỡng lại khác. (Product damage caused by force majeure events including natural disasters, fire and other irresistible external factors.)</li>
+        </ul>
+
+        <div class="footer">
+            <span>http://www.ezhanrobot.com</span>
+            <span>18</span>
+        </div>
+    </div>
+
+</body>
+</html>
