@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sổ Tay Kỹ Thuật & Xử Lý Sự Cố Robot AGV E300 & Callbox</title>
+  <style>
+    /* Sử dụng font hệ thống có sẵn trên mọi máy Windows để đảm bảo 100% không bao giờ bị lỗi font hay mất chữ */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      line-height: 1.5;
+      padding: 24px 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .document-wrapper {
+      max-width: 1040px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 36px 44px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      border: 1px solid #cbd5e1;
+    }
+
+    /* Header & Branding */
+    .doc-header {
+      border-bottom: 2px solid #cbd5e1;
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+    }
+
+    .badge-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-radius: 4px;
+    }
+
+    .badge-primary { background: #dbeafe; color: #1e40af; }
+    .badge-dark { background: #0f172a; color: #ffffff; }
+    .badge-warning { background: #fef3c7; color: #92400e; }
+
+    h1 {
+      font-size: 23px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      font-size: 13.5px;
+      color: #475569;
+      line-height: 1.55;
+    }
+
+    /* Table of Contents */
+    .toc-container {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin-bottom: 28px;
+    }
+
+    .toc-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .toc-notice {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e40af;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .toc-item {
+      font-size: 13.5px;
+      line-height: 1.45;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px dashed #e2e8f0;
+      padding-bottom: 4px;
+    }
+
+    .toc-item a {
+      color: #1e40af;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .toc-item span.num {
+      font-weight: 700;
+      color: #0f172a;
+      display: inline-block;
+      width: 26px;
+    }
+
+    .toc-page {
+      font-size: 12px;
+      font-weight: 700;
+      color: #475569;
+      white-space: nowrap;
+      margin-left: 10px;
+      background: #e2e8f0;
+      padding: 1px 7px;
+      border-radius: 4px;
+    }
+
+    /* Section Cards */
+    .situation-card {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      margin-bottom: 26px;
+      overflow: hidden;
+      page-break-inside: avoid;
+    }
+
+    .situation-header {
+      background: #f1f5f9;
+      padding: 12px 18px;
+      border-bottom: 1.5px solid #cbd5e1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .situation-title {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .situation-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+
+    .situation-body {
+      padding: 16px 18px;
+    }
+
+    /* Block types - Định nghĩa màu sắc rõ ràng và không phụ thuộc biến CSS ngoài */
+    .block {
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+    }
+
+    .block:last-child {
+      margin-bottom: 0;
+    }
+
+    .block-tag {
+      display: inline-block;
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+
+    /* Khối Đỏ - Hiện tượng */
+    .block-symptom {
+      background-color: #fff1f2;
+      border-left: 4px solid #e11d48;
+      border-top: 1px solid #fecdd3;
+      border-right: 1px solid #fecdd3;
+      border-bottom: 1px solid #fecdd3;
+    }
+    .block-symptom .block-tag {
+      background-color: #e11d48;
+      color: #ffffff;
+    }
+
+    /* Khối Vàng - Nguyên nhân */
+    .block-cause {
+      background-color: #fffbeb;
+      border-left: 4px solid #d97706;
+      border-top: 1px solid #fef3c7;
+      border-right: 1px solid #fef3c7;
+      border-bottom: 1px solid #fef3c7;
+    }
+    .block-cause .block-tag {
+      background-color: #d97706;
+      color: #ffffff;
+    }
+
+    /* Khối Xanh - Khắc phục */
+    .block-solution {
+      background-color: #f0fdf4;
+      border-left: 4px solid #16a34a;
+      border-top: 1px solid #bbf7d0;
+      border-right: 1px solid #bbf7d0;
+      border-bottom: 1px solid #bbf7d0;
+    }
+    .block-solution .block-tag {
+      background-color: #16a34a;
+      color: #ffffff;
+    }
+
+    /* Khối Xanh Dương - Thông tin */
+    .block-info {
+      background-color: #f0f9ff;
+      border-left: 4px solid #0284c7;
+      border-top: 1px solid #bae6fd;
+      border-right: 1px solid #bae6fd;
+      border-bottom: 1px solid #bae6fd;
+    }
+    .block-info .block-tag {
+      background-color: #0284c7;
+      color: #ffffff;
+    }
+
+    /* Ép buộc màu chữ luôn đậm và rõ ràng, không bao giờ bị màu trắng hay mờ */
+    p, li, span, td, th {
+      color: #0f172a !important;
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+
+    ul, ol {
+      margin-left: 20px;
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    p {
+      margin-bottom: 6px;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    strong {
+      color: #0f172a !important;
+      font-weight: 700;
+    }
+
+    code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      background: #e2e8f0;
+      color: #991b1b !important;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 12.5px;
+      font-weight: 700;
+      border: 1px solid #cbd5e1;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 13px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+    }
+
+    th {
+      background: #f1f5f9;
+      color: #0f172a !important;
+      font-weight: 700;
+      padding: 7px 10px;
+      text-align: left;
+      border: 1px solid #cbd5e1;
+    }
+
+    td {
+      padding: 7px 10px;
+      border: 1px solid #cbd5e1;
+      color: #0f172a !important;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #f8fafc;
+    }
+
+    /* Highlight note */
+    .note-box {
+      background: #f8fafc;
+      border: 1px solid #94a3b8;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 12.5px;
+      margin: 8px 0;
+      line-height: 1.45;
+    }
+
+    .diagram-box {
+      background: #0f172a;
+      color: #38bdf8 !important;
+      font-family: 'Consolas', monospace;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 12.5px;
+      margin: 8px 0;
+      white-space: pre-wrap;
+      line-height: 1.4;
+    }
+
+    /* Subsections */
+    h4.sub-step {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #0f172a !important;
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+
+    /* Footer */
+    .doc-footer {
+      border-top: 2px solid #cbd5e1;
+      padding-top: 16px;
+      margin-top: 24px;
+      text-align: center;
+      font-size: 12.5px;
+      color: #64748b !important;
+      page-break-inside: avoid;
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+        margin: 0;
+      }
+
+      .document-wrapper {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        max-width: 100%;
+      }
+
+      .situation-card {
+        page-break-inside: avoid;
+        page-break-before: always;
+        margin-bottom: 20px;
+        box-shadow: none;
+        border: 1.5px solid #94a3b8;
+      }
+
+      .toc-container {
+        page-break-inside: avoid;
+      }
+
+      @page {
+        size: A4;
+        margin: 14mm 12mm 14mm 12mm;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="document-wrapper">
+
+  <!-- Header -->
+  <header class="doc-header">
+    <div class="badge-bar">
+      <span class="badge badge-primary">Tài Liệu Kỹ Thuật Hiện Trường</span>
+      <span class="badge badge-dark">Ezhan RCS V2 & Robot AGV E300</span>
+      <span class="badge badge-warning">Chuẩn Hóa 2026</span>
+    </div>
+    <h1>Sổ Tay Kỹ Thuật & Xử Lý Sự Cố Thực Tế<br>Robot AGV E300 & Hộp Gọi Callbox</h1>
+    <div class="subtitle">
+      Cẩm nang chẩn đoán nguyên nhân cốt lõi và quy trình xử lý chuẩn hóa 12 tình huống sự cố thực tế thường gặp trong quá trình lắp đặt, vận hành hệ thống điều phối trung tâm Ezhan RCS, xe tự hành E300 Series và Hộp gọi không dây (Callbox).
+    </div>
+  </header>
+
+  <!-- Table of Contents -->
+  <section class="toc-container">
+    <div class="toc-title">MỤC LỤC TỔNG HỢP 12 TÌNH HUỐNG SỰ CỐ HIỆN TRƯỜNG</div>
+    <div class="toc-notice">
+      Tài liệu gồm đầy đủ 12 tình huống chi tiết. Anh cuộn xuống dưới từ <strong>Trang 2</strong> để xem toàn bộ nội dung từng tình huống!
+    </div>
+    <div class="toc-grid">
+      <div class="toc-item">
+        <span><span class="num">01.</span> <a href="#th1">Hộp gọi phát loa "Đã nhận lệnh" nhưng Robot hoàn toàn đứng im</a></span>
+        <span class="toc-page">Trang 2</span>
+      </div>
+      <div class="toc-item">
+        <span><span class="num">02.</span> <a href="#th2">Hộp gọi báo "Gửi nhiệm vụ ➔ Nhiệm vụ thất bại"</a></span>
+        <span class="toc-page">Trang 3</span>
+      </div>
+      <div class="toc-item">
+        <span><span class="num">03.</span> <a href="#th3">Vừa xong Task bấm lệnh mới xe khựng lại (đèn xanh dương)</a></span>
+        <span class="toc-page">Trang 4</span>
+      </div>
+      <div class="toc-item">
+        <span><span class="num">04.</span> <a href="#th4">Robot bị từ chối lệnh do Độ định vị thấp (Confidence &lt; 50%)</a></span>
+        <span class="toc-page">Trang 5</span>
+      </div>
+      <div class="toc-item">
+        <span><span class="num">05.</span> <a href="#th5">Router Wi-Fi tự đổi địa chỉ IP (DHCP) làm mất kết nối hệ thống</a></span>
+        <span class="toc-page">Trang 6</span>
+      </div>
+      <div class="toc-item">
+        <span><span class="num">06.</span> <a href="#th6">Chọn sai cấu hình loại xe (Dòng GT thay vì BZ) trong Hộp gọi</a></span>
+        <span class="toc-page">Trang 7</span>
+      </div>
+      <div class="toc-item">
+        <span><span class="num">07.</span> <a href="#th7">Khởi chạy Ezhan.jar V2 bị văng lỗi Druid SQL hoặc License</a></span>
+        <span class="toc-page">Trang 8</span>
+      </div>
+      <div class="toc-item">
+        <span><span class="num">08.</span> <a href="#th8">Cấu hình cơ chế Sạc tự động & Căn chỉnh lùi sạc chính xác</a></span>
+        <span class="toc-page">Trang 9</span>
+      </div>
+      <div class="toc-item">
+        <span><span class="num">09.</span> <a href="#th9">Xe né vật cản chui vào khe hẹp/góc kẹt không tự thoát ra được</a></span>
+        <span class="toc-page">Trang 10</span>
+      </div>
+      <div class="toc-item">
+        <span><span class="num">10.</span> <a href="#th10">Gặp vật cản xe bật đèn ĐỎ đứng im – Vật cản đi ra vẫn bị khóa ĐỎ</a></span>
+        <span class="toc-page">Trang 11</span>
+      </div>
+      <div class="toc-item">
+        <span><span class="num">11.</span> <a href="#th11">Quy tắc vận hành & Các trường hợp Di chuyển Tiến / Lùi</a></span>
+        <span class="toc-page">Trang 12</span>
+      </div>
+      <div class="toc-item">
+        <span><span class="num">12.</span> <a href="#th12">Quy trình & Xử lý sự cố Nhận diện Nâng / Hạ Kệ hàng (Lift Mode)</a></span>
+        <span class="toc-page">Trang 13</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Situation 1 -->
+  <article class="situation-card" id="th1">
+    <div class="situation-header">
+      <div class="situation-title">01. Hộp gọi báo "Đã nhận lệnh" nhưng Robot hoàn toàn đứng im</div>
+      <span class="situation-tag">Mức độ: Phổ biến</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-symptom">
+        <span class="block-tag">HIỆN TƯỢNG THỰC TẾ</span>
+        <ul>
+          <li>Nhấn nút K1, K2 hoặc K3 trên Hộp gọi cứng Callbox.</li>
+          <li>Hộp gọi phát loa thông báo rõ ràng: <em>"Đã nhận lệnh"</em>.</li>
+          <li>Tuy nhiên Robot không hề có bất kỳ phản ứng cơ học nào, màn hình cảm ứng của xe trơ ra không nhận được nhiệm vụ mới.</li>
+        </ul>
+      </div>
+      <div class="block block-cause">
+        <span class="block-tag">NGUYÊN NHÂN CỐT LÕI</span>
+        <ol>
+          <li><strong>Tiếng loa "Đã nhận lệnh" là của Hộp gọi ➔ Máy tính PC:</strong> Tín hiệu nút bấm mới chỉ truyền thành công từ Hộp gọi lên Server PC qua cổng WebSocket <code>8765</code>. Tiếng loa chứng minh Hộp gọi thông với Máy tính, <strong>chưa chứng minh lệnh đã được đẩy thành công tới Robot</strong>.</li>
+          <li><strong>Hộp gọi bị trả về cấu hình rỗng (<code>"none"</code>):</strong> Nếu IP hoặc mã ICCID của Hộp gọi bị đổi mà CSDL trên Server vẫn lưu thông tin cũ, Server sẽ phản hồi chuỗi rỗng: <code>{"1":"none", "2":"none", "3":"none"}</code> ➔ Nút bấm hoàn toàn không chứa lệnh điều khiển nào.</li>
+          <li><strong>Ô "Tác vụ liên kết" (Bind Task Name) điền sai từ khóa:</strong> Điền chữ <code>delivery</code> hoặc <code>Charge</code> khiến hệ thống tìm kiếm "Chuỗi tác vụ" (Task Chain) thay vì lệnh điều chuyển trạm điểm trực tiếp.</li>
+        </ol>
+      </div>
+      <div class="block block-solution">
+        <span class="block-tag">QUY TRÌNH KHẮC PHỤC 3 BƯỚC</span>
+        <ol>
+          <li><strong>Kiểm tra Cấu hình Hộp gọi trên Web (<code>http://127.0.0.1</code> hoặc IP Máy chủ):</strong>
+            <ul>
+              <li>Vào <strong>Quản lý thiết bị ➔ Cấu hình hộp gọi ➔ Bấm Sửa (Edit)</strong>.</li>
+              <li>Đảm bảo ô <strong><code>IP thiết bị</code></strong> đúng với địa chỉ IP thực tế hiện tại của Robot (xem trên góc màn hình xe).</li>
+              <li>Đảm bảo ô <strong><code>ICCID/IP</code></strong> khớp đúng với địa chỉ IP thực tế đang hiển thị trên màn hình OLED của Hộp gọi.</li>
+            </ul>
+          </li>
+          <li><strong>Sửa ô "Tác vụ liên kết" (Bind Task Name):</strong>
+            <ul>
+              <li><strong>Giải pháp chuẩn:</strong> Điền <strong>Tác vụ liên kết trùng tên với Trạm liên kết</strong> (Ví dụ: Nút 1: <code>Esa_1_ahuy</code> | Nút 3: <code>Esa_1_sac</code>).</li>
+              <li>Hoặc <strong>ĐỂ TRỐNG</strong> ô <em>Tác vụ liên kết</em> để hệ thống tự động kích hoạt lệnh điều chuyển điểm trực tiếp.</li>
+            </ul>
+          </li>
+          <li>Bấm <strong>Lưu (Xác nhận)</strong> ➔ Ra bấm lại nút cứng trên Hộp gọi để kiểm tra.</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <!-- Situation 2 -->
+  <article class="situation-card" id="th2">
+    <div class="situation-header">
+      <div class="situation-title">02. Hộp gọi báo "Gửi nhiệm vụ ➔ Nhiệm vụ thất bại"</div>
+      <span class="situation-tag">Mức độ: Phổ biến</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-symptom">
+        <span class="block-tag">HIỆN TƯỢNG THỰC TẾ</span>
+        <p>Bấm nút trên Hộp gọi, hệ thống phát loa thông báo: <em>"Gửi nhiệm vụ"</em>, nhưng chỉ 1-2 giây sau lập tức báo tiếp <em>"Nhiệm vụ thất bại"</em>.</p>
+      </div>
+      <div class="block block-cause">
+        <span class="block-tag">NGUYÊN NHÂN CỐT LÕI</span>
+        <ol>
+          <li><strong>Xe đang đỗ ngay tại trạm đích:</strong> Xe đang đỗ tại Trạm sạc <code>Esa_1_sac</code> mà lại bấm nút gọi xe về sạc ➔ Bộ điều hướng thấy tọa độ hiện tại trùng khít với tọa độ điểm đến nên hệ thống tự động báo hoàn thành hoặc từ chối nhiệm vụ.</li>
+          <li><strong>Tên trạm không tồn tại trên bản đồ Robot:</strong> Trong cấu hình Hộp gọi gán tên là <code>Esa_1_sac</code> nhưng trên bản đồ xe lại lưu tên có dấu tiếng Việt <code>Esa_1_Điểm sạc</code> ➔ Robot không tìm thấy trạm trên đồ thị SLAM.</li>
+          <li><strong>Robot chưa vào bản đồ (Chưa Enter Map):</strong> Trên màn hình Robot chưa bấm <strong>Enter Map</strong> hoặc xe đang ở chế độ Manual (Thao tác thủ công).</li>
+        </ol>
+      </div>
+      <div class="block block-solution">
+        <span class="block-tag">QUY TRÌNH KHẮC PHỤC</span>
+        <ol>
+          <li><strong>Kéo xe ra xa trạm đích từ 2 - 3 mét:</strong> Đảm bảo xe đứng tự do trên sàn trống trước khi bấm kích hoạt lệnh gọi.</li>
+          <li><strong>Đối chiếu chính xác tên trạm:</strong>
+            <ul>
+              <li>Mở Web ➔ Vào mục <strong>Trạng thái thiết bị ➔ Xem chi tiết xe AMR</strong>.</li>
+              <li>Xem dòng <strong><code>Vị trí hiện tại</code></strong> khi xe đỗ tại trạm đang hiển thị chuỗi ký tự gì. Sao chép chính xác 100% từng ký tự vào ô <em>Trạm liên kết</em> trong Cấu hình Hộp gọi.</li>
+            </ul>
+          </li>
+          <li><strong>Trên màn hình Robot:</strong> Mở ứng dụng Ezhan AMR ➔ Chọn đúng bản đồ đang dùng (ví dụ: <code>Esa_1</code>) ➔ Bấm <strong>Enter Map</strong> ➔ Chuyển trạng thái sang <strong>Delivery Mode</strong>.</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <!-- Situation 3 -->
+  <article class="situation-card" id="th3">
+    <div class="situation-header">
+      <div class="situation-title">03. Vừa kết thúc Task, bấm lệnh mới xe khựng lại (đèn xanh dương)</div>
+      <span class="situation-tag">Mức độ: Cấu hình phần mềm</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-symptom">
+        <span class="block-tag">HIỆN TƯỢNG THỰC TẾ</span>
+        <ul>
+          <li>Robot vừa hoàn thành lượt giao hàng đến nơi và kết thúc nhiệm vụ.</li>
+          <li>Xe đang đứng rảnh, bạn bấm nút điều phối <code>Charge Task</code> hoặc <code>Go to Standby</code>:
+            <ul>
+              <li><strong>Lần bấm 1:</strong> Xe nhận lệnh, vừa nhích bánh lăn được vài centimet thì dừng khựng lại, dải đèn LED vẫn sáng <strong>Màu xanh dương</strong>.</li>
+              <li>Bắt buộc phải bấm nút đỏ <strong><code>Cancel Task</code></strong>, sau đó bấm lại lệnh lần thứ 2 thì xe mới chịu di chuyển bình thường.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="block block-cause">
+        <span class="block-tag">NGUYÊN NHÂN CỐT LÕI</span>
+        <ul>
+          <li><strong>Bộ đếm thời gian dừng chờ tại trạm (Delivery Stay Duration):</strong> Mặc định trên phần mềm xe cài đặt thời gian dừng chờ bốc dỡ hàng là <strong><code>30s</code> hoặc <code>60s</code></strong>.</li>
+          <li>Khi xe vừa đến nơi, bộ đếm này kích hoạt chạy ngầm đếm ngược (đèn xanh dương duy trì). Khi có lệnh mới chen ngang, tiến trình tác vụ cũ chưa giải phóng phanh hoàn toàn nên xe bị ngắt khựng lại.</li>
+          <li>Khi bấm <code>Cancel Task</code>, hệ thống cưỡng chế xóa sạch bộ đếm của tác vụ cũ, trả xe về trạng thái <code>Idle</code> tuyệt đối nên lần bấm thứ 2 xe mới chạy ngay.</li>
+        </ul>
+      </div>
+      <div class="block block-solution">
+        <span class="block-tag">QUY TRÌNH KHẮC PHỤC TRIỆT ĐỂ (BẤM 1 LẦN LÀ CHẠY NGAY)</span>
+        <ol>
+          <li>Trên màn hình cảm ứng của Robot E300:
+            <ul>
+              <li>Vào <strong>System Settings (Cài đặt hệ thống)</strong> ➔ Chọn mục <strong>Basic Settings (Cài đặt cơ bản)</strong>.</li>
+            </ul>
+          </li>
+          <li>Tìm tham số: <strong><code>Delivery Stay Duration</code> (Thời gian lưu lại trạm)</strong>:
+            <ul>
+              <li>Chỉnh giá trị từ <code>30s</code> / <code>60s</code> giảm thẳng về <strong><code>0s</code></strong> (hoặc <code>3s</code>).</li>
+            </ul>
+          </li>
+          <li>Bấm <strong><code>Save settings</code> (Lưu cài đặt)</strong>.</li>
+          <li><strong>Kết quả:</strong> Vừa đến nơi bốc dỡ hàng xong, xe giải phóng phanh tức thì. Khi bấm lệnh mới 1 lần là xe quay đầu chạy ngay lập tức!</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <!-- Situation 4 -->
+  <article class="situation-card" id="th4">
+    <div class="situation-header">
+      <div class="situation-title">04. Robot bị từ chối lệnh do Độ định vị thấp (Position Confidence &lt; 50%)</div>
+      <span class="situation-tag">Mức độ: An toàn định vị</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-symptom">
+        <span class="block-tag">HIỆN TƯỢNG THỰC TẾ</span>
+        <ul>
+          <li>Trên giao diện Web phần mềm, mục Trạng thái thiết bị hiển thị dòng: <strong><code>Position Confidence: 45.4%</code></strong> (hoặc bất kỳ giá trị nào dưới 50%).</li>
+          <li>Xe nhận lệnh nhưng không chịu chạy hoặc báo lỗi mất định vị (<code>Navigation Lost</code>).</li>
+        </ul>
+      </div>
+      <div class="block block-cause">
+        <span class="block-tag">CƠ CHẾ AN TOÀN SLAM</span>
+        <ul>
+          <li>Trong thuật toán định vị Laser SLAM, khi độ tin cậy định vị <code>Position Confidence &lt; 50%</code>, Robot tự động đánh giá là <em>xe đang bị mất phương hướng hoặc lạc tọa độ</em>.</li>
+          <li>Để chống đâm va vào công nhân, máy móc hoặc góc tường, xe sẽ <strong>tự động ngắt động cơ truyền động và từ chối mọi lệnh di chuyển tự động</strong>.</li>
+        </ul>
+      </div>
+      <div class="block block-solution">
+        <span class="block-tag">QUY TRÌNH TÁI ĐỊNH VỊ HIỆN TRƯỜNG</span>
+        <ol>
+          <li>Trên màn hình cảm ứng của Robot: Bấm nút <strong><code>Định vị lại</code> (Relocalization / 重定位)</strong>.</li>
+          <li>Dùng cần gạt ảo (Joystick) trên màn hình hoặc dùng tay cầm điều khiển lái xe di chuyển một đoạn ngắn (2 - 3 mét) lại gần các góc tường hoặc vật thể cố định để mắt Lidar quét lại đặc trưng môi trường.</li>
+          <li>Khi dòng <code>Position Confidence</code> trên màn hình xe đổi sang màu xanh lục và đạt <strong>&gt; 70%</strong> (tốt nhất là &gt; 80%), xe sẽ lập tức sẵn sàng nhận lệnh chạy tự động bình thường.</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <!-- Situation 5 -->
+  <article class="situation-card" id="th5">
+    <div class="situation-header">
+      <div class="situation-title">05. Router Wi-Fi tự đổi địa chỉ IP (DHCP) làm mất kết nối hệ thống</div>
+      <span class="situation-tag">Mức độ: Hạ tầng Mạng</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-symptom">
+        <span class="block-tag">HIỆN TƯỢNG THỰC TẾ</span>
+        <p>Hôm trước toàn bộ hệ thống chạy bình thường, hôm sau bật máy lên thì xe báo Offline hoặc Hộp gọi không điều khiển được xe nữa.</p>
+      </div>
+      <div class="block block-cause">
+        <span class="block-tag">NGUYÊN NHÂN CỐT LÕI</span>
+        <ul>
+          <li>Router Wi-Fi đang ở chế độ cấp IP động (DHCP). Sau mỗi lần khởi động lại Router hoặc khi hết hạn thời gian giữ địa chỉ (Lease time), Router tự cấp phát một dải IP hoàn toàn mới (xe nhảy IP, hộp gọi nhảy IP, Server nhảy IP).</li>
+          <li>Trong CSDL Ezhan, Server vẫn cố gắng gửi lệnh vào địa chỉ IP cũ đã ngắt kết nối nên xe hoàn toàn không nhận được.</li>
+        </ul>
+      </div>
+      <div class="block block-solution">
+        <span class="block-tag">QUY TRÌNH KHẮC PHỤC TRIỆT ĐỂ: KHÓA IP TĨNH (STATIC IP)</span>
+        <div class="note-box">
+          <strong>LƯU Ý KHI TRIỂN KHAI TẠI NHÀ MÁY:</strong> Các địa chỉ IP bên dưới là <em>ví dụ tham khảo</em> trên mô hình thử nghiệm. Khi mang bộ phát Wi-Fi riêng đến nhà máy của khách hàng, kỹ sư cần cấu hình IP tĩnh theo dải mạng thực tế của router đó (ví dụ: lớp mạng <code>192.168.1.x</code>, <code>192.168.0.x</code> hoặc <code>192.168.68.x</code>) và đảm bảo các thiết bị cùng nằm trong một subnet.
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 25%;">Thiết bị</th>
+              <th style="width: 30%;">IP Ví dụ Khuyến nghị</th>
+              <th style="width: 45%;">Cách thiết lập cụ thể</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Máy tính Server PC</strong></td>
+              <td><code>192.168.1.100</code> <em>(hoặc <code>.68.100</code>)</em></td>
+              <td>Vào <em>Network & Internet ➔ Change adapter options</em> trên Windows ➔ Đặt Static IPv4 cố định.</td>
+            </tr>
+            <tr>
+              <td><strong>Robot AMR E300</strong></td>
+              <td><code>192.168.1.61</code> <em>(hoặc <code>.68.103</code>)</em></td>
+              <td>Vào Cài đặt Wi-Fi trên màn hình Robot ➔ Chuyển từ DHCP sang Static IP cố định.</td>
+            </tr>
+            <tr>
+              <td><strong>Hộp gọi Callbox</strong></td>
+              <td><code>192.168.1.35</code> <em>(hoặc <code>.68.129</code>)</em></td>
+              <td>Dùng điện thoại/laptop kết nối Wi-Fi <code>Callbox_xxxx</code> ➔ Vào <code>192.168.4.1</code> gán IP tĩnh.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><em>(Hoặc truy cập trang quản trị Router Wi-Fi, vào mục <strong>DHCP Address Reservation</strong> để khóa cứng địa chỉ MAC tương ứng với từng thiết bị).</em></p>
+      </div>
+    </div>
+  </article>
+
+  <!-- Situation 6 -->
+  <article class="situation-card" id="th6">
+    <div class="situation-header">
+      <div class="situation-title">06. Phân biệt dòng xe GT và BZ trong Cấu hình Hộp gọi</div>
+      <span class="situation-tag">Mức độ: Cấu hình thiết bị</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-symptom">
+        <span class="block-tag">HIỆN TƯỢNG & THẮC MẮC</span>
+        <p>Trong giao diện Cấu hình hộp gọi trên Web, tại cột <strong><code>Loại thiết bị</code> (Device Type)</strong> có danh sách lựa chọn: <code>GT</code>, <code>BZ</code> hoặc để trống. Việc chọn sai dẫn đến xe không thể thực hiện nhiệm vụ.</p>
+      </div>
+      <div class="block block-cause">
+        <span class="block-tag">NGUYÊN TẮC KỸ THUẬT MÃ NGUỒN EZHAN</span>
+        <ul>
+          <li><strong><code>BZ</code> (Standard Delivery AMR):</strong> Định danh dành riêng cho <strong>Dòng xe AGV E300 tiêu chuẩn</strong> (chuyên chở hàng mặt sàn, thùng hàng, khay linh kiện, chạy theo tọa độ điểm).</li>
+          <li><strong><code>GT</code> (Jacking / Forklift AMR):</strong> Định danh dành cho <strong>Dòng xe AGV kích nâng / nâng pallet</strong> (xe có cơ cấu nâng hạ thủy lực chui gầm kệ hàng).</li>
+          <li><strong>Cảnh báo:</strong> Nếu xe thực tế là E300 nhưng lại cấu hình chọn <code>GT</code>, hệ thống điều phối sẽ tự kích hoạt hàm gọi nâng hạ kệ hàng (<code>jackTask</code>) thay vì hàm chạy giao hàng thông thường (<code>deliveryTask</code>), dẫn đến xe bị đứng im không chạy được.</li>
+        </ul>
+      </div>
+      <div class="block block-solution">
+        <span class="block-tag">CHUẨN HÓA CẤU HÌNH</span>
+        <p>Trong bảng nút bấm của Cấu hình hộp gọi: Đối với xe AGV E300 tiêu chuẩn, luôn chọn cột <strong><code>Loại thiết bị = BZ</code></strong> (hoặc chọn dòng đầu tiên / để trống).</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- Situation 7 -->
+  <article class="situation-card" id="th7">
+    <div class="situation-header">
+      <div class="situation-title">07. Khởi chạy Ezhan.jar V2 bị văng lỗi Cơ sở dữ liệu hoặc License</div>
+      <span class="situation-tag">Mức độ: Máy chủ Server</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-symptom">
+        <span class="block-tag">HIỆN TƯỢNG THỰC TẾ</span>
+        <ul>
+          <li>Khi bấm chạy <code>start.bat</code> của phiên bản mới V2, cửa sổ lệnh Java báo lỗi rồi tự tắt:
+            <ul>
+              <li><code>alibaba.druid.filter.FilterChainImpl.preparedStatement_execute...</code></li>
+              <li>Hoặc thông báo: <code>Ezhan.jar process exited unexpectedly</code>.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="block block-cause">
+        <span class="block-tag">HAI NGUYÊN NHÂN CHÍNH</span>
+        <ol>
+          <li><strong>Lỗi thiếu cột trong CSDL (Database Schema Mismatch):</strong> Bản <code>Ezhan.jar</code> V2 cần truy vấn các trường dữ liệu mới (<code>device_type</code>, <code>auto_assign</code>, <code>call_location</code>, <code>amr_charging_pile</code>). Nếu CSDL MariaDB chưa được cập nhật các cột này, ứng dụng sẽ bị crash ngay khi khởi động.</li>
+          <li><strong>Lỗi License khóa sai phần cứng máy:</strong> Sử dụng file <code>license.key</code> mẫu của hãng (được mã hóa theo địa chỉ MAC của máy tính kỹ sư bên Trung Quốc) thay vì mã License được kích hoạt theo phần cứng máy tính triển khai của bạn.</li>
+        </ol>
+      </div>
+      <div class="block block-solution">
+        <span class="block-tag">QUY TRÌNH KHẮC PHỤC</span>
+        <ol>
+          <li><strong>Nâng cấp cấu trúc CSDL MariaDB:</strong> Chạy file SQL <code>update_schema.sql</code> vào database <code>Ezhan</code> trong MariaDB bằng lệnh:
+            <div class="diagram-box">mysql -u root -p ezhan &lt; update_schema.sql</div>
+          </li>
+          <li><strong>Kiểm tra file bản quyền (License Key):</strong> Đảm bảo file <code>config/license.key</code> chứa đúng chuỗi mã bản quyền được cấp cho phần cứng máy tính của bạn (chuỗi bắt đầu bằng <code>FuQhRezj...</code>).</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <!-- Situation 8 -->
+  <article class="situation-card" id="th8">
+    <div class="situation-header">
+      <div class="situation-title">08. Cấu hình cơ chế Sạc tự động & Căn chỉnh lùi sạc chuẩn xác</div>
+      <span class="situation-tag">Mức độ: Vận hành tự động</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-symptom">
+        <span class="block-tag">YÊU CẦU KỸ THUẬT HIỆN TRƯỜNG</span>
+        <p>Robot AGV phải tự động biết đường quay đầu lùi vào trạm sạc, cắm khớp chính xác 2 chấu đồng vào trạm sạc từng milimet mà không bị đâm lệch hay trượt tiếp điểm.</p>
+      </div>
+      <div class="block block-solution">
+        <span class="block-tag">QUY TRÌNH 3 BƯỚC THIẾT LẬP CHUẨN (THEO MANUAL E300)</span>
+        
+        <h4 class="sub-step">Bước 1: Khai báo Điểm sạc chuẩn trên màn hình Robot (Trang 44 Manual)</h4>
+        <ol>
+          <li>Bấm nút dừng khẩn cấp E-Stop, dùng tay đẩy xe lùi nhẹ nhàng sao cho 2 bản cực đồng ở đuôi xe áp sát chấu sạc của trạm sạc (khoảng cách khe hở từ <strong><code>2 - 5 cm</code></strong>).</li>
+          <li>Nhả nút E-Stop ➔ Mở menu <strong>Location ➔ Special Locations ➔ Bấm nút <code>Update</code> tại dòng <code>Charge</code></strong>.</li>
+          <li>Ra màn hình chính bấm <strong><code>Return to charge</code></strong> để xe tự động lùi cắm chặt vào trạm sạc.</li>
+          <li>Khi màn hình hiện biểu tượng <strong>Tia sét (Đang sạc pin)</strong> ➔ Vào lại menu <code>Special Locations</code> bấm <strong><code>Update</code></strong> lần thứ 2 để chốt tọa độ tiếp xúc tuyệt đối.</li>
+        </ol>
+
+        <h4 class="sub-step">Bước 2: Thiết lập Điểm Tiền trạm sạc (Pre-charging Point)</h4>
+        <ul>
+          <li>Trên bản đồ SLAM, tạo 1 điểm dừng phía trước trạm sạc, cách chấu sạc khoảng <strong><code>0.8m - 1.0m</code></strong> với mũi tên hướng thẳng vào trạm sạc.</li>
+          <li><strong>Tác dụng:</strong> Robot chạy thẳng đến điểm tiền trạm ➔ Tự động xoay 180° quay đuôi lại ➔ Lùi thẳng tắp một đoạn ngắn vào chấu sạc một cách an toàn và chuẩn xác.</li>
+        </ul>
+
+        <h4 class="sub-step">Bước 3: Kích hoạt Ngưỡng sạc tự động (Trang 70 Manual)</h4>
+        <ul>
+          <li>Vào <strong>System Settings ➔ Basic Settings</strong>:
+            <ul>
+              <li>Gạt bật <strong><code>Autonomous Charging = ON</code></strong> (Bật tự động sạc khi rảnh).</li>
+              <li>Cài đặt <strong><code>Automatic Charging Threshold = 20%</code></strong> (Tự động về trạm sạc khi pin tụt dưới 20%).</li>
+              <li>Bấm <strong><code>Save settings</code></strong> để lưu lại.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- Situation 9 -->
+  <article class="situation-card" id="th9">
+    <div class="situation-header">
+      <div class="situation-title">09. Xe né vật cản chui vào khe hẹp/góc kẹt không tự thoát ra được</div>
+      <span class="situation-tag">Mức độ: Điều hướng SLAM</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-symptom">
+        <span class="block-tag">HIỆN TƯỢNG THỰC TẾ</span>
+        <ul>
+          <li>Xe đang trên hành trình thì gặp vật cản (người đi bộ hoặc kiện hàng chắn đường).</li>
+          <li>Tính năng né vật cản (Obstacle Detour) kích hoạt, xe tự động đánh lái đi vòng để tìm lối thoát.</li>
+          <li>Tuy nhiên, xe lại rẽ chui vào <strong>khe hẹp giữa hai máy sản xuất, gầm bàn hoặc ngõ cụt</strong>, sau đó xe dừng lại báo lỗi hoặc loay hoay không đủ bán kính quay đầu để đi tiếp.</li>
+        </ul>
+      </div>
+      <div class="block block-cause">
+        <span class="block-tag">NGUYÊN NHÂN KỸ THUẬT (TRANG 14 & 27 MANUAL)</span>
+        <ol>
+          <li><strong>Bản đồ chưa vẽ Tường ảo (Virtual Wall):</strong> Các khoảng trống giữa các chân máy, góc chết vẫn được thuật toán tính là "vùng có thể đi được" (vùng màu trắng). Khi đường chính bị chặn, thuật toán định tuyến tự do (Free Path Navigation) sẽ cố tìm mọi khoảng trống để đi xuyên qua.</li>
+          <li><strong>Điểm mù cảm biến khi xoay trong không gian hẹp:</strong> Cảm biến Lidar chính và Camera 3D nằm ở phía trước đầu xe (góc quét 240°). Khi xe chui vào khe hẹp và cố gắng xoay đuôi để quay đầu, hai bên hông và đuôi xe là điểm mù quang học. Xe phát hiện vật cản quá gần nên kích hoạt dừng khẩn cấp để tránh va quẹt.</li>
+          <li><strong>Chế độ dẫn hướng đang để Free Path Mode:</strong> Cho phép xe tự do đổi hướng toàn bản đồ thay vì bám cố định theo luồng giao thông chỉ định.</li>
+        </ol>
+      </div>
+      <div class="block block-solution">
+        <span class="block-tag">3 GIẢI PHÁP XỬ LÝ TRIỆT ĐỂ</span>
+        <ol>
+          <li><strong>Vẽ Tường ảo (<code>Virtual Wall</code>) bịt kín các ngách hẹp (Khuyên dùng số 1):</strong> Dùng công cụ <em>Draw Area ➔ Virtual Wall</em> trên phần mềm Map để vẽ các đường ranh giới đỏ ngăn xe không bao giờ lách vào khe hở máy móc.</li>
+          <li><strong>Chuyển sang <code>FIXED PATH MODE</code> (Chế độ đường cố định):</strong> Vào <em>System Settings ➔ Basic Settings ➔ Navigation Mode Selection</em> chọn <code>FIXED PATH MODE</code>. Khi gặp vật cản, xe chỉ dừng chờ hoặc né nhẹ trong phạm vi làn đường, không bao giờ tự ý rẽ lung tung ra khỏi tuyến đường.</li>
+          <li><strong>Cứu hộ nhanh khi đang bị kẹt:</strong> Nhấn nút E-Stop trên hông xe ➔ Kéo xe thẳng ra trục đường chính rộng rãi ➔ Xoay nhả E-Stop ➔ Bấm nút xanh <strong><code>Resume Task</code></strong> trên màn hình xe (hoặc trên Web) để xe tiếp tục hoàn thành nốt hành trình.</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <!-- Situation 10 -->
+  <article class="situation-card" id="th10">
+    <div class="situation-header">
+      <div class="situation-title">10. Gặp vật cản xe bật đèn ĐỎ đứng im – Vật cản đi ra vẫn bị khóa ĐỎ</div>
+      <span class="situation-tag">Mức độ: An toàn Phần cứng</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-symptom">
+        <span class="block-tag">HIỆN TƯỢNG THỰC TẾ</span>
+        <ul>
+          <li>Xe đang chạy thì gặp vật cản bất ngờ (người lao ra quá sát hoặc một Robot khác đang đỗ chắn đúng trạm đích).</li>
+          <li>Dải đèn LED của xe bật sáng <strong>MÀU ĐỎ</strong> và xe đứng yên hoàn toàn.</li>
+          <li>Khi người hoặc Robot kia đã di chuyển đi nơi khác, con xe này <strong>vẫn tiếp tục đứng im và dải đèn LED vẫn giữ nguyên MÀU ĐỎ</strong>, không tự động chạy tiếp.</li>
+        </ul>
+      </div>
+      <div class="block block-cause">
+        <span class="block-tag">CƠ CHẾ AN TOÀN CÔNG NGHIỆP (TRANG 10, 22 & 79 MANUAL)</span>
+        <ol>
+          <li><strong>Cảm biến va chạm cơ khí Bumper bị kích hoạt (Hardware Collision Latch):</strong>
+            <ul>
+              <li>Nếu vật cản xuất hiện quá sát (&lt; 0.2m) làm chạm nhẹ vào <strong>Thanh cản va chạm (Safety Bumper)</strong> ở chân xe ➔ Hệ thống kích hoạt mạch ngắt phần cứng Cấp độ 2 (Hardware Interlock).</li>
+              <li><strong>Tiêu chuẩn an toàn máy móc công nghiệp:</strong> Khi Bumper đã kích hoạt, hệ thống <strong>NGHIÊM CẤM tự động chạy tiếp</strong> mà bắt buộc phải có thao tác xác nhận bằng tay của con người (Manual Reset) để đảm bảo không còn người hay vật thể bị kẹt dưới gầm xe.</li>
+            </ul>
+          </li>
+          <li><strong>Lỗi Quá thời gian chờ lộ trình (Route Controller Timeout / Soft E-stop):</strong>
+            <ul>
+              <li>Nếu đường đi bị chặn quá lâu (vượt ngưỡng timeout, ví dụ quá 30 giây) ➔ Bộ lập lộ trình hủy quỹ đạo (Abort Trajectory) và rơi vào trạng thái <code>Soft E-Stop Triggered</code> để chờ lệnh tái khởi động.</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+      <div class="block block-solution">
+        <span class="block-tag">2 CÁCH XỬ LÝ & CÀI ĐẶT TỰ ĐỘNG PHỤC HỒI</span>
+        <ol>
+          <li><strong>Thao tác Reset mở khóa khi xe đã dính đèn ĐỎ:</strong> Nhấn nút <strong>E-Stop trên trụ màn hình</strong> xuống ➔ Xoay theo chiều kim đồng hồ để nút <strong>bật nhả lên (Reset)</strong> ➔ Dải đèn LED sẽ lập tức chuyển từ <strong>Đỏ ➔ Xanh lá (Normal)</strong> và xe tự động chạy tiếp (hoặc bấm <code>Resume Task</code> trên Web).</li>
+          <li><strong>Cài đặt khoảng cách cảnh báo từ xa để KHÔNG BAO GIỜ BỊ DÍNH ĐÈN ĐỎ:</strong>
+            <ul>
+              <li>Vào <em>System Settings ➔ Basic Settings</em>, chỉnh thông số <strong><code>Recognition Distance</code> (Khoảng cách nhận diện vật cản)</strong> tăng lên <strong><code>1.2m - 1.5m</code></strong> (thay vì 0.3m).</li>
+              <li><strong>Kết quả:</strong> Khi gặp vật cản từ xa 1.5m, xe chỉ giảm tốc dừng tạm thời (đèn Xanh dương hoặc Vàng). Khi người đi ra khỏi vùng an toàn, xe tự động tiếp tục lăn bánh ngay mà không bao giờ bị khóa cứng đèn đỏ!</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <!-- Situation 11 -->
+  <article class="situation-card" id="th11">
+    <div class="situation-header">
+      <div class="situation-title">11. Quy tắc vận hành & Các trường hợp Di chuyển Tiến / Lùi của E300</div>
+      <span class="situation-tag">Mức độ: Động lực học Robot</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-info">
+        <span class="block-tag">NGUYÊN LÝ DẪN ĐỘNG VI SAI & BÁN KÍNH QUAY BẰNG 0</span>
+        <ul>
+          <li>E300 sử dụng cơ cấu truyền động <strong>2 bánh vi sai độc lập (Double Wheel Differential Drive)</strong>.</li>
+          <li><strong>Bán kính quay xe = 0 (Zero Turning Radius):</strong> Thân xe chỉ <strong><code>840mm (84cm)</code></strong>, cho phép xe tự xoay tròn 360° ngay tại tâm mà không cần không gian tiến lùi như ô tô.</li>
+        </ul>
+      </div>
+      <div class="block block-cause">
+        <span class="block-tag">SO SÁNH CHẾ ĐỘ TIẾN VS LÙI THỰC TẾ</span>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 20%;">Chế độ</th>
+              <th style="width: 20%;">Vận tốc</th>
+              <th style="width: 30%;">Cảm biến an toàn</th>
+              <th style="width: 30%;">Phạm vi áp dụng</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Tiến (Forward)</strong></td>
+              <td><code>0.1 ~ 1.5 m/s</code><br><em>(Mặc định: 0.4 m/s)</em></td>
+              <td><strong>Đầy đủ 3 lớp:</strong> Laser Lidar 240° (25m) + Camera 3D (180mm) + Bumper va chạm.</td>
+              <td><strong>Chế độ chính (95% thời gian):</strong> Toàn bộ quá trình giao hàng, tuần tra giữa các xưởng.</td>
+            </tr>
+            <tr>
+              <td><strong>Lùi (Backward)</strong></td>
+              <td><code>&lt; 0.1 m/s</code><br><em>(Tốc độ rùa bò)</em></td>
+              <td><strong>Điểm mù quang học:</strong> Đuôi xe không có Lidar quét 360°, chỉ có cảm biến tiếp điểm ngắn.</td>
+              <td><strong>Chỉ dùng trong 2 trường hợp:</strong><br>1. Lùi cắm chấu sạc tự động.<br>2. Lùi rút khỏi gầm kệ hàng sau khi hạ.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="block block-solution">
+        <span class="block-tag">KHUYẾN NGHỊ AN TOÀN QUỐC TẾ (TIÊU CHUẨN ISO 3691-4)</span>
+        <ul>
+          <li><strong>Tuyệt đối không ép xe chạy lùi quãng đường dài:</strong> Do đuôi xe là điểm mù quang học, việc cho xe chạy lùi tốc độ cao trên lối đi chung tiềm ẩn nguy cơ va quẹt vào công nhân hoặc hàng hóa phía sau.</li>
+          <li><strong>Cơ chế tự động đổi hướng chuẩn:</strong> Khi cần đổi hướng di chuyển, xe sẽ <strong>tự động xoay đầu 180° tại chỗ rồi mới chạy tiến</strong>, đảm bảo "mắt thần" Lidar luôn quét bao quát phía trước hướng chuyển động.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- Situation 12 -->
+  <article class="situation-card" id="th12">
+    <div class="situation-header">
+      <div class="situation-title">12. Quy trình & Xử lý sự cố Nhận diện Nâng / Hạ Kệ hàng (Lift Mode)</div>
+      <span class="situation-tag">Mức độ: Ứng dụng Nâng kệ</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-info">
+        <span class="block-tag">THÔNG SỐ MÂM KÍCH NÂNG (TRANG 9, 48 & 65-67 MANUAL)</span>
+        <ul>
+          <li><strong>Tải trọng nâng tối đa:</strong> <strong><code>300 kg</code></strong> | <strong>Hành trình kích nâng:</strong> <strong><code>55 mm (± 2mm)</code></strong>.</li>
+          <li><strong>Cơ chế:</strong> Mâm nâng phẳng bằng điện/thủy lực nhấc bổng toàn bộ 4 chân giá kệ lên khỏi sàn nhà để vận chuyển.</li>
+        </ul>
+      </div>
+      <div class="block block-cause">
+        <span class="block-tag">CHU TRÌNH 4 BƯỚC NHẬN DIỆN & NÂNG HẠ KỆ HÀNG TỰ ĐỘNG</span>
+        <div class="diagram-box">[1. Tiếp cận trạm kệ] ──> [2. Quét Laser 4 chân kệ] ──> [3. Chui gầm & Kích nâng 55mm] ──> [4. Vận chuyển & Hạ kệ]</div>
+        <ol>
+          <li><strong>Bước 1: Tiếp cận trạm kệ:</strong> Xe di chuyển đến điểm tiền trạm (Pre-jacking point) trước mặt kệ hàng.</li>
+          <li><strong>Bước 2: Quét Laser nhận diện chân kệ:</strong> Mắt Lidar quét nhận diện đám mây điểm 3D của 4 chân trụ kệ sắt, tự căn chỉnh góc Yaw thẳng hàng với trục giữa của kệ.</li>
+          <li><strong>Bước 3: Chui gầm & Kích nâng (<code>Identify & Lift</code>):</strong> Xe chui vào gầm kệ (độ sâu mặc định <code>-0.87m</code>) ➔ Mâm nâng đẩy lên cao <code>55mm</code>, nhấc bổng 4 chân kệ khỏi mặt đất.</li>
+          <li><strong>Bước 4: Vận chuyển & Hạ kệ (<code>Identify & Lower</code>):</strong> Xe cõng kệ đến điểm xả hàng ➔ Mâm hạ xuống sàn ➔ Xe lùi hoặc tiến rút ra khỏi gầm an toàn.</li>
+        </ol>
+      </div>
+
+      <div class="block block-solution">
+        <span class="block-tag">HƯỚNG DẪN CÀI ĐẶT THÔNG SỐ KỆ HÀNG (MỤC SHELF SETTINGS)</span>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 32%;">Thông số trên màn hình</th>
+              <th style="width: 48%;">Ý nghĩa & Đơn vị</th>
+              <th style="width: 20%;">Giá trị mẫu chuẩn</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong><code>Shelf Width</code> / <code>Shelf Length</code></strong></td>
+              <td>Chiều rộng / Chiều dài bao ngoài của giá kệ (m).</td>
+              <td><code>0.90 m</code></td>
+            </tr>
+            <tr>
+              <td><strong><code>Leg Center Distance (W/L)</code></strong></td>
+              <td>Khoảng cách tâm giữa chân trái - phải và trước - sau (m).</td>
+              <td><code>0.82 m</code></td>
+            </tr>
+            <tr>
+              <td><strong><code>Insertion Depth</code></strong></td>
+              <td>Chiều sâu xe chui vào tâm kệ (mặc định âm).</td>
+              <td><code>-0.87 m</code></td>
+            </tr>
+            <tr>
+              <td><strong><code>Leg Expansion</code> / <code>Actual Leg Width</code></strong></td>
+              <td>Khoảng hở dung sai chui gầm (0.20m) / Độ dày chân kệ (0.04m).</td>
+              <td><code>0.20m / 0.04m</code></td>
+            </tr>
+            <tr>
+              <td><strong><code>Overall Offset</code></strong></td>
+              <td>Tinh chỉnh vị trí mâm nâng khớp tâm trọng lực kệ.</td>
+              <td><code>-0.10 m</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4 class="sub-step">Xử lý 2 sự cố thường gặp:</h4>
+        <ol>
+          <li><strong>Lỗi: Không nhận diện được chân kệ (<code>Shelf Recognition Failed</code>):</strong>
+            <ul>
+              <li><em>Khắc phục:</em> Đo lại chính xác khoảng cách giữa tâm 4 chân sắt giá kệ và cập nhật lại vào bảng <em>Shelf Settings</em>. Đảm bảo khoảng sáng gầm từ sàn lên đáy kệ cao tối thiểu <strong><code>250mm</code></strong>.</li>
+            </ul>
+          </li>
+          <li><strong>Lỗi: Kệ bị nghiêng hoặc trượt khi kích nâng:</strong>
+            <ul>
+              <li><em>Khắc phục:</em> Xếp hàng hóa đều trọng tâm; vào <em>Shelf Settings</em> chỉnh lại <code>Overall Offset</code> sao cho biểu tượng xe nằm chính giữa khung màu xanh dương trên màn hình mô phỏng.</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <!-- Footer -->
+  <footer class="doc-footer">
+    <p><strong>Tài liệu Kỹ thuật & Cứu hộ Hiện trường Robot AGV E300 Series</strong></p>
+    <p>Biên soạn chuẩn hóa theo cấu trúc mã nguồn Ezhan RCS V2 và hệ điều hành AGV E300 &copy; 2026 ESATECH</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
