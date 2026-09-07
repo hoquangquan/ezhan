@@ -301,4 +301,115 @@ Khi đưa giá kệ mới vào xưởng, bạn dùng thước dây đo thực t�
 
 ---
 
+## 13. TÌNH HUỐNG 13: Xe chui lọt kệ hàng, kích nâng lên xong (đèn LED xanh dương) nhưng đứng im không di chuyển
+
+### 🔴 Hiện tượng:
+* Xe tiếp cận trạm kệ, nhận diện 4 chân kệ thành công và chui vào gầm an toàn.
+* Mâm nâng kích đẩy lên cao 55mm nhấc bổng giá kệ, dải đèn LED chuyển sang **MÀU XANH DƯƠNG** (trạng thái cõng tải sẵn sàng).
+* Tuy nhiên, xe đứng im tại chỗ không chịu lăn bánh di chuyển về điểm xả hàng.
+
+### 🔍 4 Nguyên nhân kỹ thuật cốt lõi:
+1. **Mất điểm mốc định vị khi chui gầm (Localization Confidence Lost):**
+   * 4 chân sắt hoặc vách kệ che khuất một phần góc quét 240° của mắt Laser Lidar.
+   * Độ tin cậy định vị (*Localization Confidence*) bị tụt xuống dưới ngưỡng an toàn (< 60%), xe tự động hãm phanh để chống chạy lạc hướng.
+2. **Camera đọc mã QR dưới sàn/đáy kệ bị lỗi:** Mắt camera quang học dưới gầm xe bị bẩn hoặc mã QR dán trên sàn/đáy kệ bị mờ, rách khiến xe không xác nhận được góc xoay ban đầu.
+3. **Xung đột vùng an toàn (Footprint / Leg Expansion Conflict):** Phần mềm tính toán quỹ đạo thoát hiểm thấy kích thước kệ mở rộng (`Leg Expansion`) vượt quá làn đường cho phép nên từ chối xuất lệnh chuyển động.
+4. **Chờ xác nhận từ hệ thống điều phối RCS (Dispatch ACK Timeout):** Server RCS chưa gửi gói tin xác nhận hoàn thành công đoạn nâng hàng.
+
+### 🛠 Hướng dẫn Trích xuất Log Điều Hướng gửi Kỹ sư Hãng (winwin):
+Kỹ sư hãng cần thư mục log gỡ lỗi di chuyển (`navigation_debug`) trên màn hình Android của xe để đọc dữ liệu Lidar và mã lỗi:
+1. Kết nối máy tính với màn hình xe bằng cáp USB (theo quy trình ở Tình huống 14 bên dưới).
+2. Chạy file 1-click [**`lay_log_navigation.bat`**](file:///c:/Users/Admin/Downloads/EZHAN/EZHAN/lay_log_navigation.bat) ở thư mục gốc, hoặc mở PowerShell gõ:
+   ```bash
+   adb pull /storage/emulated/0/Android/data/com.ezhan.amr/files/navigation_debug/ ./logs/
+   ```
+3. Nén thư mục `navigation_debug` thành file `.zip` và gửi trực tiếp cho kỹ sư hãng phân tích.
+
+### 🛠 Xử lý nhanh tại hiện trường:
+* **Vệ sinh camera & mã QR:** Lau sạch kính camera quét mã dưới gầm xe và bề mặt mã QR trên sàn nhà.
+* **Tăng dung sai chui gầm:** Vào *Shelf Settings*, tăng thông số `Leg Expansion` từ `0.20m` lên `0.25m`.
+* **Cứu hộ thủ công:** Dùng cần gạt ảo (Joystick) trên màn hình hoặc Remote điều khiển nhích nhẹ xe ra khỏi tâm kệ khoảng 10-20cm ➔ Bấm nút xanh **`Resume Task`** trên màn hình xe hoặc Web RCS để xe tiếp tục hành trình.
+
+---
+
+## 14. TÌNH HUỐNG 14: Lỗi máy tính cắm cáp USB không nhận xe (`adb devices` trống, `no devices/emulators found`)
+
+### 🔴 Hiện tượng:
+* Dùng cáp USB cắm nối giữa máy tính và màn hình xe AGV để lấy log hoặc cập nhật file APK (`E300XDY-3.3.48.apk`).
+* Mở CMD/PowerShell gõ `adb devices` thì danh sách thiết bị `List of devices attached` bị trống hoàn toàn, hoặc báo `no devices/emulators found`.
+
+### 🔍 4 Nguyên nhân kỹ thuật & Cách khắc phục chi tiết:
+
+| Nguyên nhân | Giải thích kỹ thuật | Cách khắc phục triệt để |
+| :--- | :--- | :--- |
+| **1. Cáp Type-C to Type-C cắm laptop** | Cổng Type-C trên laptop hiện đại yêu cầu chip đàm phán CC/PD. Màn hình xe là bo mạch công nghiệp không có chip này nên laptop coi như không có thiết bị cắm vào. | **Bắt buộc dùng cáp USB-A to Type-C:** Đầu cắm vào máy tính là **đầu USB chữ nhật to thông thường**, đầu cắm vào xe là Type-C. |
+| **2. Dùng nhầm cáp sạc nguồn** | Cáp sạc điện thoại giá rẻ chỉ có 2 sợi dây nguồn (+ / -), bị cắt bỏ 2 sợi truyền tín hiệu (D+ / D-). | Đổi sang **cáp truyền dữ liệu (Data Cable)** - loại cáp cắm điện thoại vào máy tính sao chép hình ảnh được. |
+| **3. Cổng xe chưa chuyển sang Device** | Cổng Type-C trên xe đang ở chế độ Host (chỉ để cắm chuột/USB), từ chối nhận lệnh từ máy tính. | Trên màn hình xe: Vào **Settings ➔ Hiển thị (Display) ➔ dòng `otgmode control` ➔ chuyển sang `Device`** *(hoặc trong Trợ năng tắt `OTG to USB switch` sang `OFF`)*. |
+| **4. Chưa bật Gỡ lỗi USB** | Tính năng USB Debugging trên Android của xe đang bị tắt. | Vào **Settings ➔ Tùy chọn nhà phát triển (Developer options) ➔ Bật `Gỡ lỗi USB (USB Debugging)` sang ON** ➔ Nhìn màn hình xe chọn **"Luôn cho phép"** và bấm **OK**. |
+
+---
+
+## 15. TÌNH HUỐNG 15: Lỗi kết nối ADB qua mạng LAN/Ethernet bị từ chối (`cannot connect to IP:5555: Connection actively refused 10061`)
+
+### 🔴 Hiện tượng:
+* Nối dây mạng LAN giữa máy tính và xe AGV (hoặc chung mạng Wi-Fi).
+* Dùng lệnh `adb connect <IP_Xe>:5555` thì nhận được thông báo lỗi:
+  `cannot connect to 192.168.x.x:5555: No connection could be made because the target machine actively refused it. (10061)`
+
+### 🔍 Nguyên nhân bảo mật hệ điều hành:
+* Bản phân phối Android công nghiệp trên màn hình xe AGV mặc định **đóng cổng mạng 5555** nhằm ngăn chặn việc can thiệp trái phép từ xa qua mạng nội bộ nhà máy.
+* Cổng gỡ lỗi ADB chỉ được phép kích hoạt thông qua kết nối vật lý bằng dây cáp USB.
+
+### 🛠 Hướng xử lý chuẩn:
+* **Không cố gắng kết nối ADB qua cổng mạng Ethernet LAN.**
+* Chuyển sang kết nối bằng **cáp USB-A to Type-C** cắm trực tiếp vào màn hình xe và thực hiện theo đúng 4 bước ở **Tình huống 14**.
+
+---
+
+## 16. TÌNH HUỐNG 16: Lỗi Bản quyền hệ thống điều phối RCS (`LICENSE VERIFICATION FAILED - Machine Code changed`)
+
+### 🔴 Hiện tượng:
+* Khi chạy file `start.bat` để khởi động hệ thống điều phối RCS (Project 2 hoặc Project 1), cửa sổ điều khiển `Ezhan Core Console` bật lên và dừng lại với dòng chữ:
+  ```text
+  =====================================================
+  LICENSE VERIFICATION FAILED - System cannot start!
+  Reason: License verification failed
+  Machine Code: 0A7E-402F-E804-104B-048C
+
+  Contact your supplier for a valid license code.
+  Put the license code into config/license.key and restart.
+  =====================================================
+  ```
+* Dịch vụ backend `Ezhan.jar` bị ngắt, trình duyệt không mở được Web RCS hoặc mở web lên nhưng không giao tiếp được với Robot.
+
+### 🔍 2 Nguyên nhân cốt lõi:
+1. **Thay đổi trạng thái cắm dây mạng Ethernet (Nguyên nhân phổ biến nhất):**
+   * Theo tài liệu cấp phép RuoYi (`Authorization_Code_Instructions.pdf`), chuỗi `Machine Code` được tính toán tự động bằng thuật toán băm SHA-256 từ:
+     $$\text{Machine Code} = \text{SHA256}(\text{CPU Serial} + \text{Mainboard Serial} + \mathbf{\text{MAC Card mạng đầu tiên}} + \text{Disk Serial})$$
+   * **Vấn đề thực tế:** Khi máy tính đang dùng Wi-Fi mà bạn **cắm thêm dây cáp mạng Ethernet (LAN)** nối với Robot hoặc Switch xưởng:
+     * Windows tự động đẩy card mạng có dây (Ethernet) lên vị trí ưu tiên số 1 (Interface Metric thấp hơn Wi-Fi).
+     * Thuật toán Java lấy địa chỉ MAC của card Ethernet thay vì card Wi-Fi.
+     * `Machine Code` lập tức bị biến đổi sang mã mới (ví dụ: `0A7E-402F-E804-104B-048C`), khiến file `license.key` cũ không còn trùng khớp!
+2. **Cài đặt phần mềm sang máy tính mới:** Mỗi máy tính có phần cứng khác nhau nên Machine Code sẽ khác nhau hoàn toàn.
+
+### 🛠 2 Phương án khắc phục:
+
+#### 👉 Phương án 1: Xử lý nhanh trong 5 giây (Khôi phục card mạng ban đầu)
+1. **Rút dây cáp mạng Ethernet ra khỏi máy tính** (hoặc vào *Network Connections* bấm chuột phải vào card Ethernet chọn *Disable*).
+2. Chạy lại file `start.bat`.
+3. Java sẽ đọc lại địa chỉ MAC của card Wi-Fi ban đầu $\rightarrow$ `Machine Code` trùng khớp trở lại $\rightarrow$ Hệ thống khởi động bình thường ngay lập tức!
+
+#### 👉 Phương án 2: Đăng ký mã bản quyền bổ sung khi cắm cố định dây mạng LAN
+Nếu nhà máy bắt buộc phải cắm cố định dây mạng LAN giữa máy tính và xe Robot:
+1. Giữ nguyên dây mạng cắm vào máy tính.
+2. Sao chép chuỗi `Machine Code` mới đang hiển thị trên màn hình lỗi (Ví dụ: `0A7E-402F-E804-104B-048C`).
+3. Gửi mã này cho kỹ sư đại diện của hãng (như bạn `winwin`):
+   > *"Hi winwin, when I plug in the Ethernet cable, our RCS server Machine Code becomes: `0A7E-402F-E804-104B-048C`. Could you please generate a new license key for this machine code?"*
+4. Sau khi nhận được mã bản quyền mới từ hãng, mở file:
+   [**`Robot Central Dispatch System Project2\config\license.key`**](file:///c:/Users/Admin/Downloads/EZHAN/EZHAN/Robot%20Central%20Dispatch%20System%20Project2/config/license.key)
+5. Xóa nội dung cũ, dán mã mới vào và bấm **Ctrl + S** để lưu lại.
+6. Chạy lại `start.bat` $\rightarrow$ Hệ thống sẽ hoạt động ổn định vĩnh viễn trên đường truyền mạng LAN.
+
+---
+
 *(Tài liệu này được biên soạn chuẩn xác theo cấu trúc mã nguồn Ezhan RCS V2 và hệ điều hành AGV E300 - Bản quyền ESATECH © 2026).*

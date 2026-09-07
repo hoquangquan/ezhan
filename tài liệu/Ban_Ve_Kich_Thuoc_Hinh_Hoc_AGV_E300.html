@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bản Vẽ & Thông Số Kích Thước Hình Học AGV E300 Pro & Trạm Sạc</title>
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 15mm 15mm 15mm 15mm;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #2c3e50;
+            margin: 0;
+            padding: 20px;
+            background: #fff;
+        }
+        .header {
+            border-bottom: 2px solid #1a5276;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .header h1 {
+            color: #1a5276;
+            font-size: 19px;
+            margin: 0 0 6px 0;
+            text-transform: uppercase;
+        }
+        .header .meta {
+            font-size: 11px;
+            color: #7f8c8d;
+        }
+        .section-title {
+            background: #2980b9;
+            color: #fff;
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-top: 18px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+            font-size: 12.5px;
+        }
+        table th, table td {
+            border: 1px solid #bdc3c7;
+            padding: 7px 10px;
+            text-align: left;
+        }
+        table th {
+            background: #ebf5fb;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #c0392b;
+        }
+        .note-box {
+            background: #fdfefe;
+            border-left: 4px solid #3498db;
+            padding: 10px 14px;
+            margin: 12px 0;
+            font-size: 12px;
+            border-radius: 0 4px 4px 0;
+        }
+        .footer {
+            margin-top: 25px;
+            border-top: 1px solid #bdc3c7;
+            padding-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #95a5a6;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .card {
+            border: 1px solid #d6dbdf;
+            border-radius: 6px;
+            padding: 12px;
+            background: #fafbfc;
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #1b4f72;
+            font-size: 13px;
+            border-bottom: 1px solid #eaeded;
+            padding-bottom: 5px;
+        }
+        @media print {
+            body { padding: 0; }
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div>
+            <h1>Bản Vẽ & Thông Số Kích Thước Hình Học Thiết Bị</h1>
+            <div class="meta">Hệ thống Xe tự hành AGV E300 Pro & Trạm sạc tự động E-YLH-10A | Dự án Nhà máy RRC</div>
+        </div>
+        <div style="text-align: right;">
+            <div style="font-weight: bold; color: #1a5276;">Đơn vị cung cấp: ESATECH / EZHAN</div>
+            <div class="meta">Mã tài liệu: DWG-AGV-E300-2026</div>
+        </div>
+    </div>
+
+    <!-- PHẦN 1: KÍCH THƯỚC ROBOT AGV E300 PRO -->
+    <div class="section-title">1. Kích Thước Hình Học Xe Tự Hành AGV E300 Pro</div>
+    
+    <div class="grid-2">
+        <div class="card">
+            <h3>Kích thước bao ngoài (Envelope Dimensions)</h3>
+            <ul>
+                <li><strong>Chiều dài tổng thể (L):</strong> <span class="highlight">785 mm</span></li>
+                <li><strong>Chiều rộng tổng thể (W):</strong> <span class="highlight">470 mm</span></li>
+                <li><strong>Chiều cao tổng thể (H):</strong> <span class="highlight">1300 mm</span> (tính đến đỉnh màn hình cảm ứng HMI 10.1 inch)</li>
+                <li><strong>Trọng lượng bản thân:</strong> 100 kg (đã bao gồm pin Lithium 48V/15Ah)</li>
+                <li><strong>Tải trọng chuyên chở tối đa:</strong> 300 kg</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Động học & Cơ chế Nâng hạ (Kinematics & Jacking)</h3>
+            <ul>
+                <li><strong>Chiều cao mặt mâm nâng (Hạ):</strong> 210 mm (cách mặt sàn)</li>
+                <li><strong>Chiều cao mặt mâm nâng (Nâng):</strong> 265 mm (cách mặt sàn)</li>
+                <li><strong>Hành trình kích nâng:</strong> <span class="highlight">55 mm ± 2 mm</span></li>
+                <li><strong>Khoảng sáng gầm xe:</strong> 25 mm</li>
+                <li><strong>Đường kính quay tròn tại chỗ:</strong> <span class="highlight">Ø 840 mm</span> (xoay 360° tại tâm vi sai)</li>
+                <li><strong>Độ dốc vượt dốc tối đa:</strong> ≤ 5° | Gờ sàn vượt tối đa: ≤ 5 mm</li>
+            </ul>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 25%;">Bộ phận cảm biến</th>
+                <th style="width: 30%;">Vị trí bố trí trên thân xe</th>
+                <th style="width: 45%;">Thông số hình học & Phạm vi bảo vệ an toàn</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Cảm biến Laser LiDAR (SLAM)</strong></td>
+                <td>Chính giữa cản trước thân xe</td>
+                <td>Độ cao quét: <strong>180 mm</strong> so với sàn | Góc quét: <strong>240°</strong> | Tầm xa phát hiện: <strong>25 m</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Camera 3D tránh vật cản</strong></td>
+                <td>Phía trước (dưới cản) và trên trụ HMI</td>
+                <td>Phát hiện vật cản 3 chiều tầm thấp và tầm cao tránh người đi bộ</td>
+            </tr>
+            <tr>
+                <td><strong>Cản an toàn va chạm (Bumper)</strong></td>
+                <td>Vòng cung chân đế xe phía trước</td>
+                <td>Cảm biến cơ học tiếp xúc tự ngắt khẩn cấp khi va chạm</td>
+            </tr>
+            <tr>
+                <td><strong>Chấu sạc tự động (Charging Contact)</strong></td>
+                <td>Phía đuôi xe (Rear aspect)</td>
+                <td>Tự động tiếp xúc với chấu lò xo của trạm sạc khi lùi xe</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- PHẦN 2: KÍCH THƯỚC TRẠM SẠC TỰ ĐỘNG -->
+    <div class="section-title">2. Kích Thước Hình Học Trạm Sạc Tự Động (Model: E-YLH-10A)</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 30%;">Hạng mục</th>
+                <th style="width: 30%;">Thông số kỹ thuật</th>
+                <th style="width: 40%;">Ghi chú lắp đặt thực tế</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Kích thước vỏ ngoài (L × W × H)</strong></td>
+                <td><span class="highlight">380 × 178 × 330 mm</span></td>
+                <td>Vỏ kim loại sơn tĩnh điện, khối lượng 12 kg</td>
+            </tr>
+            <tr>
+                <td><strong>Cố định chân đế xuống sàn</strong></td>
+                <td>04 lỗ bu-lông nở sắt <strong>M8</strong></td>
+                <td>Khoan bê tông bắt chết xuống sàn chống xô lệch khi xe lùi tì</td>
+            </tr>
+            <tr>
+                <td><strong>Khoảng trống tiếp cận xe (Clearance)</strong></td>
+                <td><span class="highlight">Dài 1.8 m × Rộng 1.2 m</span></td>
+                <td>Vùng thông thủy bắt buộc phía trước trạm sạc để AGV quay đầu lùi</td>
+            </tr>
+            <tr>
+                <td><strong>Nguồn điện cấp</strong></td>
+                <td>AC 220V~240V, 50/60Hz (500W)</td>
+                <td>Ổ cắm/Aptomat cách ≤ 1.5m, có dây tiếp địa PE</td>
+            </tr>
+            <tr>
+                <td><strong>Đầu ra chấu sạc (DC)</strong></td>
+                <td>54.75V - 10A (Tiếp xúc chấu đồng)</td>
+                <td>Chấu đàn hồi lò xo tự động ngắt điện khi xe tách rời</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- PHẦN 3: KÍCH THƯỚC GẦM KỆ VÀ HÀNH LANG HOẠT ĐỘNG -->
+    <div class="section-title">3. Yêu Cầu Kích Thước Hình Học Gầm Kệ Hàng & Lối Đi</div>
+
+    <div class="grid-2">
+        <div class="card">
+            <h3>Yêu cầu Kích thước Gầm Kệ (Rack/Shelf Requirement)</h3>
+            <ul>
+                <li><strong>Chiều cao thông thủy gầm kệ:</strong> Tối thiểu <span class="highlight">≥ 240 mm</span> (để xe cao 210mm chui lọt dễ dàng).</li>
+                <li><strong>Khoảng cách giữa 2 chân kệ (Lọt lòng):</strong> Tối thiểu <span class="highlight">≥ 550 mm</span> (thân xe rộng 470mm).</li>
+                <li><strong>Độ dày chân kệ sắt:</strong> Khuyến nghị 40mm ~ 50mm (để cảm biến LiDAR nhận diện chân kệ chuẩn xác).</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Yêu cầu Lối đi Hành lang Nhà Xưởng (Aisle Clearance)</h3>
+            <ul>
+                <li><strong>Lối đi xe chạy 1 chiều:</strong> Rộng tối thiểu <span class="highlight">≥ 1.2 m</span>.</li>
+                <li><strong>Lối đi xe chạy 2 chiều / Tránh người:</strong> Rộng khuyến nghị <span class="highlight">≥ 1.5 m ~ 1.8 m</span>.</li>
+                <li><strong>Bán kính góc cua (Turning radius):</strong> Nhờ cơ chế quay tròn tại chỗ (Ø 840mm), AGV có thể chuyển hướng tại các ngã tư hẹp từ 1.0m.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="note-box">
+        <strong>📌 Xác thực nguồn gốc tài liệu:</strong> Toàn bộ các thông số kích thước hình học trên được trích xuất trực tiếp từ <em>Tài liệu Hướng dẫn sử dụng chính hãng Ezhan E300 Series User Manual (Part 2 trang 9, Part 3 trang 12, Part 6 trang 20, Part 8 trang 73-75)</em>. Tài liệu này có giá trị cam kết kỹ thuật phục vụ thẩm định lắp đặt máy móc tại Nhà máy RRC.
+    </div>
+
+    <div class="footer">
+        <div>Hồ sơ kỹ thuật dự án AGV E300 © ESATECH 2026</div>
+        <div>Trang 1 / 1</div>
+    </div>
+
+</body>
+</html>

@@ -243,9 +243,9 @@ Vào màn hình chính ➔ Chọn ô màu tím **`Lift Mode` ➔ `Create task`**
 
 ---
 
-## PHẦN 8: CẤU HÌNH HỘP GỌI KHÔNG DÂY CALLBOX ĐIỀU KHIỂN ROBOT
+## PHẦN 8: HƯỚNG DẪN TRUY CẬP WEB RCS & CẤU HÌNH HỘP GỌI KHÔNG DÂY CALLBOX
 
-Hộp gọi Callbox giao tiếp thời gian thực với Máy tính Server PC qua cổng WebSocket 8765.
+Hộp gọi Callbox giao tiếp thời gian thực với Máy tính Server PC qua cổng WebSocket 8765, sau đó Server điều phối gửi lệnh điều khiển tới Robot qua cổng HTTP API 8068.
 
 ```text
 [HỘP GỌI CALLBOX] ──(WebSocket 8765)──> [SERVER PC EZHAN RCS] ──(HTTP POST 8068)──> [ROBOT E300]
@@ -254,48 +254,116 @@ Hộp gọi Callbox giao tiếp thời gian thực với Máy tính Server PC qu
 ```
 
 > [!NOTE]
-> *(Các IP trên chỉ là ví dụ tham khảo. Khi triển khai tại nhà máy, bạn sử dụng dải IP thực tế của Bộ phát Wi-Fi mang theo, chỉ cần đảm bảo Callbox, Server và Robot cùng lớp mạng).*
+> *(Các địa chỉ IP trên chỉ là ví dụ tham khảo minh họa. Khi triển khai tại nhà máy, bạn sử dụng dải IP thực tế của Bộ phát Wi-Fi mang theo, chỉ cần đảm bảo Callbox, Server và Robot cùng chung một lớp mạng).*
 
-### 8.1. Quy tắc Cấu hình Bảng nút Hộp gọi trên Web RCS
-Vào Web RCS: **Quản lý thiết bị ➔ Cấu hình hộp gọi ➔ Bấm Sửa (Edit)**:
+### 8.1. Hướng dẫn Truy cập Trang Web Quản trị Ezhan RCS V2
 
-1. **Thông tin chung:**
-   * **`Tên hộp gọi`:** `callbox7`
-   * **`IP thiết bị`:** Điền đúng IP tĩnh của Robot trên Bộ phát Wi-Fi (Ví dụ minh họa: `192.168.1.61`).
-   * **`ICCID/IP`:** Điền đúng IP tĩnh của Hộp gọi hiển thị trên màn hình OLED (Ví dụ minh họa: `192.168.1.35`).
-   * **`Tự động gán`:** Gạt sang **BẬT (Màu xanh)**.
-2. **Cấu hình chi tiết 3 nút bấm:**
-   * **Nút 1 (Giao hàng tiêu chuẩn):**
-     * `Tên nút`: `giao`
-     * `Tác vụ liên kết`: Điền trùng tên trạm `Esa_1_ahuy` (hoặc để trống).
-     * `Trạm liên kết`: `Esa_1_ahuy`
-     * `Loại thiết bị`: Chọn **`BZ`** *(xe tiêu chuẩn)*.
-     * `Tự động phân bổ nút`: Bật XANH.
-   * **Nút 2 (Chạy nhiệm vụ Nâng Hạ Kệ):**
-     * `Tên nút`: `nangke`
-     * `Tác vụ liên kết`: Điền chính xác **TÊN TÁC VỤ NÂNG** đã tạo trên xe (Ví dụ: `NangKe_1`).
-     * `Trạm liên kết`: `Esa_1_ahuy`
-     * `Loại thiết bị`: Chọn **`GT`** *(dòng lệnh dành riêng cho kích nâng Jacking)*.
-     * `Tự động phân bổ nút`: Bật XANH.
-   * **Nút 3 (Tự động về sạc pin):**
-     * `Tên nút`: `sac`
-     * `Tác vụ liên kết`: `Esa_1_sac` (hoặc để trống).
-     * `Trạm liên kết`: `Esa_1_sac`
-     * `Loại thiết bị`: Chọn **`BZ`**.
-     * `Tự động phân bổ nút`: Bật XANH.
-3. Bấm **`Xác nhận` (Lưu lại)**.
+1. **Khởi chạy hệ thống trước khi vào Web:**
+   * Tại máy tính Server PC, click đúp chạy file [`start.bat`](file:///C:/Users/Admin/Downloads/EZHAN/EZHAN/Robot%20Central%20Dispatch%20System%20Project2/start.bat).
+   * Chờ các cửa sổ dịch vụ (MariaDB, Redis, Nginx, `Ezhan.jar`) khởi động xong và xuất hiện thông báo sẵn sàng.
+2. **Mở trình duyệt Web (Google Chrome hoặc Microsoft Edge):**
+   * **Nếu thao tác ngay trên máy tính Server PC:**
+     * Nhập vào thanh địa chỉ: `http://127.0.0.1` hoặc `http://localhost`
+   * **Nếu thao tác từ Máy tính / Laptop / Máy tính bảng khác trong xưởng:**
+     * Kết nối thiết bị vào cùng mạng Wi-Fi của hệ thống.
+     * Nhập vào thanh địa chỉ: `http://<IP_MÁY_TÍNH_SERVER>` *(Ví dụ minh họa: `http://192.168.1.100` hoặc `http://192.168.68.100`)*.
+3. **Đăng nhập hệ thống:**
+   * **Tài khoản mặc định:** `admin`
+   * **Mật khẩu mặc định:** `admin123`
+   * Bấm **Đăng nhập (Login)** để vào giao diện điều khiển trung tâm.
 
 ---
 
-## PHẦN 9: ĐỒNG BỘ BẢN ĐỒ & ĐIỀU PHỐI ĐA XE TỪ XA QUA RCS
+### 8.2. Quy trình Từng bước Cấu hình Hộp gọi (Callbox) trên Web RCS
 
-1. **Thêm bản đồ trên Web RCS:**
-   * Vào **Quản lý bản đồ (Map Management) ➔ Bấm `+ Thêm`**.
-   * Đặt **Tên bản đồ trùng khớp 100%** với tên trên màn hình xe (Ví dụ: `Esa_1`).
-   * Bấm nút **`Đồng bộ bản đồ`** để tải toàn bộ sơ đồ đường đi và trạm làm việc về Server PC.
-2. **Quản lý trạng thái xe (Robot Status):**
-   * Vào **Trạng thái thiết bị**: Theo dõi mức pin (%), vị trí tọa độ thời gian thực, bản đồ hiện tại, và trạng thái `Idle` / `Running`.
-   * Có thể ra lệnh trực tiếp: `Charge Task` (về sạc), `Go to Standby` (về điểm chờ), `Pause Task`, `Resume Task`, `Cancel Task`.
+Sau khi đăng nhập Web RCS thành công, thực hiện cấu hình nút bấm hộp gọi theo các bước sau:
+
+#### Bước 1: Mở menu Cấu hình Hộp gọi
+* Nhìn sang cột menu bên trái ➔ Chọn **Quản lý thiết bị (Device Management)** ➔ Bấm chọn **Cấu hình hộp gọi (Call Box Config)**.
+* Danh sách các hộp gọi đã khai báo sẽ xuất hiện trên màn hình.
+* Tìm đến dòng hộp gọi cần cài đặt (ví dụ: `callbox7`) ➔ Bấm nút màu xanh **`Sửa` (Edit)** (hoặc bấm `+ Thêm` nếu khai báo hộp gọi mới).
+
+#### Bước 2: Khai báo Thông tin Chung của Hộp gọi
+Trong cửa sổ hộp thoại cấu hình, nhập chính xác các trường sau:
+* **`Tên hộp gọi` (Call Box Name):** Đặt tên định danh gợi nhớ vị trí lắp đặt (Ví dụ: `Callbox_Xuong1`, `callbox7`).
+* **`IP thiết bị` (Device IP):** Nhập **Địa chỉ IP tĩnh thực tế của Robot AGV E300** trong mạng Wi-Fi (Xem ở góc trên màn hình xe, ví dụ minh họa: `192.168.1.61`).
+* **`ICCID/IP`:** Nhập **Địa chỉ IP tĩnh thực tế của Hộp gọi Callbox** đang hiển thị trên màn hình OLED của hộp gọi (Ví dụ minh họa: `192.168.1.35`).
+* **`Tự động gán` (Auto Assign):** Gạt nút chuyển sang **BẬT (Màu xanh)** để Server tự động liên kết lệnh với robot.
+
+#### Bước 3: Cấu hình Bảng nút bấm (Nút K1, K2, K3)
+Hộp gọi phần cứng có 3 nút bấm cơ học, bạn cấu hình lần lượt từng nút:
+
+1. **Nút 1 (Dùng để Gọi xe Giao hàng / Đến trạm làm việc):**
+   * `Tên nút` (Button Name): `giao` (hoặc `Tram_A`)
+   * `Tác vụ liên kết` (Bind Task Name): Điền **trùng tên với Trạm liên kết** (Ví dụ: `Esa_1_ahuy`) hoặc **ĐỂ TRỐNG** để hệ thống gọi lệnh chuyển điểm trực tiếp.
+   * `Trạm liên kết` (Bind Station): Chọn đúng tên trạm đích trên bản đồ xe (Ví dụ: `Esa_1_ahuy`).
+   * `Loại thiết bị` (Device Type): Chọn **`BZ`** *(áp dụng cho dòng xe E300 tiêu chuẩn chở hàng mặt sàn)*.
+   * `Tự động phân bổ nút`: Gạt sang **BẬT (Màu xanh)**.
+
+2. **Nút 2 (Dùng cho Nhiệm vụ Kích Nâng Hạ Kệ Hàng - Lift Mode):**
+   * `Tên nút` (Button Name): `nangke`
+   * `Tác vụ liên kết` (Bind Task Name): Nhập chính xác **TÊN CHUỖI TÁC VỤ NÂNG KỆ** đã tạo trong ứng dụng xe (Ví dụ: `NangKe_1`).
+   * `Trạm liên kết` (Bind Station): Chọn trạm kệ hàng (Ví dụ: `Esa_1_ahuy`).
+   * `Loại thiết bị` (Device Type): Chọn **`GT`** *(dòng lệnh dành riêng cho xe kích nâng pallet chui gầm kệ)*.
+   * `Tự động phân bổ nút`: Gạt sang **BẬT (Màu xanh)**.
+
+3. **Nút 3 (Dùng để Điều khiển xe Tự động về Trạm Sạc Pin):**
+   * `Tên nút` (Button Name): `sac`
+   * `Tác vụ liên kết` (Bind Task Name): Điền trùng tên trạm sạc `Esa_1_sac` (hoặc để trống).
+   * `Trạm liên kết` (Bind Station): Chọn trạm sạc `Esa_1_sac`.
+   * `Loại thiết bị` (Device Type): Chọn **`BZ`**.
+   * `Tự động phân bổ nút`: Gạt sang **BẬT (Màu xanh)**.
+
+#### Bước 4: Lưu & Kiểm tra Bắt tay Tín hiệu
+* Bấm nút **`Xác nhận` (Confirm)** để lưu cấu hình vào cơ sở dữ liệu MariaDB.
+* Ra ấn thử nút cứng trên Hộp gọi:
+  * Hộp gọi phát loa thông báo: *"Đã nhận lệnh"* (chứng minh thông mạch Hộp gọi ➔ Server PC).
+  * Màn hình xe Robot E300 nhảy sang trạng thái nhận nhiệm vụ và bắt đầu xoay bánh di chuyển (chứng minh thông mạch Server PC ➔ Robot).
+
+---
+
+## PHẦN 9: HƯỚNG DẪN THEO DÕI TRẠNG THÁI ROBOT & ĐIỀU PHỐI TỪ XA TRÊN WEB RCS
+
+Giao diện Web RCS cung cấp bảng giám sát trực quan toàn bộ hạm đội Robot theo thời gian thực, cho phép kỹ sư vận hành theo dõi trạng thái pin, vị trí tọa độ, độ tin cậy định vị và can thiệp điều khiển khẩn cấp từ xa.
+
+### 9.1. Truy cập Menu Theo dõi Trạng thái Thiết bị (Device Status)
+
+1. Trên thanh menu bên trái của Web RCS, vào mục: **Quản lý thiết bị (Device Management) ➔ Trạng thái thiết bị (Device Status)**.
+2. Danh sách toàn bộ các Robot AMR đang kết nối trong xưởng sẽ hiển thị dưới dạng bảng chi tiết.
+3. Bấm vào dòng xe (ví dụ: `AMR003`) hoặc bấm nút **`Xem chi tiết` (Detail)** để mở bảng giám sát chuyên sâu.
+
+### 9.2. Bảng Giải nghĩa Các Thông số Giám sát Quan trọng
+
+| Thông số trên Web RCS | Ý nghĩa Kỹ thuật | Trạng thái Chuẩn / Cần lưu ý |
+| :--- | :--- | :--- |
+| **`Trạng thái kết nối` (Online/Offline)** | Tình trạng liên lạc mạng Wi-Fi giữa Server và xe. | **Online (Xanh lá):** Tín hiệu mạng ổn định.<br>**Offline (Xám/Đỏ):** Mất kết nối (Kiểm tra lại Wi-Fi hoặc IP xe). |
+| **`Mức pin (%)` (Battery Level)** | Dung lượng pin Lithium 48V thời gian thực của xe. | **> 50%:** Vận hành tốt.<br>**< 20%:** Cần đưa xe về sạc (xe tự động về sạc nếu bật Auto-Charging). |
+| **`Vị trí hiện tại` (Current Location)** | Tên trạm làm việc mà xe đang đỗ hoặc vừa đi qua. | Hiển thị chính xác tên trạm (VD: `Esa_1_ahuy`, `Esa_1_sac`) hoặc tọa độ `(X, Y, Yaw)`. |
+| **`Độ tin cậy định vị` (Position Confidence)** | Độ chính xác so khớp giữa Lidar và bản đồ SLAM. | **> 70%:** Xe định vị rất tốt, sẵn sàng tự chạy.<br>**< 50%:** Xe bị lạc hướng, tự ngắt motor chống va chạm (Cần bấm *Relocalization*). |
+| **`Bản đồ hiện tại` (Current Map)** | Tên bản đồ số mà Robot đang chạy ngầm bên trong. | Bắt buộc phải khớp 100% với tên bản đồ trên hệ thống RCS (Ví dụ: `Esa_1`). |
+| **`Trạng thái vận hành` (Operation Mode)** | Tiến trình làm việc hiện tại của xe. | **`Idle`:** Xe đang rảnh rỗi chờ lệnh.<br>**`Running` / `Navigating`:** Xe đang di chuyển làm nhiệm vụ.<br>**`At Station` / `Stay`:** Xe đang dừng bốc hàng tại trạm.<br>**`Charging`:** Xe đang cắm chấu sạc pin tự động.<br>**`Soft E-Stop` / `Error`:** Dừng khẩn cấp do gặp cản hoặc nhấn E-Stop. |
+
+### 9.3. Bảng Điều khiển Can thiệp & Ra lệnh Từ xa Trực tiếp trên Web
+
+Ngay tại giao diện Web RCS, người vận hành có thể điều khiển xe từ xa mà không cần thao tác trực tiếp trên màn hình cảm ứng của Robot:
+
+* **Nút `Charge Task` (Lệnh về trạm sạc):**
+  * *Tác dụng:* Phát lệnh điều xe tự động quay đầu chạy về trạm sạc cắm chấu đồng sạc pin ngay lập tức.
+* **Nút `Go to Standby` (Về điểm chờ):**
+  * *Tác dụng:* Điều xe di chuyển về vị trí đỗ chờ (Standby Point) quy định trong xưởng để tránh cản trở lối đi của công nhân.
+* **Nút `Pause Task` (Tạm dừng nhiệm vụ):**
+  * *Tác dụng:* Xe lập tức phanh dừng tại chỗ nhưng vẫn giữ nguyên lộ trình trong bộ nhớ (dùng khi phát hiện sự cố bất ngờ trên đường chạy).
+* **Nút `Resume Task` (Tiếp tục hành trình):**
+  * *Tác dụng:* Cho xe tiếp tục lộ trình đang dở sau khi chướng ngại vật đã được giải phóng hoặc sau khi nhả nút E-Stop.
+* **Nút `Cancel Task` (Hủy nhiệm vụ khẩn cấp):**
+  * *Tác dụng:* Xóa sạch nhiệm vụ hiện tại, hủy bộ đếm thời gian dừng chờ tại trạm (`Stay Duration`), giải phóng phanh hoàn toàn và đưa xe về trạng thái `Idle` tuyệt đối sẵn sàng nhận lệnh mới.
+
+### 9.4. Đồng bộ Bản đồ SLAM từ Xe lên Server RCS
+
+1. Vào menu **Quản lý bản đồ (Map Management) ➔ Bấm nút `+ Thêm`**.
+2. Nhập **Tên bản đồ trùng khớp 100%** với tên đã tạo trên màn hình Robot (Ví dụ: `Esa_1`).
+3. Bấm nút màu xanh **`Đồng bộ bản đồ` (Sync Map)**.
+4. Server PC sẽ tự động kéo toàn bộ sơ đồ tọa độ, danh sách các điểm trạm làm việc (`Work Locations`), trạm sạc (`Special Locations`) và các vạch tường ảo (`Virtual Wall`) từ xe về máy chủ để phục vụ điều phối đa xe tránh xung đột làn đường.
 
 ---
 

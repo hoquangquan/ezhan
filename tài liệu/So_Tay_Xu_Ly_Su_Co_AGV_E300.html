@@ -418,15 +418,15 @@
     </div>
     <h1>Sổ Tay Kỹ Thuật & Xử Lý Sự Cố Thực Tế<br>Robot AGV E300 & Hộp Gọi Callbox</h1>
     <div class="subtitle">
-      Cẩm nang chẩn đoán nguyên nhân cốt lõi và quy trình xử lý chuẩn hóa 12 tình huống sự cố thực tế thường gặp trong quá trình lắp đặt, vận hành hệ thống điều phối trung tâm Ezhan RCS, xe tự hành E300 Series và Hộp gọi không dây (Callbox).
+      Cẩm nang chẩn đoán nguyên nhân cốt lõi và quy trình xử lý chuẩn hóa 16 tình huống sự cố thực tế thường gặp trong quá trình lắp đặt, vận hành hệ thống điều phối trung tâm Ezhan RCS, xe tự hành E300 Series và Hộp gọi không dây (Callbox).
     </div>
   </header>
 
   <!-- Table of Contents -->
   <section class="toc-container">
-    <div class="toc-title">MỤC LỤC TỔNG HỢP 12 TÌNH HUỐNG SỰ CỐ HIỆN TRƯỜNG</div>
+    <div class="toc-title">MỤC LỤC TỔNG HỢP 16 TÌNH HUỐNG SỰ CỐ HIỆN TRƯỜNG</div>
     <div class="toc-notice">
-      Tài liệu gồm đầy đủ 12 tình huống chi tiết. Anh cuộn xuống dưới từ <strong>Trang 2</strong> để xem toàn bộ nội dung từng tình huống!
+      Tài liệu gồm đầy đủ 16 tình huống chi tiết. Anh cuộn xuống dưới từ <strong>Trang 2</strong> để xem toàn bộ nội dung từng tình huống!
     </div>
     <div class="toc-grid">
       <div class="toc-item">
@@ -476,6 +476,22 @@
       <div class="toc-item">
         <span><span class="num">12.</span> <a href="#th12">Quy trình & Xử lý sự cố Nhận diện Nâng / Hạ Kệ hàng (Lift Mode)</a></span>
         <span class="toc-page">Trang 13</span>
+      </div>
+      <div class="toc-item">
+        <span><span class="num">13.</span> <a href="#th13">Xe chui lọt kệ, nâng lên xong (đèn xanh dương) nhưng đứng im</a></span>
+        <span class="toc-page">Trang 14</span>
+      </div>
+      <div class="toc-item">
+        <span><span class="num">14.</span> <a href="#th14">Cắm cáp USB máy tính không nhận xe (adb devices trống)</a></span>
+        <span class="toc-page">Trang 15</span>
+      </div>
+      <div class="toc-item">
+        <span><span class="num">15.</span> <a href="#th15">Kết nối ADB qua mạng Ethernet/LAN bị từ chối (10061 Refused)</a></span>
+        <span class="toc-page">Trang 16</span>
+      </div>
+      <div class="toc-item">
+        <span><span class="num">16.</span> <a href="#th16">Lỗi Bản quyền RCS (LICENSE VERIFICATION FAILED - MAC đổi)</a></span>
+        <span class="toc-page">Trang 17</span>
       </div>
     </div>
   </section>
@@ -1005,6 +1021,181 @@
               <li><em>Khắc phục:</em> Xếp hàng hóa đều trọng tâm; vào <em>Shelf Settings</em> chỉnh lại <code>Overall Offset</code> sao cho biểu tượng xe nằm chính giữa khung màu xanh dương trên màn hình mô phỏng.</li>
             </ul>
           </li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <!-- Situation 13 -->
+  <article class="situation-card" id="th13">
+    <div class="situation-header">
+      <div class="situation-title">13. Xe chui lọt kệ, nâng lên xong (đèn LED xanh dương) nhưng đứng im không di chuyển</div>
+      <span class="situation-tag">Mức độ: Điều hướng & Lập lộ trình</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-symptom">
+        <span class="block-tag">HIỆN TƯỢNG THỰC TẾ</span>
+        <p>Xe tự động tiếp cận trạm kệ, nhận diện 4 chân và chui vào gầm an toàn. Mâm nâng kích đẩy lên cao <code>55mm</code> nhấc bổng kệ hàng, dải đèn LED chuyển sang <strong>MÀU XANH DƯƠNG</strong> (trạng thái đã cõng tải). Tuy nhiên, xe đứng im tại chỗ không chịu lăn bánh di chuyển về điểm xả hàng.</p>
+      </div>
+      <div class="block block-cause">
+        <span class="block-tag">4 NGUYÊN NHÂN CỐT LÕI</span>
+        <ol>
+          <li><strong>Mất điểm mốc định vị khi chui gầm (Localization Confidence Lost):</strong> 4 chân sắt và thành kệ che khuất một phần góc quét 240° của Laser Lidar khiến độ tin cậy định vị tụt xuống dưới ngưỡng an toàn (&lt; 60%), xe tự phanh khẩn cấp để chống chạy sai lệch.</li>
+          <li><strong>Mắt camera đọc mã QR dưới sàn/kệ bị lỗi:</strong> Kính camera quang học dưới gầm bị bụi bẩn hoặc mã QR định hướng dán trên sàn bị mờ, rách khiến xe không xác định được hướng thoát.</li>
+          <li><strong>Xung đột vùng an toàn (Footprint / Leg Expansion Conflict):**</strong> Tham số kích thước phủ bì kệ mở rộng (<code>Leg Expansion</code>) tính toán thấy vướng hành lang di chuyển nên thuật toán hủy lệnh chuyển bánh.</li>
+          <li><strong>Chờ gói tin xác nhận từ hệ thống điều phối RCS (Dispatch ACK Timeout):</strong> Máy chủ điều phối chưa phản hồi gói tin chấp thuận hoàn thành công đoạn nâng tải.</li>
+        </ol>
+      </div>
+      <div class="block block-solution">
+        <span class="block-tag">QUY TRÌNH TRÍCH XUẤT LOG & XỬ LÝ HIỆN TRƯỜNG</span>
+        <h4 class="sub-step">1. Trích xuất Log điều hướng (navigation_debug) gửi Kỹ sư Hãng (winwin):</h4>
+        <p>Để kỹ sư hãng đọc chính xác đám mây điểm Lidar và mã ngắt di chuyển, sử dụng công cụ ADB kéo log từ màn hình xe về máy tính:</p>
+        <pre><code>adb pull /storage/emulated/0/Android/data/com.ezhan.amr/files/navigation_debug/ ./logs/</code></pre>
+        <p><em>(Hoặc chỉ cần nhấp đúp file tự động <strong><code>lay_log_navigation.bat</code></strong> tại thư mục gốc dự án để tự kéo log và nén file .zip gửi cho winwin).</em></p>
+        
+        <h4 class="sub-step">2. Cứu hộ nhanh tại hiện trường:</h4>
+        <ul>
+          <li><strong>Vệ sinh camera & mã QR:</strong> Dùng khăn mềm lau sạch mắt camera dưới gầm xe và bề mặt mã QR dán trên sàn xưởng.</li>
+          <li><strong>Tăng khoảng hở an toàn kệ:</strong> Vào <em>Shelf Settings</em>, tăng nhẹ thông số <code>Leg Expansion</code> từ <code>0.20m</code> lên <code>0.25m</code>.</li>
+          <li><strong>Điều khiển cưỡng bức thoát tâm:</strong> Dùng cần gạt ảo (Joystick) trên màn hình xe nhích nhẹ xe ra khỏi tâm kệ 15cm ➔ Bấm nút xanh <strong><code>Resume Task</code></strong> trên Web RCS để xe tiếp tục hành trình.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- Situation 14 -->
+  <article class="situation-card" id="th14">
+    <div class="situation-header">
+      <div class="situation-title">14. Cắm cáp USB máy tính không nhận xe (adb devices trống / no devices found)</div>
+      <span class="situation-tag">Mức độ: Kết nối phần cứng</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-symptom">
+        <span class="block-tag">HIỆN TƯỢNG THỰC TẾ</span>
+        <p>Dùng cáp USB nối máy tính với cổng USB trên màn hình xe AGV để lấy log hoặc cập nhật file APK (<code>E300XDY-3.3.48.apk</code>), nhưng khi mở CMD/PowerShell gõ lệnh <code>adb devices</code> thì danh sách <code>List of devices attached</code> hoàn toàn trống rỗng hoặc báo <code>no devices/emulators found</code>.</p>
+      </div>
+      <div class="block block-cause">
+        <span class="block-tag">NGUYÊN NHÂN & CƠ CHẾ KỸ THUẬT</span>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 30%;">Nguyên nhân</th>
+              <th style="width: 70%;">Bản chất kỹ thuật & Điểm mấu chốt</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Cáp Type-C to Type-C cắm laptop</strong></td>
+              <td>Cổng Type-C trên laptop hiện đại yêu cầu chip đàm phán tín hiệu (CC/PD Pin). Màn hình xe là bo mạch công nghiệp không có chip này nên laptop không handshake được và coi như không có kết nối.</td>
+            </tr>
+            <tr>
+              <td><strong>Cáp sạc nguồn (không có Data)</strong></td>
+              <td>Dây cáp sạc điện thoại giá rẻ chỉ có 2 lõi nguồn (+ / -), bị cắt bỏ 2 lõi truyền tín hiệu (D+ / D-).</td>
+            </tr>
+            <tr>
+              <td><strong>Cổng xe đang ở chế độ Host</strong></td>
+              <td>Cổng Type-C trên xe đang để chế độ Host (chỉ để cắm chuột/USB), hai cổng Host cắm vào nhau sẽ không giao tiếp được.</td>
+            </tr>
+            <tr>
+              <td><strong>Chưa bật Gỡ lỗi USB</strong></td>
+              <td>Tính năng USB Debugging trên Android của xe chưa được kích hoạt.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="block block-solution">
+        <span class="block-tag">QUY TRÌNH KHẮC PHỤC TRIỆT ĐỂ (4 BƯỚC)</span>
+        <ol>
+          <li><strong>Bắt buộc đổi sang cáp USB-A to Type-C:</strong> Đầu USB chữ nhật to cắm vào cổng USB thường của máy tính, đầu Type-C cắm vào màn hình xe. Đảm bảo là cáp truyền dữ liệu (Data Cable).</li>
+          <li><strong>Chuyển chế độ Device trên xe:</strong>
+            <ul>
+              <li>Trên màn hình xe AGV: Vào <strong>Cài đặt (Settings) ➔ Hiển thị (Display)</strong>.</li>
+              <li>Chạm vào dòng thứ 7: <strong><code>otgmode control</code> ➔ Chọn sang <code>Device</code></strong> (hoặc <code>Slave</code>).</li>
+              <li><em>(Hoặc trong mục Trợ năng/Accessibility: Tắt <strong>OTG to USB switch</strong> sang <strong>OFF</strong>)</em>.</li>
+            </ul>
+          </li>
+          <li><strong>Kích hoạt Gỡ lỗi USB (USB Debugging):</strong> Vào <em>Cài đặt ➔ Tùy chọn nhà phát triển ➔ Bật Gỡ lỗi USB sang ON</em>. Khi cắm cáp, nhìn màn hình xe tích chọn <strong>"Luôn cho phép"</strong> và bấm <strong>OK</strong>.</li>
+          <li>Gõ lại <code>adb devices</code> trên máy tính để thấy mã thiết bị <code>xxxxxx device</code> hiển thị.</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <!-- Situation 15 -->
+  <article class="situation-card" id="th15">
+    <div class="situation-header">
+      <div class="situation-title">15. Kết nối ADB qua mạng Ethernet/LAN bị từ chối (10061 Connection Refused)</div>
+      <span class="situation-tag">Mức độ: Bảo mật Android</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-symptom">
+        <span class="block-tag">HIỆN TƯỢNG THỰC TẾ</span>
+        <p>Cắm dây mạng Ethernet giữa PC và Robot (hoặc chung mạng Wi-Fi), gõ lệnh <code>adb connect &lt;IP_Xe&gt;:5555</code> thì lập tức bị lỗi:</p>
+        <pre><code>cannot connect to 192.168.x.x:5555: No connection could be made because the target machine actively refused it. (10061)</code></pre>
+      </div>
+      <div class="block block-cause">
+        <span class="block-tag">NGUYÊN NHÂN BẢO MẬT</span>
+        <p>Hệ điều hành Android công nghiệp trên màn hình xe AGV mặc định <strong>khóa hoàn toàn cổng mạng 5555</strong> nhằm ngăn ngừa nguy cơ tấn công mạng nội bộ và can thiệp trái phép từ xa vào hệ thống lái tự động. Xe chỉ chấp nhận gỡ lỗi và nạp dữ liệu thông qua cổng cắm vật lý USB.</p>
+      </div>
+      <div class="block block-solution">
+        <span class="block-tag">GIẢI PHÁP CHUẨN KỸ THUẬT</span>
+        <ol>
+          <li><strong>Không cố gắng kết nối ADB qua cổng mạng LAN/Wi-Fi:</strong> Cổng 5555 trên xe chưa mở nên mọi câu lệnh kết nối qua IP sẽ đều bị từ chối <code>10061</code>.</li>
+          <li><strong>Sử dụng cáp USB vật lý:</strong> Chuyển sang kết nối bằng cáp USB-A to Type-C cắm trực tiếp vào màn hình xe và thực hiện đúng theo 4 bước ở <strong>Tình huống 14</strong> để thao tác mượt mà 100%.</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <!-- Situation 16 -->
+  <article class="situation-card" id="th16">
+    <div class="situation-header">
+      <div class="situation-title">16. Lỗi Bản quyền hệ thống điều phối RCS (LICENSE VERIFICATION FAILED - MAC đổi)</div>
+      <span class="situation-tag">Mức độ: Bản quyền phần mềm</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-symptom">
+        <span class="block-tag">HIỆN TƯỢNG THỰC TẾ</span>
+        <p>Vừa nãy hệ thống vẫn mở web và chạy bình thường. Sau khi cắm thêm dây mạng LAN hoặc đổi mạng, chạy lại <code>start.bat</code> thì cửa sổ <code>Ezhan Core Console</code> bật lên và dừng lại với thông báo lỗi:</p>
+        <pre><code>=====================================================
+LICENSE VERIFICATION FAILED - System cannot start!
+Reason: License verification failed
+Machine Code: 0A7E-402F-E804-104B-048C
+
+Contact your supplier for a valid license code.
+Put the license code into config/license.key and restart.
+=====================================================</code></pre>
+        <p>Dịch vụ <code>Ezhan.jar</code> không khởi động được, máy tính không truy cập được vào Web RCS điều khiển xe.</p>
+      </div>
+      <div class="block block-cause">
+        <span class="block-tag">NGUYÊN NHÂN CỐT LÕI (CƠ CHẾ TÍNH MACHINE CODE)</span>
+        <p>Theo tài liệu bảo mật RuoYi (<code>Authorization_Code_Instructions.pdf</code>), mã máy tính được tính bằng công thức:</p>
+        <div style="background: #f1f5f9; padding: 10px; border-radius: 6px; font-family: monospace; margin-bottom: 10px;">
+          Machine Code = SHA256(CPU Serial + Mainboard Serial + <strong>First Valid MAC Address</strong> + Disk Serial)
+        </div>
+        <ul>
+          <li><strong>Lúc bình thường (mở được):</strong> Máy tính kết nối qua Wi-Fi. Java đọc địa chỉ MAC của card Wi-Fi để kiểm tra bản quyền ➔ Khớp với file <code>license.key</code>.</li>
+          <li><strong>Khi cắm dây mạng Ethernet (LAN):</strong> Card mạng có dây được kích hoạt, Windows tự động ưu tiên card Ethernet lên vị trí số 1. Thuật toán Java lấy địa chỉ MAC của card Ethernet thay vì Wi-Fi ➔ Làm chuỗi <code>Machine Code</code> bị đổi sang mã mới (<code>0A7E-402F-E804-104B-048C</code>) ➔ File <code>license.key</code> cũ bị báo không khớp!</li>
+        </ul>
+      </div>
+      <div class="block block-solution">
+        <span class="block-tag">2 PHƯƠNG ÁN XỬ LÝ</span>
+        <h4 class="sub-step">Phương án 1: Xử lý nhanh trong 5 giây (Khôi phục card mạng ban đầu):</h4>
+        <ol>
+          <li><strong>Rút dây mạng Ethernet ra khỏi máy tính</strong> (để máy tính quay lại dùng duy nhất card mạng Wi-Fi như ban đầu).</li>
+          <li>Chạy lại file <strong><code>start.bat</code></strong>.</li>
+          <li>Hệ thống đọc lại đúng MAC ban đầu ➔ Machine Code khớp lại ➔ Web RCS khởi động thành công ngay lập tức!</li>
+        </ol>
+
+        <h4 class="sub-step">Phương án 2: Đăng ký mã License bổ sung khi cắm cố định dây mạng LAN:</h4>
+        <ol>
+          <li>Giữ nguyên dây mạng cắm vào máy tính.</li>
+          <li>Sao chép đúng chuỗi mã máy đang hiển thị trên cửa sổ lỗi: <strong><code>0A7E-402F-E804-104B-048C</code></strong>.</li>
+          <li>Gửi mã này cho kỹ sư của hãng (như bạn <strong>winwin</strong>) với nội dung:
+            <pre><code>Hi winwin, when I plug in the Ethernet cable to the robot, our RCS Machine Code becomes: 0A7E-402F-E804-104B-048C. Could you please generate a license key for this machine code?</code></pre>
+          </li>
+          <li>Khi hãng gửi lại chuỗi bản quyền mới, mở file <strong><code>Robot Central Dispatch System Project2\config\license.key</code></strong>, xóa nội dung cũ, dán mã mới vào và lưu lại (Ctrl + S).</li>
+          <li>Chạy lại <code>start.bat</code> ➔ Hệ thống sẽ chạy ổn định vĩnh viễn trên đường truyền mạng LAN có dây.</li>
         </ol>
       </div>
     </div>
