@@ -274,6 +274,101 @@
       padding-bottom: 6px;
     }
 
+    /* Callbox Hardware & UI Mockups */
+    .screen-data-box {
+      background: #0f172a;
+      color: #38bdf8;
+      font-family: 'Consolas', 'Courier New', monospace;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      line-height: 1.55;
+      display: inline-block;
+      text-align: left;
+      border: 2px solid #334155;
+      margin: 8px 0;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .callbox-mockup-wrap {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      margin: 16px 0;
+      flex-wrap: wrap;
+    }
+
+    .box-diagram {
+      width: 170px;
+      height: 220px;
+      border: 2px solid #94a3b8;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 14px 18px;
+      flex-shrink: 0;
+    }
+
+    .box-screen {
+      width: 75px;
+      height: 50px;
+      background: #0f172a;
+      border-radius: 4px;
+      border: 1px solid #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #38bdf8;
+      font-family: monospace;
+      font-size: 9px;
+      text-align: center;
+    }
+
+    .box-buttons {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 4px;
+    }
+
+    .btn-item {
+      text-align: center;
+    }
+
+    .btn-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 3px;
+    }
+
+    .btn-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid #0284c7;
+      background: #ffffff;
+      box-shadow: 0 0 6px rgba(2,132,199,0.3);
+      position: relative;
+      margin: 0 auto;
+    }
+
+    .btn-circle::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #e0f2fe;
+    }
+
     .footer {
       margin-top: 40px;
       padding-top: 20px;
@@ -341,7 +436,7 @@
           </ul>
         </li>
         <li><strong>BƯỚC 4 - Đồng bộ Map lên RCS V2:</strong> Mở Web RCS (<code>http://127.0.0.1</code>) ➔ Vào <code>Quản lý bản đồ</code> thêm map <code>Esa_1</code> và bấm <code>Đồng bộ bản đồ</code> ➔ Vào <code>Quản lý thiết bị</code> thêm xe với IP tĩnh.</li>
-        <li><strong>BƯỚC 5 - Cấu hình Hộp gọi Callbox:</strong> Gán IP tĩnh cho Hộp gọi (VD: <code>192.168.1.35</code>). Vào <code>Cấu hình hộp gọi</code> trên Web gán Nút 1 (Giao hàng: <code>BZ</code>), Nút 3 (Sạc: <code>BZ</code>), Nút nâng kệ (<code>GT</code>).</li>
+        <li><strong>BƯỚC 5 - Cấu hình Hộp gọi Callbox:</strong> Bắt Wi-Fi phát ra từ Hộp gọi (<code>callbox...-SETUP</code>) ➔ Mở trình duyệt vào <code>http://192.168.4.1/</code> cài Wi-Fi nhà máy & IP Server ➔ Sau khi kết nối thành công, <strong>nhìn màn hình OLED lấy địa chỉ IP nhận được</strong> (dòng <code>IP: ...</code>) ➔ Vào Web RCS (<code>http://127.0.0.1/device/callbox</code>) dán IP này vào ô <code>ICCID/IP</code> để gán nút điều khiển (K1: Giao hàng, K2: Nâng kệ, K3: Về sạc).</li>
         <li><strong>BƯỚC 6 - Vận hành & Thử nghiệm:</strong> Bấm nút trên Hộp gọi hoặc trên Web/màn hình xe ➔ Xe tự động chạy giao hàng, tự nâng kệ và tự lùi về trạm sạc khi hết pin!</li>
       </ul>
     </div>
@@ -666,45 +761,265 @@
 
     <!-- PHẦN 8 -->
     <div class="page-break"></div>
-    <h2>Phần 8: Hướng Dẫn Truy Cập Web RCS & Cấu Hình Hộp Gọi Callbox</h2>
-    <p>Hộp gọi Callbox giao tiếp thời gian thực với Server PC qua cổng WebSocket 8765, sau đó Server điều phối gửi lệnh điều khiển tới Robot qua cổng HTTP API 8068.</p>
+    <h2>Phần 8: Hướng Dẫn Cài Đặt & Cấu Hình Hộp Gọi Không Dây (Theo Chuẩn Hãng Ezhan)</h2>
+    <p>Quy trình cài đặt, cấu hình và vận hành Hộp gọi không dây (Call Box V1.0) theo đúng tài liệu kỹ thuật chuẩn của nhà sản xuất <strong>Shenzhen Ezhan Technology Co., Ltd.</strong> Hộp gọi là thiết bị đầu cuối công nghiệp chuyên dụng cho cụm AMR, kết nối không dây độc lập qua giao thức WebSocket và hỗ trợ thông báo giọng nói tự động khi xe đến trạm.</p>
 
     <pre>[HỘP GỌI CALLBOX] ──(WebSocket 8765)──> [SERVER PC EZHAN RCS] ──(HTTP POST 8068)──> [ROBOT E300]
   (VD: 192.168.X.35)                     (VD: 192.168.X.100)                     (VD: 192.168.X.61)
   └────────────────────── CÙNG DẢI MẠNG BỘ PHÁT WI-FI RIÊNG NHÀ MÁY ─────────────────────┘</pre>
 
-    <h3>8.1. Hướng dẫn Truy cập Trang Web Quản trị Ezhan RCS V2</h3>
-    <ol>
-      <li><strong>Khởi chạy hệ thống trước khi vào Web:</strong> Chạy file <code>start.bat</code> trên máy chủ PC.</li>
-      <li><strong>Mở trình duyệt Web (Chrome hoặc Edge):</strong>
+    <div class="alert alert-warning">
+      <h3 style="margin-top:0; color:#b45309; border-bottom:none;">⚡ QUY TẮC CỐT LÕI VẬN HÀNH HỘP GỌI: BẮT WI-FI HỘP GỌI ➔ VÀO 192.168.4.1 CÀI WI-FI XƯỞNG ➔ LẤY IP TRÊN OLED</h3>
+      <p style="margin-bottom:8px;">Để cài đặt và vận hành bất kỳ Hộp gọi mới nào, kỹ sư bắt buộc phải nắm vững trình tự 3 bước mấu chốt:</p>
+      <ol style="margin-bottom:0; padding-left:20px;">
+        <li><strong>Bước 1: Bắt sóng Wi-Fi từ Hộp gọi:</strong> Dùng điện thoại hoặc laptop mở danh sách Wi-Fi, tìm và kết nối vào sóng Wi-Fi do chính Hộp gọi phát ra (Tên có dạng: <code>callbox...-SETUP</code>, không có mật khẩu).</li>
+        <li><strong>Bước 2: Mở trình duyệt vào <code>http://192.168.4.1/</code> cài đặt Wi-Fi nhà máy:</strong> Nhập IP máy chủ Server RCS (<code>Cloud server IP</code>), chọn tên Wi-Fi nhà xưởng, nhập mật khẩu Wi-Fi và bấm <code>Connect</code>.</li>
+        <li><strong>Bước 3: Lấy địa chỉ IP trên màn hình OLED để cấu hình Web RCS:</strong> Sau khi Hộp gọi báo kết nối thành công, nhìn trực tiếp lên màn hình OLED của Hộp gọi để <strong>lấy địa chỉ IP thực tế nhận được</strong> (dòng <code>IP: ...</code>). Dùng chính địa chỉ IP này dán vào ô <code>ICCID/IP</code> trên Web điều phối RCS (<code>http://127.0.0.1/device/callbox</code>) để gán nút và điều khiển xe!</li>
+      </ol>
+    </div>
+
+    <h3>8.1. Tổng Quan Phần Cứng & Bảng Thông Số Kỹ Thuật (Chuẩn Manual Mục II & III)</h3>
+    <div class="callbox-mockup-wrap">
+      <div class="box-diagram">
+        <div class="box-screen">OLED<br>SCREEN</div>
+        <div class="box-buttons">
+          <div class="btn-item">
+            <div class="btn-label">K1</div>
+            <div class="btn-circle"></div>
+          </div>
+          <div class="btn-item">
+            <div class="btn-label">K2</div>
+            <div class="btn-circle"></div>
+          </div>
+          <div class="btn-item">
+            <div class="btn-label">K3</div>
+            <div class="btn-circle"></div>
+          </div>
+        </div>
+      </div>
+      <div style="flex: 1; min-width: 280px;">
+        <p><strong>Cấu tạo ngoại quan & Bố trí vật lý:</strong></p>
         <ul>
-          <li>Tại máy chủ: Nhập <code>http://127.0.0.1</code> hoặc <code>http://localhost</code></li>
-          <li>Tại laptop/tablet khác trong xưởng: Nhập <code>http://&lt;IP_SERVER_PC&gt;</code> (Ví dụ: <code>http://192.168.1.100</code>).</li>
+          <li><strong>Mặt trước (Front Panel):</strong> Màn hình OLED hiển thị thông số hoạt động và 3 nút bấm cơ học <code>K1</code>, <code>K2</code>, <code>K3</code> có vòng đèn LED trợ sáng.</li>
+          <li><strong>Mặt bên (Side Ports):</strong> Trang bị <strong>Cổng sạc USB Type-C</strong> (cấp nguồn DC 5V/2W) và <strong>Khe lưới loa (Speaker grille)</strong> để phát thông báo giọng nói.</li>
+          <li><strong>Mặt sau (Rear Housing):</strong> Trang bị 6 lỗ bắt vít định vị để gắn cố định Hộp gọi lên vách tường, cột xưởng hoặc bàn thao tác của công nhân.</li>
+        </ul>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 35%;">Thông Số Kỹ Thuật (Parameter)</th>
+          <th style="width: 65%;">Giá Trị Định Mức & Tiêu Chuẩn Chuẩn Hãng</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Điện áp & Công suất định mức</strong></td>
+          <td><strong>DC 5V</strong> (qua cáp USB Type-C) | Công suất: <strong>2W</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Số lượng nút bấm tác vụ</strong></td>
+          <td><strong>3 nút cơ học</strong> (K1, K2, K3) tích hợp vòng đèn LED chỉ thị trạng thái</td>
+        </tr>
+        <tr>
+          <td><strong>Chuẩn mạng & Tần số không dây</strong></td>
+          <td>Wi-Fi tiêu chuẩn <strong>802.11 b/g/n</strong> | Băng tần: <strong>2.4 GHz / 5.8 GHz</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Giao thức & Cổng truyền thông</strong></td>
+          <td><strong>WebSocket</strong> (kết nối trực tiếp tới Server RCS qua cổng <code>8765</code>)</td>
+        </tr>
+        <tr>
+          <td><strong>Nhiệt độ & Độ ẩm hoạt động</strong></td>
+          <td><code>-10℃ ~ +55℃</code> | Độ ẩm: <code>≤ 85% RH</code> (không ngưng tụ)</td>
+        </tr>
+        <tr>
+          <td><strong>Chất liệu vỏ ngoài</strong></td>
+          <td>Nhựa kỹ thuật <strong>Resin</strong> cách điện, chịu lực công nghiệp</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>8.2. Giai đoạn 1: Cấu Hình Thông Số Trực Tiếp Trên Hộp Gọi (Web AP `http://192.168.4.1/`)</h3>
+    <p>Áp dụng theo đúng <strong>Mục IV: Cấu hình thông số Hộp gọi (Call Box Parameter Configuration)</strong> trong tài liệu hướng dẫn sử dụng của hãng:</p>
+
+    <ol>
+      <li><strong>Bước 1 - Cấp nguồn qua cáp dữ liệu Type-C (Manual Mục 5.1):</strong>
+        <ul>
+          <li>Cắm cáp USB Type-C chuẩn vào cổng sạc bên hông Hộp gọi. Đảm bảo nguồn cấp ổn định <code>5V / 2W</code>.</li>
+          <li>Sau khi cấp nguồn, màn hình OLED và vòng đèn LED trên 3 nút (K1, K2, K3) sẽ lập tức phát sáng khởi động.</li>
         </ul>
       </li>
-      <li><strong>Đăng nhập:</strong> Tài khoản mặc định <code>admin</code> / Mật khẩu <code>admin123</code>.</li>
+      <li><strong>Bước 2 - Kết nối vào sóng Wi-Fi phát ra từ Hộp gọi (Manual Mục 4.1):</strong>
+        <ul>
+          <li>Dùng điện thoại di động hoặc máy tính laptop mở danh sách Wi-Fi khả dụng.</li>
+          <li>Tìm và kết nối vào mạng Wi-Fi của Hộp gọi (Tên mạng có dạng: <strong><code>callbox1-SETUP</code></strong> hoặc <strong><code>callbox7-SETUP</code></strong>, mạng mở không có mật khẩu). Tên này tương ứng hiển thị trên màn hình OLED của hộp gọi.</li>
+        </ul>
+      </li>
+      <li><strong>Bước 3 - Mở trang Web cấu hình Hộp gọi (Manual Mục 4.1 & 4.2):</strong>
+        <ul>
+          <li>Mở trình duyệt Web (Chrome, Edge hoặc Safari), nhập chính xác địa chỉ: 👉 <strong><code>http://192.168.4.1/</code></strong></li>
+          <li>Giao diện cấu hình <strong>Callbox Setup</strong> sẽ xuất hiện. <em>(Lưu ý: Sau mỗi lần cấu hình từng mục, phải bấm nút Lưu tương ứng trước khi chuyển sang bước tiếp theo)</em>.</li>
+        </ul>
+      </li>
+      <li><strong>Bước 4 - Đổi tên Hộp gọi (Manual Mục 4.2 - Rename the Call Box):</strong>
+        <ul>
+          <li>Tại ô <strong><code>Callbox name</code></strong>: Nhập tên định danh mong muốn cho Hộp gọi.</li>
+          <li><strong>Quy định chuẩn của hãng:</strong> Chỉ sử dụng các chữ cái, số và dấu gạch dưới, độ dài từ <strong>1 đến 16 ký tự</strong> (Ví dụ: <code>callbox1</code>, <code>callbox7</code>).</li>
+          <li>Bấm nút <strong><code>Save name</code></strong> để lưu lại. <em>(Lưu ý: Sau khi đổi tên, kết nối lại vào Wi-Fi theo tên mới và truy cập lại trang này)</em>.</li>
+        </ul>
+      </li>
+      <li><strong>Bước 5 - Cấu hình Địa chỉ Máy chủ Đám mây (Manual Mục 4.3 - Cloud Server Address):</strong>
+        <ul>
+          <li>Tại ô <strong><code>Cloud server IP</code></strong>: Điền địa chỉ IPv4 của máy tính cài hệ thống điều phối Ezhan RCS (hoặc IP của robot trên cùng mạng cục bộ nếu kết nối trực tiếp, ví dụ: <code>192.168.1.100</code> hoặc theo dải IP thực tế).</li>
+          <li>Bấm nút <strong><code>Save server IP</code></strong> để lưu lại.</li>
+        </ul>
+      </li>
+      <li><strong>Bước 6 - Cấu hình Tín hiệu Mạng Wi-Fi của Hộp gọi (Manual Mục 4.4 - Network Signal):</strong>
+        <ul>
+          <li>Tại ô <strong><code>network</code></strong>: Chọn quét mạng hoặc chọn <code>Manual input</code>.</li>
+          <li>Chọn cùng mạng Wi-Fi mà Robot AGV và Máy tính điều phối đang kết nối.</li>
+          <li><strong>Nguyên tắc chọn sóng Wi-Fi (RSSI) tối ưu chuẩn hãng:</strong>
+            <p>Chọn mạng có chỉ số RSSI tối ưu nhất. <strong>RSSI là số âm: càng gần 0 thì tín hiệu sóng càng mạnh</strong>.</p>
+            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px 14px; margin: 8px 0; font-family: monospace; font-size: 12px;">
+              📶 EzhanNet_test &nbsp;<strong>RSSI: -46 dBm</strong> CH:1 WPA/WPA2 &nbsp;➔ <span style="color: #16a34a; font-weight: bold;">[TỐI ƯU NHẤT - NÊN CHỌN]</span><br>
+              📶 EzhanNet_test &nbsp;<strong>RSSI: -49 dBm</strong> CH:40 WPA/WPA2 ➔ <span style="color: #0284c7;">[Rất tốt]</span><br>
+              📶 EzhanNetA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>RSSI: -63 dBm</strong> CH:36 WPA/WPA2 ➔ <span style="color: #d97706;">[Mức trung bình]</span><br>
+              📶 ChinaNet-Hzts &nbsp;<strong>RSSI: -75 dBm</strong> CH:11 WPA2 &nbsp;&nbsp;&nbsp;&nbsp;➔ <span style="color: #dc2626;">[Quá yếu, không chọn]</span>
+            </div>
+          </li>
+          <li>Tại ô <strong><code>password</code></strong>: Nhập chính xác mật khẩu Wi-Fi của nhà xưởng.</li>
+          <li>Bấm nút <strong><code>Connect</code></strong> để Hộp gọi kết nối vào mạng.</li>
+        </ul>
+      </li>
+      <li><strong>Bước 7 - Kiểm tra Thông tin Màn hình OLED Hộp gọi (Manual Mục 5.2):</strong>
+        <p>Sau khi lưu và kết nối thành công, màn hình OLED mặt trước Hộp gọi hiển thị chuẩn xác 7 dòng trạng thái:</p>
+        <div class="screen-data-box">
+          Name: &nbsp;callbox7 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Tên định danh hộp gọi đã cấu hình]<br>
+          WiFi: &nbsp;EzhanNet &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Tên Wi-Fi xưởng đã kết nối thành công]<br>
+          MQTT: &nbsp;[1--] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Trạng thái Broker MQTT: 1 là thông suốt, 0 là mất mạng]<br>
+          IP: &nbsp;&nbsp;&nbsp;192.168.70.44 &nbsp;&nbsp;&nbsp;&nbsp;[IP Hộp gọi nhận được - GHI LẠI ĐỂ DÙNG BƯỚC TIẾP THEO]<br>
+          CLOUD: OK &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Trạng thái kết nối Server: OK là thành công, FAIL là lỗi]<br>
+          1: &nbsp;&nbsp;&nbsp;&nbsp;none / Tên nút 1 &nbsp;[Trạng thái tác vụ liên kết Nút 1 (K1)]<br>
+          2: &nbsp;&nbsp;&nbsp;&nbsp;none / Tên nút 2 &nbsp;[Trạng thái tác vụ liên kết Nút 2 (K2)]<br>
+          3: &nbsp;&nbsp;&nbsp;&nbsp;none / Tên nút 3 &nbsp;[Trạng thái tác vụ liên kết Nút 3 (K3)]
+        </div>
+      </li>
     </ol>
 
-    <h3>8.2. Quy trình Từng bước Cấu hình Hộp gọi (Callbox) trên Web RCS</h3>
+    <h3>8.3. Giai đoạn 2: Quản Lý & Gán Nút Tác Vụ Trên Web Điều Phối Ezhan RCS (Manual Mục 5.3)</h3>
     <ol>
-      <li><strong>Bước 1 - Mở menu Cấu hình Hộp gọi:</strong> Vào <code>Quản lý thiết bị ➔ Cấu hình hộp gọi</code>. Tìm dòng hộp gọi cần cài đặt (ví dụ: <code>callbox7</code>) ➔ Bấm nút màu xanh <strong><code>Sửa</code> (Edit)</strong>.</li>
-      <li><strong>Bước 2 - Khai báo Thông tin Chung:</strong>
+      <li><strong>Bước 1 - Truy cập hệ thống điều phối (Manual Mục 5.3.1):</strong>
         <ul>
-          <li><code>Tên hộp gọi</code>: Đặt tên định danh gợi nhớ (Ví dụ: <code>Callbox_Chuyen1</code>).</li>
-          <li><code>IP thiết bị</code>: Nhập <strong>Địa chỉ IP tĩnh của Robot AGV E300</strong> (Ví dụ: <code>192.168.1.61</code>).</li>
-          <li><code>ICCID/IP</code>: Nhập <strong>Địa chỉ IP tĩnh của Hộp gọi Callbox</strong> (Ví dụ: <code>192.168.1.35</code>).</li>
-          <li><code>Tự động gán</code>: Gạt sang <strong>BẬT (Màu xanh)</strong>.</li>
+          <li>Mở trình duyệt trên máy tính, nhập URL: <strong><code>http://127.0.0.1/device/callbox</code></strong> (hoặc vào menu: <strong>Quản lý thiết bị ➔ Cấu hình hộp gọi</strong>).</li>
         </ul>
       </li>
-      <li><strong>Bước 3 - Cấu hình Bảng nút bấm (K1, K2, K3):</strong>
+      <li><strong>Bước 2 - Đăng nhập tài khoản (Manual Mục 5.3.2):</strong>
         <ul>
-          <li><strong>Nút 1 (Gọi xe Giao hàng):</strong> Tên nút <code>giao</code> | Trạm liên kết <code>Esa_1_ahuy</code> | Tác vụ liên kết: điền trùng tên trạm hoặc để trống | Loại thiết bị: <strong><code>BZ</code></strong> | Tự động phân bổ: BẬT.</li>
-          <li><strong>Nút 2 (Nhiệm vụ Nâng hạ kệ):</strong> Tên nút <code>nangke</code> | Trạm liên kết <code>Esa_1_ahuy</code> | Tác vụ liên kết: nhập chính xác tên chuỗi tác vụ <code>NangKe_1</code> | Loại thiết bị: <strong><code>GT</code></strong> | Tự động phân bổ: BẬT.</li>
-          <li><strong>Nút 3 (Điều khiển về sạc pin):</strong> Tên nút <code>sac</code> | Trạm liên kết <code>Esa_1_sac</code> | Tác vụ liên kết: điền trùng tên trạm hoặc để trống | Loại thiết bị: <strong><code>BZ</code></strong> | Tự động phân bổ: BẬT.</li>
+          <li>Nhập tài khoản <code>admin</code>, mật khẩu <code>admin123</code> (hoặc <code>123456</code>) và mã xác thực captcha ➔ Bấm <strong>Đăng nhập (Log in)</strong>.</li>
         </ul>
       </li>
-      <li><strong>Bước 4 - Lưu & Kiểm tra tín hiệu:</strong> Bấm <strong><code>Xác nhận</code></strong>. Ra ấn thử nút cứng trên Hộp gọi: Hộp gọi phát loa thông báo và xe AGV bắt đầu di chuyển nhận lệnh.</li>
+      <li><strong>Bước 3 - Lấy địa chỉ IP thiết bị của Robot AGV (Manual Mục 5.3.3):</strong>
+        <ul>
+          <li>Vào menu <strong>Trạng thái thiết bị (Device Status)</strong> trên thanh điều hướng bên trái.</li>
+          <li>Tìm đúng Robot AGV cần liên kết và sao chép chính xác địa chỉ <strong><code>Device IP</code></strong> (Ví dụ: <code>192.168.0.71</code> hoặc <code>192.168.1.61</code>).</li>
+        </ul>
+      </li>
+      <li><strong>Bước 4 - Thêm Hộp gọi mới hoặc Sửa (Manual Mục 5.3.5 & 5.3.6):</strong>
+        <ul>
+          <li>Bấm nút <strong><code>Thêm Hộp gọi mới</code> (New Call Box)</strong> hoặc bấm nút màu xanh <strong><code>Sửa</code> (Edit)</strong> tại dòng hộp gọi cần cài đặt.</li>
+          <li>Điền đầy đủ các thông tin liên kết cho cấu hình đám mây:
+            <ul>
+              <li><strong><code>Call Box Name</code>:</strong> Nhập tên hộp gọi đã đặt ở Mục 8.2 (Ví dụ: <code>callbox7</code> hoặc <code>callbox1</code>).</li>
+              <li><strong><code>Device IP</code>:</strong> Dán địa chỉ IP của Robot AGV đã sao chép ở Bước 3.</li>
+              <li><strong><code>ICCID/IP</code>:</strong> Điền chính xác địa chỉ IP của Hộp gọi đang hiển thị trên màn hình OLED (dòng <code>IP: ...</code>, ví dụ: <code>192.168.70.44</code>).</li>
+              <li><strong><code>Department</code>:</strong> Chọn phòng ban liên kết (Ví dụ: <em>Yizhan Zhihui</em> hoặc <em>Ezhan</em> hoặc phòng ban thực tế).</li>
+              <li>Bấm <strong>Lưu (Save)</strong>.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><strong>Bước 5 - Cấu hình Nút bấm Tác vụ (Manual Mục 5.3.7 - Button Configuration):</strong>
+        <p>Bấm nút <strong><code>+ Thêm (Add Button)</code></strong> để cấu hình lần lượt tối đa 3 nút cơ học (K1, K2, K3):</p>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 12%;">Button ID</th>
+              <th style="width: 22%;">Tên Nút (Button Name)</th>
+              <th style="width: 33%;">Tác Vụ Liên Kết (Bound Task)</th>
+              <th style="width: 33%;">Trạm Liên Kết (Bound Station)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1 (K1)</strong></td>
+              <td><code>K1</code> hoặc <code>giao_hang</code></td>
+              <td><code>Delivery Task</code> (hoặc điền trùng tên trạm / để trống để xe di chuyển đến trạm)</td>
+              <td>Chọn tên trạm đích trên bản đồ xe (VD: <code>Esa_1_ahuy</code>)</td>
+            </tr>
+            <tr>
+              <td><strong>2 (K2)</strong></td>
+              <td><code>K2</code> hoặc <code>nang_ke</code></td>
+              <td>Nhập chính xác <strong>Tên chuỗi tác vụ kích nâng kệ</strong> đã tạo trên xe (VD: <code>NangKe_1</code>)</td>
+              <td>Chọn trạm kệ hàng (VD: <code>Esa_1_ahuy</code>)</td>
+            </tr>
+            <tr>
+              <td><strong>3 (K3)</strong></td>
+              <td><code>K3</code> hoặc <code>ve_sac</code></td>
+              <td><code>Charge Task</code> (Lệnh điều xe tự động lùi về trạm sạc pin)</td>
+              <td>Chọn trạm sạc (VD: <code>Esa_1_sac</code>)</td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+      <li><strong>Bước 6 - Cấu hình Trạm liên kết Phát loa Giọng nói (Manual Mục 5.3.8 - Station Binding):</strong>
+        <div class="alert alert-success">
+          <strong>🔊 TÍNH NĂNG THÔNG BÁO GIỌNG NÓI CHÍNH HÃNG (STATION BINDING):</strong>
+          <p><strong>Chức năng:</strong> Cho phép Hộp gọi tự động phát thông báo bằng giọng nói qua loa tích hợp khi Robot di chuyển đến trạm làm việc, cung cấp lời nhắc nhở bằng âm thanh cho công nhân bốc dỡ hàng.</p>
+          <p><strong>Phương pháp cấu hình từng bước:</strong></p>
+          <ol>
+            <li>Lấy và sao chép <strong>Vị trí hiện tại (Current Position)</strong> của Robot từ phần <strong>Trạng thái thiết bị (Device Status)</strong> khi xe đang đỗ tại trạm.</li>
+            <li>Nhấp vào nút <strong>Sửa (Edit)</strong> trên trang cấu hình Hộp gọi.</li>
+            <li>Dán vị trí đã sao chép vào trường <strong>Trạm liên kết (Site binding)</strong>.</li>
+            <li>Bấm <strong>Lưu (Save)</strong>. Khi Robot di chuyển đến đúng vị trí này, loa trên Hộp gọi sẽ tự động phát âm thanh thông báo nhắc việc!</li>
+          </ol>
+        </div>
+      </li>
     </ol>
+
+    <h3>8.4. Bảng Tra Cứu & Xử Lý Sự Cố Hộp Gọi (Troubleshooting Chuẩn Hãng Mục VI)</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 25%;">Mô Tả Lỗi (Fault Description)</th>
+          <th style="width: 35%;">Hạng Mục Kiểm Tra (Inspection Items)</th>
+          <th style="width: 40%;">Hành Động Khắc Phục (Corrective Actions)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="3"><strong>Không có phản hồi khi bấm nút gọi<br><em>(No response on call)</em></strong></td>
+          <td>Kiểm tra trạng thái cấp nguồn<br><em>(Check power supply status)</em></td>
+          <td>Đảm bảo nguồn điện 5V ổn định cho hộp gọi, đèn LED nút bấm và màn hình OLED phải sáng bình thường.</td>
+        </tr>
+        <tr>
+          <td>Cấu hình tín hiệu có bình thường không?<br><em>(Is signal configuration normal?)</em></td>
+          <td>Cấu hình lại Hộp gọi theo các bước vận hành qua <code>http://192.168.4.1/</code>, kiểm tra chính xác Cloud server IP và mật khẩu Wi-Fi.</td>
+        </tr>
+        <tr>
+          <td>Tín hiệu sóng Wi-Fi của Hộp gọi có ổn định không?<br><em>(Is call box signal connected normally?)</em></td>
+          <td>Kiểm tra chỉ số RSSI (phải tối ưu, ≥ -65 dBm). Bố trí thêm bộ định tuyến Wi-Fi công nghiệp hoặc chuyển Hộp gọi đến vị trí có sóng phủ tốt hơn.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>8.5. Chính Sách Dịch Vụ Sau Bán Hàng & Giới Hạn Bảo Hành (Manual Mục VII)</h3>
+    <ul>
+      <li><strong>Thời hạn bảo hành:</strong> Bảo hành <strong>1 năm kể từ ngày bán</strong> cho các lỗi hỏng do chất lượng linh kiện hoặc khuyết tật thiết kế từ nhà sản xuất.</li>
+      <li><strong>Các trường hợp loại trừ bảo hành:</strong> Hư hỏng do cấp nguồn sai điện áp định mức (khác 5V DC), vận hành trong môi trường ẩm ướt đọng nước/hóa chất ăn mòn, tự ý tháo rời hoặc sửa đổi thiết bị mà không có sự chấp thuận bằng văn bản của hãng, hoặc do các sự kiện bất khả kháng (hỏa hoạn, thiên tai).</li>
+    </ul>
 
     <!-- PHẦN 9 -->
     <div class="page-break"></div>

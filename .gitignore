@@ -1,5 +1,5 @@
 # Bỏ qua các file nhị phân lớn vượt quá giới hạn 100MB của GitHub
-*.apk
+*.apk*
 *.pdb
 *.zip
 *.rdb
