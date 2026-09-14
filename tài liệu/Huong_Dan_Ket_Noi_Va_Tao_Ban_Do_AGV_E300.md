@@ -26,7 +26,7 @@ Dưới đây là tóm tắt quy trình thực hành nhanh nhất cho kỹ thu�
   * *Trạm sạc:* Đẩy đuôi xe cách chấu sạc 2-5cm ➔ Vào `Special Locations` lưu tọa độ làm điểm sạc (`Charge`).
   * *Kệ hàng (nếu có nâng hạ):* Vào `Shelf Settings` đo và nhập đúng kích thước 4 chân kệ ➔ Bấm `Used`.
 * **BƯỚC 4 - Đồng bộ Map lên RCS V2:** Mở Web RCS (`http://127.0.0.1`) ➔ Vào `Quản lý bản đồ` thêm map `Esa_1` và bấm `Đồng bộ bản đồ` ➔ Vào `Quản lý thiết bị` thêm xe `AMR003` với IP tĩnh `192.168.1.61`.
-* **BƯỚC 5 - Cấu hình Hộp gọi Callbox:** Gán IP tĩnh cho Hộp gọi (VD: `192.168.1.35`). Vào `Cấu hình hộp gọi` trên Web gán Nút 1 (Giao hàng: `BZ`), Nút 3 (Sạc: `BZ`), Nút nâng kệ (`GT`).
+* **BƯỚC 5 - Cấu hình Hộp gọi Callbox:** Bắt Wi-Fi do Hộp gọi phát ra (`callbox...-SETUP`) ➔ Mở trình duyệt vào `http://192.168.4.1/` cài Wi-Fi nhà máy & IP Server ➔ Sau khi kết nối thành công, **nhìn màn hình OLED lấy địa chỉ IP nhận được** (dòng `IP: ...`) ➔ Vào Web RCS (`http://127.0.0.1/device/callbox`) dán IP này vào ô `ICCID/IP` để gán nút điều khiển (K1: Giao hàng, K2: Nâng kệ, K3: Về sạc).
 * **BƯỚC 6 - Vận hành thử nghiệm:** Bấm nút trên Hộp gọi hoặc bấm trên Web/màn hình xe ➔ Xe tự động chạy giao hàng, tự nâng kệ và tự lùi về trạm sạc khi hết pin!
 
 ---
@@ -243,9 +243,9 @@ Vào màn hình chính ➔ Chọn ô màu tím **`Lift Mode` ➔ `Create task`**
 
 ---
 
-## PHẦN 8: HƯỚNG DẪN TRUY CẬP WEB RCS & CẤU HÌNH HỘP GỌI KHÔNG DÂY CALLBOX
+## PHẦN 8: HƯỚNG DẪN CÀI ĐẶT & CẤU HÌNH HỘP GỌI KHÔNG DÂY (THEO CHUẨN HÃNG EZHAN)
 
-Hộp gọi Callbox giao tiếp thời gian thực với Máy tính Server PC qua cổng WebSocket 8765, sau đó Server điều phối gửi lệnh điều khiển tới Robot qua cổng HTTP API 8068.
+Quy trình cài đặt, cấu hình và vận hành Hộp gọi không dây (Call Box V1.0) theo đúng tài liệu kỹ thuật chuẩn của nhà sản xuất **Shenzhen Ezhan Technology Co., Ltd.** Hộp gọi là thiết bị đầu cuối công nghiệp chuyên dụng cho cụm AMR, kết nối không dây độc lập qua giao thức WebSocket và hỗ trợ thông báo giọng nói tự động khi xe đến trạm.
 
 ```text
 [HỘP GỌI CALLBOX] ──(WebSocket 8765)──> [SERVER PC EZHAN RCS] ──(HTTP POST 8068)──> [ROBOT E300]
@@ -253,72 +253,128 @@ Hộp gọi Callbox giao tiếp thời gian thực với Máy tính Server PC qu
   └────────────────────── CÙNG DẢI MẠNG BỘ PHÁT WI-FI RIÊNG NHÀ MÁY ─────────────────────┘
 ```
 
-> [!NOTE]
-> *(Các địa chỉ IP trên chỉ là ví dụ tham khảo minh họa. Khi triển khai tại nhà máy, bạn sử dụng dải IP thực tế của Bộ phát Wi-Fi mang theo, chỉ cần đảm bảo Callbox, Server và Robot cùng chung một lớp mạng).*
-
-### 8.1. Hướng dẫn Truy cập Trang Web Quản trị Ezhan RCS V2
-
-1. **Khởi chạy hệ thống trước khi vào Web:**
-   * Tại máy tính Server PC, click đúp chạy file [`start.bat`](file:///C:/Users/Admin/Downloads/EZHAN/EZHAN/Robot%20Central%20Dispatch%20System%20Project2/start.bat).
-   * Chờ các cửa sổ dịch vụ (MariaDB, Redis, Nginx, `Ezhan.jar`) khởi động xong và xuất hiện thông báo sẵn sàng.
-2. **Mở trình duyệt Web (Google Chrome hoặc Microsoft Edge):**
-   * **Nếu thao tác ngay trên máy tính Server PC:**
-     * Nhập vào thanh địa chỉ: `http://127.0.0.1` hoặc `http://localhost`
-   * **Nếu thao tác từ Máy tính / Laptop / Máy tính bảng khác trong xưởng:**
-     * Kết nối thiết bị vào cùng mạng Wi-Fi của hệ thống.
-     * Nhập vào thanh địa chỉ: `http://<IP_MÁY_TÍNH_SERVER>` *(Ví dụ minh họa: `http://192.168.1.100` hoặc `http://192.168.68.100`)*.
-3. **Đăng nhập hệ thống:**
-   * **Tài khoản mặc định:** `admin`
-   * **Mật khẩu mặc định:** `admin123`
-   * Bấm **Đăng nhập (Login)** để vào giao diện điều khiển trung tâm.
+> [!WARNING]
+> ### ⚡ QUY TẮC CỐT LÕI VẬN HÀNH HỘP GỌI: BẮT WI-FI HỘP GỌI ➔ VÀO 192.168.4.1 CÀI WI-FI XƯỞNG ➔ LẤY IP TRÊN OLED
+> Để cài đặt và vận hành bất kỳ Hộp gọi mới nào, kỹ sư bắt buộc phải nắm vững trình tự 3 bước mấu chốt sau:
+> 1. **Bước 1 - Bắt sóng Wi-Fi từ Hộp gọi:** Dùng điện thoại hoặc laptop mở danh sách Wi-Fi, tìm và kết nối vào sóng Wi-Fi do chính Hộp gọi phát ra (Tên có dạng: `callbox...-SETUP`, mạng mở không có mật khẩu).
+> 2. **Bước 2 - Mở trình duyệt vào `http://192.168.4.1/` cài đặt Wi-Fi nhà máy:** Nhập IP máy chủ Server RCS (`Cloud server IP`), chọn tên Wi-Fi nhà xưởng, nhập mật khẩu Wi-Fi và bấm `Connect`.
+> 3. **Bước 3 - Lấy địa chỉ IP trên màn hình OLED để cấu hình Web RCS:** Sau khi Hộp gọi báo kết nối thành công, nhìn trực tiếp lên màn hình OLED của Hộp gọi để **lấy địa chỉ IP thực tế nhận được** (dòng `IP: ...`). Dùng chính địa chỉ IP này dán vào ô `ICCID/IP` trên Web điều phối RCS (`http://127.0.0.1/device/callbox`) để gán nút bấm và điều khiển xe!
 
 ---
 
-### 8.2. Quy trình Từng bước Cấu hình Hộp gọi (Callbox) trên Web RCS
+### 8.1. Tổng Quan Phần Cứng & Bảng Thông Số Kỹ Thuật (Chuẩn Manual Mục II & III)
 
-Sau khi đăng nhập Web RCS thành công, thực hiện cấu hình nút bấm hộp gọi theo các bước sau:
+* **Cấu tạo ngoại quan:**
+  * **Mặt trước:** Màn hình OLED hiển thị thông số và 3 nút bấm cơ học `K1`, `K2`, `K3` có vòng đèn LED chỉ thị.
+  * **Mặt bên:** Cổng cấp nguồn USB Type-C (`DC 5V / 2W`) và Khe loa (`Speaker grille`) phát âm thanh giọng nói.
+  * **Mặt sau:** 6 lỗ bắt vít định vị để cố định Hộp gọi lên tường, cột hoặc bàn làm việc.
 
-#### Bước 1: Mở menu Cấu hình Hộp gọi
-* Nhìn sang cột menu bên trái ➔ Chọn **Quản lý thiết bị (Device Management)** ➔ Bấm chọn **Cấu hình hộp gọi (Call Box Config)**.
-* Danh sách các hộp gọi đã khai báo sẽ xuất hiện trên màn hình.
-* Tìm đến dòng hộp gọi cần cài đặt (ví dụ: `callbox7`) ➔ Bấm nút màu xanh **`Sửa` (Edit)** (hoặc bấm `+ Thêm` nếu khai báo hộp gọi mới).
+| Thông Số Kỹ Thuật (Parameter) | Giá Trị Định Mức & Tiêu Chuẩn Chuẩn Hãng |
+| :--- | :--- |
+| **Điện áp & Công suất định mức** | **DC 5V** (cổng USB Type-C) \| Công suất: **2W** |
+| **Số lượng nút bấm tác vụ** | **3 nút cơ học** (K1, K2, K3) tích hợp vòng đèn LED chỉ thị trạng thái |
+| **Chuẩn mạng & Tần số không dây** | Wi-Fi tiêu chuẩn **802.11 b/g/n** \| Băng tần: **2.4 GHz / 5.8 GHz** |
+| **Giao thức & Cổng truyền thông** | **WebSocket** (kết nối trực tiếp tới Server RCS qua cổng `8765`) |
+| **Nhiệt độ & Độ ẩm hoạt động** | `-10℃ ~ +55℃` \| Độ ẩm: `≤ 85% RH` (không ngưng tụ) |
+| **Chất liệu vỏ ngoài** | Nhựa kỹ thuật **Resin** cách điện, chống va đập công nghiệp |
 
-#### Bước 2: Khai báo Thông tin Chung của Hộp gọi
-Trong cửa sổ hộp thoại cấu hình, nhập chính xác các trường sau:
-* **`Tên hộp gọi` (Call Box Name):** Đặt tên định danh gợi nhớ vị trí lắp đặt (Ví dụ: `Callbox_Xuong1`, `callbox7`).
-* **`IP thiết bị` (Device IP):** Nhập **Địa chỉ IP tĩnh thực tế của Robot AGV E300** trong mạng Wi-Fi (Xem ở góc trên màn hình xe, ví dụ minh họa: `192.168.1.61`).
-* **`ICCID/IP`:** Nhập **Địa chỉ IP tĩnh thực tế của Hộp gọi Callbox** đang hiển thị trên màn hình OLED của hộp gọi (Ví dụ minh họa: `192.168.1.35`).
-* **`Tự động gán` (Auto Assign):** Gạt nút chuyển sang **BẬT (Màu xanh)** để Server tự động liên kết lệnh với robot.
+---
 
-#### Bước 3: Cấu hình Bảng nút bấm (Nút K1, K2, K3)
-Hộp gọi phần cứng có 3 nút bấm cơ học, bạn cấu hình lần lượt từng nút:
+### 8.2. Giai đoạn 1: Cấu Hình Thông Số Trực Tiếp Trên Hộp Gọi (Web AP `http://192.168.4.1/`)
 
-1. **Nút 1 (Dùng để Gọi xe Giao hàng / Đến trạm làm việc):**
-   * `Tên nút` (Button Name): `giao` (hoặc `Tram_A`)
-   * `Tác vụ liên kết` (Bind Task Name): Điền **trùng tên với Trạm liên kết** (Ví dụ: `Esa_1_ahuy`) hoặc **ĐỂ TRỐNG** để hệ thống gọi lệnh chuyển điểm trực tiếp.
-   * `Trạm liên kết` (Bind Station): Chọn đúng tên trạm đích trên bản đồ xe (Ví dụ: `Esa_1_ahuy`).
-   * `Loại thiết bị` (Device Type): Chọn **`BZ`** *(áp dụng cho dòng xe E300 tiêu chuẩn chở hàng mặt sàn)*.
-   * `Tự động phân bổ nút`: Gạt sang **BẬT (Màu xanh)**.
+Áp dụng theo đúng **Mục IV: Cấu hình thông số Hộp gọi (Call Box Parameter Configuration)** trong tài liệu hướng dẫn sử dụng của hãng:
 
-2. **Nút 2 (Dùng cho Nhiệm vụ Kích Nâng Hạ Kệ Hàng - Lift Mode):**
-   * `Tên nút` (Button Name): `nangke`
-   * `Tác vụ liên kết` (Bind Task Name): Nhập chính xác **TÊN CHUỖI TÁC VỤ NÂNG KỆ** đã tạo trong ứng dụng xe (Ví dụ: `NangKe_1`).
-   * `Trạm liên kết` (Bind Station): Chọn trạm kệ hàng (Ví dụ: `Esa_1_ahuy`).
-   * `Loại thiết bị` (Device Type): Chọn **`GT`** *(dòng lệnh dành riêng cho xe kích nâng pallet chui gầm kệ)*.
-   * `Tự động phân bổ nút`: Gạt sang **BẬT (Màu xanh)**.
+1. **Bước 1 - Cấp nguồn qua cáp dữ liệu Type-C (Manual Mục 5.1):**
+   * Cắm cáp USB Type-C chuẩn vào cổng sạc bên hông Hộp gọi. Đảm bảo nguồn cấp ổn định `5V / 2W`.
+   * Sau khi cấp nguồn, màn hình OLED và vòng đèn LED trên 3 nút (K1, K2, K3) sẽ phát sáng khởi động.
+2. **Bước 2 - Kết nối vào sóng Wi-Fi phát ra từ Hộp gọi (Manual Mục 4.1):**
+   * Dùng điện thoại di động hoặc máy tính laptop mở danh sách Wi-Fi khả dụng.
+   * Tìm và kết nối vào mạng Wi-Fi của Hộp gọi (Tên mạng có dạng: **`callbox1-SETUP`** hoặc **`callbox7-SETUP`**, mạng mở không có mật khẩu). Tên này tương ứng hiển thị trên màn hình OLED của hộp gọi.
+3. **Bước 3 - Mở trang Web cấu hình Hộp gọi (Manual Mục 4.1 & 4.2):**
+   * Mở trình duyệt Web (Chrome, Edge hoặc Safari), nhập chính xác địa chỉ: 👉 **`http://192.168.4.1/`**
+   * Giao diện cấu hình **Callbox Setup** sẽ xuất hiện. *(Lưu ý: Sau mỗi lần cấu hình từng mục, phải bấm nút Lưu tương ứng trước khi chuyển sang bước tiếp theo)*.
+4. **Bước 4 - Đổi tên Hộp gọi (Manual Mục 4.2 - Rename the Call Box):**
+   * Tại ô **`Callbox name`**: Nhập tên định danh mong muốn cho Hộp gọi.
+   * **Quy định chuẩn của hãng:** Chỉ sử dụng các chữ cái, số và dấu gạch dưới, độ dài từ **1 đến 16 ký tự** (Ví dụ: `callbox1`, `callbox7`).
+   * Bấm nút **`Save name`** để lưu lại. *(Lưu ý: Sau khi đổi tên, kết nối lại vào Wi-Fi theo tên mới và truy cập lại trang này)*.
+5. **Bước 5 - Cấu hình Địa chỉ Máy chủ Đám mây (Manual Mục 4.3 - Cloud Server Address):**
+   * Tại ô **`Cloud server IP`**: Điền địa chỉ IPv4 của máy tính cài hệ thống điều phối Ezhan RCS (hoặc IP của robot trên cùng mạng cục bộ nếu kết nối trực tiếp, ví dụ: `192.168.1.100` hoặc theo dải IP thực tế).
+   * Bấm nút **`Save server IP`** để lưu lại.
+6. **Bước 6 - Cấu hình Tín hiệu Mạng Wi-Fi của Hộp gọi (Manual Mục 4.4 - Network Signal):**
+   * Tại ô **`network`**: Chọn quét mạng hoặc chọn `Manual input`.
+   * Chọn cùng mạng Wi-Fi mà Robot AGV và Máy tính điều phối đang kết nối.
+   * **Nguyên tắc chọn sóng Wi-Fi (RSSI) tối ưu chuẩn hãng:**
+     * Chọn mạng có chỉ số RSSI tối ưu nhất. **RSSI là số âm: càng gần 0 thì tín hiệu sóng càng mạnh**.
+     * `EzhanNet_test RSSI:-46 dBm CH:1 WPA/WPA2` ➔ **[TỐI ƯU NHẤT - NÊN CHỌN]**
+     * `EzhanNet_test RSSI:-49 dBm CH:40 WPA/WPA2` ➔ **[Rất tốt]**
+     * `EzhanNetA RSSI:-63 dBm CH:36 WPA/WPA2` ➔ **[Mức trung bình]**
+     * `ChinaNet-Hzts RSSI:-75 CH:11 WPA2` ➔ **[Quá yếu, không chọn]**
+   * Tại ô **`password`**: Nhập chính xác mật khẩu Wi-Fi của nhà xưởng.
+   * Bấm nút **`Connect`** để Hộp gọi kết nối vào mạng.
+7. **Bước 7 - Kiểm tra Thông tin Màn hình OLED Hộp gọi (Manual Mục 5.2):**
+   Sau khi lưu và kết nối thành công, màn hình OLED mặt trước Hộp gọi hiển thị chuẩn xác 7 dòng trạng thái:
+   ```text
+   Name:  callbox7           [Tên định danh hộp gọi đã cấu hình]
+   WiFi:  EzhanNet           [Tên Wi-Fi xưởng đã kết nối thành công]
+   MQTT:  [1--]              [Trạng thái Broker MQTT: 1 là thông suốt, 0 là mất mạng]
+   IP:    192.168.70.44      [IP Hộp gọi nhận được - GHI LẠI ĐỂ DÙNG BƯỚC TIẾP THEO]
+   CLOUD: OK                 [Trạng thái kết nối Server: OK là thành công, FAIL là lỗi]
+   1:     none / Tên nút 1   [Trạng thái tác vụ liên kết Nút 1 (K1)]
+   2:     none / Tên nút 2   [Trạng thái tác vụ liên kết Nút 2 (K2)]
+   3:     none / Tên nút 3   [Trạng thái tác vụ liên kết Nút 3 (K3)]
+   ```
 
-3. **Nút 3 (Dùng để Điều khiển xe Tự động về Trạm Sạc Pin):**
-   * `Tên nút` (Button Name): `sac`
-   * `Tác vụ liên kết` (Bind Task Name): Điền trùng tên trạm sạc `Esa_1_sac` (hoặc để trống).
-   * `Trạm liên kết` (Bind Station): Chọn trạm sạc `Esa_1_sac`.
-   * `Loại thiết bị` (Device Type): Chọn **`BZ`**.
-   * `Tự động phân bổ nút`: Gạt sang **BẬT (Màu xanh)**.
+---
 
-#### Bước 4: Lưu & Kiểm tra Bắt tay Tín hiệu
-* Bấm nút **`Xác nhận` (Confirm)** để lưu cấu hình vào cơ sở dữ liệu MariaDB.
-* Ra ấn thử nút cứng trên Hộp gọi:
-  * Hộp gọi phát loa thông báo: *"Đã nhận lệnh"* (chứng minh thông mạch Hộp gọi ➔ Server PC).
-  * Màn hình xe Robot E300 nhảy sang trạng thái nhận nhiệm vụ và bắt đầu xoay bánh di chuyển (chứng minh thông mạch Server PC ➔ Robot).
+### 8.3. Giai đoạn 2: Quản Lý & Gán Nút Tác Vụ Trên Web Điều Phối Ezhan RCS (Manual Mục 5.3)
+
+1. **Bước 1 - Truy cập hệ thống điều phối (Manual Mục 5.3.1):**
+   * Mở trình duyệt trên máy tính, nhập URL: **`http://127.0.0.1/device/callbox`** (hoặc vào menu: **Quản lý thiết bị ➔ Cấu hình hộp gọi**).
+2. **Bước 2 - Đăng nhập tài khoản (Manual Mục 5.3.2):**
+   * Nhập tài khoản `admin`, mật khẩu `admin123` (hoặc `123456`) và mã xác thực captcha ➔ Bấm **Đăng nhập (Log in)**.
+3. **Bước 3 - Lấy địa chỉ IP thiết bị của Robot AGV (Manual Mục 5.3.3):**
+   * Vào menu **Trạng thái thiết bị (Device Status)** trên thanh điều hướng bên trái.
+   * Tìm đúng Robot AGV cần liên kết và sao chép chính xác địa chỉ **`Device IP`** (Ví dụ: `192.168.0.71` hoặc `192.168.1.61`).
+4. **Bước 4 - Thêm Hộp gọi mới hoặc Sửa (Manual Mục 5.3.5 & 5.3.6):**
+   * Bấm nút **`Thêm Hộp gọi mới` (New Call Box)** hoặc bấm nút màu xanh **`Sửa` (Edit)** tại dòng hộp gọi cần cài đặt.
+   * Điền đầy đủ các thông tin liên kết cho cấu hình đám mây:
+     * **`Call Box Name`:** Nhập tên hộp gọi đã đặt ở Mục 8.2 (Ví dụ: `callbox7` hoặc `callbox1`).
+     * **`Device IP`:** Dán địa chỉ IP của Robot AGV đã sao chép ở Bước 3.
+     * **`ICCID/IP`:** Điền chính xác địa chỉ IP của Hộp gọi đang hiển thị trên màn hình OLED (dòng `IP: ...`, ví dụ: `192.168.70.44`).
+     * **`Department`:** Chọn phòng ban liên kết (Ví dụ: *Yizhan Zhihui* hoặc *Ezhan* hoặc phòng ban thực tế).
+     * Bấm **Lưu (Save)**.
+5. **Bước 5 - Cấu hình Nút bấm Tác vụ (Manual Mục 5.3.7 - Button Configuration):**
+   Bấm nút **`+ Thêm (Add Button)`** để cấu hình lần lượt tối đa 3 nút cơ học (K1, K2, K3):
+
+| Button ID | Tên Nút (Button Name) | Tác Vụ Liên Kết (Bound Task) | Trạm Liên Kết (Bound Station) |
+| :---: | :--- | :--- | :--- |
+| **1 (K1)** | `K1` hoặc `giao_hang` | `Delivery Task` (hoặc điền trùng tên trạm / để trống để xe di chuyển đến trạm) | Chọn tên trạm đích trên bản đồ xe (VD: `Esa_1_ahuy`) |
+| **2 (K2)** | `K2` hoặc `nang_ke` | Nhập chính xác **Tên chuỗi tác vụ kích nâng kệ** đã tạo trên xe (VD: `NangKe_1`) | Chọn trạm kệ hàng (VD: `Esa_1_ahuy`) |
+| **3 (K3)** | `K3` hoặc `ve_sac` | `Charge Task` (Lệnh điều xe tự động lùi về trạm sạc pin) | Chọn trạm sạc (VD: `Esa_1_sac`) |
+
+6. **Bước 6 - Cấu hình Trạm liên kết Phát loa Giọng nói (Manual Mục 5.3.8 - Station Binding):**
+   * **Chức năng:** Cho phép Hộp gọi tự động phát thông báo bằng giọng nói qua loa tích hợp khi Robot di chuyển đến trạm làm việc, cung cấp lời nhắc nhở bằng âm thanh cho công nhân bốc dỡ hàng.
+   * **Phương pháp cấu hình từng bước:**
+     1. Lấy và sao chép **Vị trí hiện tại (Current Position)** của Robot từ phần **Trạng thái thiết bị (Device Status)** khi xe đang đỗ tại trạm.
+     2. Nhấp vào nút **Sửa (Edit)** trên trang cấu hình Hộp gọi.
+     3. Dán vị trí đã sao chép vào trường **Trạm liên kết (Site binding)**.
+     4. Bấm **Lưu (Save)**. Khi Robot di chuyển đến đúng vị trí này, loa trên Hộp gọi sẽ tự động phát âm thanh thông báo nhắc việc!
+
+---
+
+### 8.4. Bảng Tra Cứu & Xử Lý Sự Cố Hộp Gọi (Troubleshooting Chuẩn Hãng Mục VI)
+
+| Mô Tả Lỗi (Fault Description) | Hạng Mục Kiểm Tra (Inspection Items) | Hành Động Khắc Phục (Corrective Actions) |
+| :--- | :--- | :--- |
+| **Không có phản hồi khi bấm nút gọi<br>*(No response on call)*** | Kiểm tra trạng thái cấp nguồn<br>*(Check power supply status)* | Đảm bảo nguồn điện 5V ổn định cho hộp gọi, đèn LED nút bấm và màn hình OLED phải sáng bình thường. |
+| | Cấu hình tín hiệu có bình thường không?<br>*(Is signal configuration normal?)* | Cấu hình lại Hộp gọi theo các bước vận hành qua `http://192.168.4.1/`, kiểm tra chính xác Cloud server IP và mật khẩu Wi-Fi. |
+| | Tín hiệu sóng Wi-Fi của Hộp gọi có ổn định không?<br>*(Is call box signal connected normally?)* | Kiểm tra chỉ số RSSI (phải tối ưu, ≥ -65 dBm). Bố trí thêm bộ định tuyến Wi-Fi công nghiệp hoặc chuyển Hộp gọi đến vị trí có sóng phủ tốt hơn. |
+
+### 8.5. Chính Sách Dịch Vụ Sau Bán Hàng & Giới Hạn Bảo Hành (Manual Mục VII)
+* **Thời hạn bảo hành:** Bảo hành **1 năm kể từ ngày bán** cho các lỗi hỏng do chất lượng linh kiện hoặc khuyết tật thiết kế từ nhà sản xuất.
+* **Các trường hợp loại trừ bảo hành:** Hư hỏng do cấp nguồn sai điện áp định mức (khác 5V DC), vận hành trong môi trường ẩm ướt đọng nước/hóa chất ăn mòn, tự ý tháo rời hoặc sửa đổi thiết bị mà không có sự chấp thuận bằng văn bản của hãng, hoặc do các sự kiện bất khả kháng (hỏa hoạn, thiên tai).
+
+---
 
 ---
 
