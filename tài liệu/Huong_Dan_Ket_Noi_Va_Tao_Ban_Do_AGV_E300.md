@@ -444,4 +444,150 @@ Ngay tại giao diện Web RCS, người vận hành có thể điều khiển x
 
 ---
 
+## PHẦN 11: HƯỚNG DẪN CẤU HÌNH THIẾT BỊ WI-FI CÔNG NGHIỆP MOXA AWK-1137C-EU
+
+Thiết bị **MOXA AWK-1137C-EU** là dòng Access Point / Bridge / Client Wi-Fi công nghiệp chuẩn 802.11a/b/g/n, đóng vai trò hạ tầng mạng không dây huyết mạch kết nối giữa **Máy chủ Ezhan RCS V2**, **Hạm đội AGV E300** và **Các Hộp gọi Callbox**.
+
+### 11.1. Vai Trò Kỹ Thuật & Danh Sách 6 Thiết Bị MOXA trong Dự Án
+
+* **Chế độ Access Point (AP - Trạm phát sóng Wi-Fi cố định):** Lắp đặt cố định trên cột xưởng hoặc trần nhà, kết nối cáp LAN về Switch mạng nhà xưởng để phủ sóng Wi-Fi cho toàn khu vực vận hành.
+* **Chế độ Client (Bộ thu Wi-Fi trên xe AGV với Turbo Roaming):** Gắn trực tiếp trên robot AGV E300, cắm dây LAN vào máy tính công nghiệp của robot. Tính năng **Turbo Roaming** giúp robot chuyển vùng giữa các trạm AP chỉ trong **< 150 ms**, đảm bảo xe không bị mất lệnh hay gián đoạn lộ trình khi di chuyển khắp xưởng.
+
+#### Bảng Tổng Hợp 6 Thiết Bị MOXA Dự Án (Serial & Địa Chỉ MAC Thực Tế)
+
+| STT | Số Serial (S/N) | Địa Chỉ MAC Cố Định | IP Mặc Định | Quy Hoạch Đề Xuất (Mạng 192.168.31.x) |
+| :---: | :--- | :--- | :--- | :--- |
+| **01** | `TBBFQ1015595` | `00:90:E8:AA:B8:82` | 192.168.127.253 | **AP 01:** `192.168.31.251` |
+| **02** | `TBZJQ1006012` | `00:90:E8:8F:CE:AB` | 192.168.127.253 | **AP 02:** `192.168.31.252` |
+| **03** | `TBZJQ1005718` | `00:90:E8:8F:CD:82` | 192.168.127.253 | **AP 03:** `192.168.31.253` |
+| **04** | `TBBBQ1005144` | `00:90:E8:A4:6B:8D` | 192.168.127.253 | **Client AGV 01:** `192.168.31.254` |
+| **05** | `TBACQ1029625` | `00:90:E8:95:F0:70` | 192.168.127.253 | **Client AGV 02:** `192.168.31.255` |
+| **06** | `TBZCQ1018491` | `00:90:E8:87:EA:83` | 192.168.127.253 | **Dự phòng / AP 04:** `192.168.31.256` |
+
+> ⚠️ **LƯU Ý PHẦN CỨNG BẮT BUỘC TRƯỚC KHI CẤP NGUỒN:**
+> * **Phải vặn đủ 2 Anten RP-SMA** vào cổng `ANT1` và `ANT2` trước khi cắm nguồn điện. Tuyệt đối không bật nguồn khi chưa gắn anten để tránh cháy tầng công suất phát RF.
+> * **Nguồn cấp:** 9 - 30 VDC (dùng jack terminal 3 chân V+, V-, Ground).
+
+### 11.2. Kết Nối Ban Đầu & Đăng Nhập Trang Quản Trị Web MOXA
+
+1. Cắm cáp mạng RJ45 từ cổng **LAN** của MOXA vào cổng mạng của Laptop.
+2. Trên Laptop, đặt IP tĩnh cho card mạng:
+   * IP Address: `192.168.127.100`
+   * Subnet Mask: `255.255.255.0`
+3. Mở trình duyệt Web (Edge hoặc Chrome), truy cập: **`https://192.168.127.253/`**
+4. Trình duyệt hiện cảnh báo chứng chỉ SSL ➔ Bấm **Advanced ➔ Proceed to 192.168.127.253 (unsafe)**.
+5. Đăng nhập mặc định của nhà máy:
+   * **Account name:** `admin`
+   * **Password:** `moxa`
+
+![Giao diện Trang chủ MOXA AWK-1137C-EU](images/moxa_step0_home.png)
+*Hình 11.1: Giao diện Trang chủ Web Quản trị MOXA AWK-1137C-EU với nút Quick Setup*
+
+### 11.3. Quy Trình Cài Đặt Từng Bước Bằng Quick Setup Wizard
+
+#### Bước 1: Cài Đặt Thông Tin Thiết Bị & Địa Chỉ IP (Device Info & IP Settings)
+Bấm vào nút màu xanh **`Quick Setup`** tại trang chủ:
+* **Device name:** Đặt tên thiết bị (Ví dụ: `MOXA_AP_01` nếu làm trạm phát, hoặc `MOXA_AGV_01` nếu lắp trên robot).
+* **Time zone:** Chọn `(GMT+07:00) Bangkok, Hanoi, Jakarta`.
+* **IP Settings:**
+  * *IP address assignment:* Chọn **Static** (IP tĩnh cố định).
+  * *IP address:* Nhập địa chỉ IP mạng xưởng (Ví dụ: `192.168.31.251` cho AP 01).
+  * *Subnet mask:* `255.255.255.0`
+  * *Gateway:* `192.168.31.1` (IP Router mạng xưởng).
+* **User Settings:** Bỏ trống các ô mật khẩu nếu muốn giữ nguyên mặc định `moxa`.
+
+![Màn hình Quick Setup Bước 1](images/moxa_step1_ip.png)
+*Hình 11.2: Màn hình Quick Setup Bước 1 - Device Info & IP Settings*
+
+👉 Bấm nút **`Next`** ở góc dưới bên trái.
+
+#### Bước 2-1: Cài Đặt Cấu Hình Wi-Fi (Wi-Fi Settings)
+Tại màn hình Bước 2-1:
+* Xuất hiện 2 nút: **`Manual`** và **`AeroMag`**.
+
+![Màn hình Quick Setup Bước 2-1](images/moxa_step2_wifi.png)
+*Hình 11.3: Màn hình Quick Setup Bước 2-1 - Bấm nút Manual để cài đặt tham số Wi-Fi*
+
+![Màn hình chi tiết Basic Settings và RF Settings](images/moxa_step2_detail.png)
+*Hình 11.4: Màn hình chi tiết Basic Settings & RF Settings sau khi bấm nút Manual*
+
+**Giải nghĩa các trường cấu hình trên màn hình này:**
+* **`Wireless`:** Giữ nguyên chọn **`Enable`** để kích hoạt thu/phát sóng vô tuyến.
+* **`Operation mode`:** Chọn vai trò của thiết bị Moxa:
+  * Chọn **`Client`**: Nếu cục Moxa này **lắp trên thân xe robot AGV E300** để thu sóng Wi-Fi từ xưởng cắm vào bo điều khiển robot.
+  * Chọn **`Access Point (AP)`**: Nếu cục Moxa này đặt cố định trên cột/trần xưởng để **phát sóng Wi-Fi**.
+* **`SSID` & Nút `Site Survey`:**
+  * *Nếu là Client (thu sóng trên xe AGV):* Nhập tên Wi-Fi xưởng, hoặc bấm ngay vào nút **`Site Survey`** bên cạnh để Moxa tự quét các trạm phát trong xưởng và chọn kết nối nhanh.
+  * *Nếu là Access Point (phát sóng xưởng):* Đặt tên mạng Wi-Fi muốn phát (ví dụ: `AGV_NETWORK_5G`).
+* **`RF type`:** Chuẩn phát sóng:
+  * Mặc định là `B/G/N Mixed` (băng tần 2.4 GHz).
+  * **Khuyên dùng:** Nếu mạng xưởng chạy 5GHz, hãy chuyển sang chuẩn 5GHz (như `A/N Mixed`) để AGV chạy ổn định, tốc độ cao và không bị can nhiễu bởi motor biến tần trong xưởng.
+
+👉 Sau khi chọn xong thông số, bấm nút **`Next`** ở góc dưới bên trái để chuyển sang bước **2-2. Security**.
+
+#### Bước 2-2: Cài Đặt Bảo Mật Không Dây (Security Settings)
+![Màn hình Quick Setup Bước 2-2: Wi-Fi Security](images/moxa_step2_security.png)
+*Hình 11.5: Màn hình Quick Setup Bước 2-2 - Wi-Fi Security (Nhập Passphrase Wi-Fi)*
+
+* **Security mode:** Giữ nguyên **`WPA2`**.
+* **WPA type:** Giữ nguyên **`Personal`** (chuẩn WPA2-PSK an toàn).
+* **Encryption method:** Giữ nguyên **`AES`** (chuẩn mã hóa phần cứng nhanh nhất, không gây trễ ping mạng).
+* **EAPOL version:** Giữ nguyên **`1`**.
+* **Passphrase:** Nhập mật khẩu Wi-Fi của xưởng (từ 8 đến 63 ký tự, phải khớp với mật khẩu của trạm phát Wi-Fi xưởng).
+
+👉 Sau khi nhập xong mật khẩu, bấm nút **`Next`** ở góc dưới bên trái.
+
+#### Bước 2-3: Cấu Hình Turbo Roaming (Chuyển Vùng Siêu Tốc Cho Robot AGV)
+![Màn hình Quick Setup Bước 2-3: Client-Based Turbo Roaming](images/moxa_step2_roaming.png)
+*Hình 11.6: Màn hình Quick Setup Bước 2-3 - Cấu hình Turbo Roaming & Danh sách kênh quét (Scan Channel)*
+
+* **Turbo Roaming:** Tích chọn **`[x] Enable`** (bắt buộc bật).
+* **Danh sách kênh quét (Scan Channel 1 đến 11):**
+  * Mặc định đang chọn: `Scan Channel 1 = 6`.
+  * *Tối ưu hóa đa trạm phát (AP) trong xưởng:* Nếu xưởng lắp nhiều trạm AP ở các kênh khác nhau (ví dụ: kênh 1, 6, 11), anh cài:
+    * `Scan Channel 1`: `1`
+    * `Scan Channel 2`: `6`
+    * `Scan Channel 3`: `11`
+    * Các ô còn lại để `Not Scanning`.
+    *(Moxa sẽ chỉ quét 3 kênh này trong < 50ms và nhảy trạm tức thì khi xe di chuyển qua lại giữa các khu vực xưởng).*
+  * *Nếu xưởng chỉ có 1 bộ phát:* Giữ nguyên mặc định (kênh 6).
+
+👉 Bấm nút **`Next`** ở góc dưới bên trái.
+
+#### Bước 3: Cài Đặt Cổng Nối Tiếp (Serial Settings)
+![Màn hình Quick Setup Bước 3: Serial Settings](images/moxa_step3_serial.png)
+*Hình 11.7: Màn hình Quick Setup Bước 3 - Serial Settings (Cấu hình cổng truyền thông nối tiếp RS-232)*
+
+* **Vai trò trong hệ thống AGV E300:** Robot AGV E300 giao tiếp với Moxa hoàn toàn qua cáp mạng LAN Ethernet (RJ45), không sử dụng cổng Serial COM này.
+* **Thao tác khuyến nghị:**
+  * Giữ nguyên toàn bộ giá trị mặc định của nhà sản xuất (`Serial Interface: Enable`, `Real COM Mode`, `Baud rate: 115200`).
+  * *(Tùy chọn):* Có thể tích chọn `Disable` ở mục `Serial Interface` nếu muốn tắt cổng này.
+
+👉 Bấm nút **`Next`** ở góc dưới bên trái để sang bước cuối cùng.
+
+#### Bước 4: Kiểm Tra Lại Cấu Hình (Review Settings) & Lưu Vĩnh Viễn
+![Màn hình Quick Setup Bước 4: Review Settings](images/moxa_step4_review.png)
+*Hình 11.8: Màn hình Quick Setup Bước 4 - Review Settings (Kiểm tra lại toàn bộ cấu hình)*
+
+* **Đối chiếu các mục quan trọng:**
+  * `Operation mode: Client` (chuẩn bộ thu Wi-Fi trên xe AGV).
+  * `SSID: Nokia` (tên Wi-Fi xưởng).
+  * `Security: WPA2 Personal AES`.
+  * `Turbo Roaming: ENABLE` (chuyển vùng siêu tốc đã bật).
+* **Ý nghĩa 2 nút bấm ở cuối trang:**
+  * **Nút `Submit`:** Chỉ lưu tạm vào RAM (tắt nguồn sẽ mất cấu hình).
+  * **Nút `Save and Restart` (KHUYÊN DÙNG BẤM NÚT NÀY):** Thiết bị sẽ **tự động ghi toàn bộ cấu hình vĩnh viễn vào bộ nhớ Flash ROM và tự khởi động lại module ngay lập tức**. Đây là cách nhanh nhất và chuẩn xác nhất để hoàn tất!
+
+### 11.4. BƯỚC SỐNG CÒN CỦA MOXA: LƯU CẤU HÌNH VÀO FLASH & KHỞI ĐỘNG LẠI
+
+> 🔥 **CẢNH BÁO QUAN TRỌNG:**
+> Thiết bị MOXA chỉ mới ghi cấu hình vào bộ nhớ RAM tạm thời khi bấm *Activate*. **Nếu tắt nguồn/rút điện, cấu hình sẽ bị mất hoàn toàn!**
+> Kỹ thuật viên **bắt buộc phải thực hiện 2 thao tác sau trên thanh Menu bên trái**:
+> 1. Nhìn cột menu bên trái, bấm vào mục: **`Save Configuration` ➔ Bấm nút `Save`** (chờ thanh tiến trình lưu vào bộ nhớ Flash hoàn tất 100%).
+> 2. Bấm tiếp vào mục: **`Restart` ➔ Bấm nút `Restart`** để module MOXA nạp lại cấu hình mới.
+
+Sau khi khởi động lại, anh cắm Moxa vào switch mạng xưởng và truy cập vào thiết bị bằng địa chỉ IP tĩnh mới (Ví dụ: `https://192.168.31.251/`).
+
+---
+
 *(Tài liệu chuẩn hóa kỹ thuật và tối ưu vận hành AGV E300 - Bản quyền ESATECH Automation Systems © 2026).*
