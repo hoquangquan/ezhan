@@ -1182,14 +1182,17 @@
     </ul>
 
     <h4>Bảng Tổng Hợp 6 Thiết Bị MOXA Dự Án (Serial & Địa Chỉ MAC Thực Tế)</h4>
+    <p>Hệ thống Wi-Fi công nghiệp của dự án bao gồm <strong>01 Trạm phát Master (MOXA AWK-1131A)</strong> phát sóng xưởng (SSID: <code>ESATECH_ROBOT</code>, Kênh 6, WPA2-Personal AES: <code>168154727ESA</code>, IP: <code>192.168.127.1</code> hoặc <code>192.168.127.250</code>) và <strong>06 Thiết bị thu sóng (MOXA AWK-1137C-EU)</strong> cấu hình ở chế độ <strong>Client</strong> gắn trên AGV hoặc thiết bị trạm thuộc dải mạng <code>192.168.127.x/24</code>:</p>
+
     <table>
       <thead>
         <tr>
-          <th style="width: 8%;">STT</th>
-          <th style="width: 22%;">Số Serial (S/N)</th>
-          <th style="width: 25%;">Địa Chỉ MAC Cố Định</th>
-          <th style="width: 22%;">IP Mặc Định</th>
-          <th style="width: 23%;">Quy Hoạch Đề Xuất (Mạng 192.168.31.x)</th>
+          <th style="width: 6%;">STT</th>
+          <th style="width: 18%;">Số Serial (S/N)</th>
+          <th style="width: 22%;">Địa Chỉ MAC Cố Định</th>
+          <th style="width: 18%;">Tên Thiết Bị</th>
+          <th style="width: 24%;">IP Tĩnh Cấu Hình (192.168.127.x)</th>
+          <th style="width: 12%;">Chế Độ</th>
         </tr>
       </thead>
       <tbody>
@@ -1197,50 +1200,73 @@
           <td><strong>01</strong></td>
           <td><code>TBBFQ1015595</code></td>
           <td><code>00:90:E8:AA:B8:82</code></td>
-          <td>192.168.127.253</td>
-          <td><span class="badge badge-blue">AP 01</span> <code>192.168.31.251</code></td>
+          <td><code>MOXA_CLIENT_01</code></td>
+          <td><span class="badge badge-green">Client 01</span> <code>192.168.127.11</code></td>
+          <td>Client</td>
         </tr>
         <tr>
           <td><strong>02</strong></td>
           <td><code>TBZJQ1006012</code></td>
           <td><code>00:90:E8:8F:CE:AB</code></td>
-          <td>192.168.127.253</td>
-          <td><span class="badge badge-blue">AP 02</span> <code>192.168.31.252</code></td>
+          <td><code>MOXA_CLIENT_02</code></td>
+          <td><span class="badge badge-green">Client 02</span> <code>192.168.127.12</code></td>
+          <td>Client</td>
         </tr>
         <tr>
           <td><strong>03</strong></td>
           <td><code>TBZJQ1005718</code></td>
           <td><code>00:90:E8:8F:CD:82</code></td>
-          <td>192.168.127.253</td>
-          <td><span class="badge badge-blue">AP 03</span> <code>192.168.31.253</code></td>
+          <td><code>MOXA_CLIENT_03</code></td>
+          <td><span class="badge badge-green">Client 03</span> <code>192.168.127.13</code></td>
+          <td>Client</td>
         </tr>
         <tr>
           <td><strong>04</strong></td>
           <td><code>TBBBQ1005144</code></td>
           <td><code>00:90:E8:A4:6B:8D</code></td>
-          <td>192.168.127.253</td>
-          <td><span class="badge badge-green">Client AGV 01</span> <code>192.168.31.254</code></td>
+          <td><code>MOXA_CLIENT_04</code></td>
+          <td><span class="badge badge-green">Client 04</span> <code>192.168.127.14</code></td>
+          <td>Client</td>
         </tr>
         <tr>
           <td><strong>05</strong></td>
           <td><code>TBACQ1029625</code></td>
           <td><code>00:90:E8:95:F0:70</code></td>
-          <td>192.168.127.253</td>
-          <td><span class="badge badge-green">Client AGV 02</span> <code>192.168.31.255</code></td>
+          <td><code>MOXA_CLIENT_05</code></td>
+          <td><span class="badge badge-green">Client 05</span> <code>192.168.127.15</code></td>
+          <td>Client</td>
         </tr>
         <tr>
           <td><strong>06</strong></td>
           <td><code>TBZCQ1018491</code></td>
           <td><code>00:90:E8:87:EA:83</code></td>
-          <td>192.168.127.253</td>
-          <td><span class="badge badge-amber">Dự phòng / AP 04</span> <code>192.168.31.256</code></td>
+          <td><code>MOXA_CLIENT_06</code></td>
+          <td><span class="badge badge-green">Client 06</span> <code>192.168.127.16</code></td>
+          <td>Client</td>
+        </tr>
+        <tr>
+          <td><strong>--</strong></td>
+          <td><em>Robot AGV E300</em></td>
+          <td><em>Bo điều khiển IPC</em></td>
+          <td><code>AGV_E300_01</code></td>
+          <td><span class="badge badge-blue">Robot AGV</span> <code>192.168.127.7</code></td>
+          <td>Thiết bị xe</td>
+        </tr>
+        <tr>
+          <td><strong>--</strong></td>
+          <td><em>Laptop Kỹ Sư</em></td>
+          <td><em>Card LAN/Wi-Fi</em></td>
+          <td><code>ENGINEER_PC</code></td>
+          <td><span class="badge badge-amber">Laptop PC</span> <code>192.168.127.100</code></td>
+          <td>Điều khiển</td>
         </tr>
       </tbody>
     </table>
 
     <div class="alert alert-warning">
-      <strong>⚠️ LƯU Ý PHẦN CỨNG BẮT BUỘC TRƯỚC KHI CẤP NGUỒN:</strong>
+      <strong>⚠️ LƯU Ý PHẦN CỨNG & XUNG ĐỘT IP BẮT BUỘC TRƯỚC KHI CẤP NGUỒN:</strong>
       <ul>
+        <li><strong>Không giữ lại IP mặc định <code>192.168.127.253</code>:</strong> Cần đổi IP cho từng bộ Moxa ngay khi cấu hình theo bảng trên để tránh xung đột IP gây ngắt quãng mạng không dây.</li>
         <li><strong>Phải lắp đủ 2 Anten RP-SMA</strong> vào cổng <code>ANT1</code> và <code>ANT2</code> trước khi cắm nguồn điện. Nếu cấp nguồn khi chưa vặn anten, công suất sóng phản xạ ngược có thể làm hỏng tầng khuếch đại công suất RF của thiết bị.</li>
         <li><strong>Nguồn cấp:</strong> 9 đến 30 VDC (dùng jack terminal 3 chân V+, V-, Ground). Có thể đấu nguồn từ ắc quy/nguồn phụ xe AGV hoặc adapter công nghiệp.</li>
       </ul>
@@ -1279,10 +1305,9 @@
       <li><strong>IP Settings:</strong>
         <ul>
           <li><em>IP address assignment:</em> Chọn <strong>Static</strong> (IP tĩnh cố định).</li>
-          <li><em>IP address:</em> Nhập địa chỉ IP thuộc dải mạng nhà máy (Ví dụ: <code>192.168.31.251</code> cho AP 1).<br>
-          <em>*Lưu ý: Nếu đang cắm cáp LAN trực tiếp cấu hình thử nghiệm, có thể giữ nguyên <code>192.168.127.253</code> và đổi sang dải mạng xưởng ở bước hoàn tất cuối cùng.</em></li>
+          <li><em>IP address:</em> Nhập địa chỉ IP tương ứng theo bảng quy hoạch (Ví dụ: <code>192.168.127.11</code> cho Client 01).</li>
           <li><em>Subnet mask:</em> <code>255.255.255.0</code></li>
-          <li><em>Gateway:</em> <code>192.168.31.1</code> (Địa chỉ router mạng xưởng).</li>
+          <li><em>Gateway:</em> <code>192.168.127.1</code> (Địa chỉ IP của Trạm phát Master AWK-1131A).</li>
         </ul>
       </li>
       <li><strong>User Settings:</strong> Bỏ trống các ô mật khẩu nếu muốn giữ nguyên mật khẩu mặc định (<code>moxa</code>).</li>

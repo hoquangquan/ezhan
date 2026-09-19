@@ -453,18 +453,24 @@ Thiết bị **MOXA AWK-1137C-EU** là dòng Access Point / Bridge / Client Wi-F
 * **Chế độ Access Point (AP - Trạm phát sóng Wi-Fi cố định):** Lắp đặt cố định trên cột xưởng hoặc trần nhà, kết nối cáp LAN về Switch mạng nhà xưởng để phủ sóng Wi-Fi cho toàn khu vực vận hành.
 * **Chế độ Client (Bộ thu Wi-Fi trên xe AGV với Turbo Roaming):** Gắn trực tiếp trên robot AGV E300, cắm dây LAN vào máy tính công nghiệp của robot. Tính năng **Turbo Roaming** giúp robot chuyển vùng giữa các trạm AP chỉ trong **< 150 ms**, đảm bảo xe không bị mất lệnh hay gián đoạn lộ trình khi di chuyển khắp xưởng.
 
-#### Bảng Tổng Hợp 6 Thiết Bị MOXA Dự Án (Serial & Địa Chỉ MAC Thực Tế)
+#### Bảng Tổng Hợp & Quy Hoạch 6 Thiết Bị MOXA AWK-1137C (Kết Nối Trạm Chính AWK-1131A)
 
-| STT | Số Serial (S/N) | Địa Chỉ MAC Cố Định | IP Mặc Định | Quy Hoạch Đề Xuất (Mạng 192.168.31.x) |
-| :---: | :--- | :--- | :--- | :--- |
-| **01** | `TBBFQ1015595` | `00:90:E8:AA:B8:82` | 192.168.127.253 | **AP 01:** `192.168.31.251` |
-| **02** | `TBZJQ1006012` | `00:90:E8:8F:CE:AB` | 192.168.127.253 | **AP 02:** `192.168.31.252` |
-| **03** | `TBZJQ1005718` | `00:90:E8:8F:CD:82` | 192.168.127.253 | **AP 03:** `192.168.31.253` |
-| **04** | `TBBBQ1005144` | `00:90:E8:A4:6B:8D` | 192.168.127.253 | **Client AGV 01:** `192.168.31.254` |
-| **05** | `TBACQ1029625` | `00:90:E8:95:F0:70` | 192.168.127.253 | **Client AGV 02:** `192.168.31.255` |
-| **06** | `TBZCQ1018491` | `00:90:E8:87:EA:83` | 192.168.127.253 | **Dự phòng / AP 04:** `192.168.31.256` |
+* **Trạm phát Wi-Fi Master (AP):** **MOXA AWK-1131A** (`192.168.127.1` hoặc `.250`), SSID: `ESATECH_ROBOT`, Kênh 6 (20MHz), Bảo mật WPA2-Personal AES: `168154727ESA`.
+* **6 Bộ thu sóng (Client):** **MOXA AWK-1137C-EU** cấu hình chế độ **Client** kết nối về SSID `ESATECH_ROBOT`:
 
-> ⚠️ **LƯU Ý PHẦN CỨNG BẮT BUỘC TRƯỚC KHI CẤP NGUỒN:**
+| STT | Số Serial (S/N) | Địa Chỉ MAC Cố Định | IP Mặc Định | Tên Thiết Bị Gợi Ý | Quy Hoạch IP Tĩnh Thực Tế (Dải 192.168.127.x) | Chế Độ (Mode) |
+| :---: | :--- | :--- | :---: | :--- | :--- | :---: |
+| **01** | `TBBFQ1015595` | `00:90:E8:AA:B8:82` | 192.168.127.253 | `MOXA_CLIENT_01` | **Client 01:** `192.168.127.11` | Client |
+| **02** | `TBZJQ1006012` | `00:90:E8:8F:CE:AB` | 192.168.127.253 | `MOXA_CLIENT_02` | **Client 02:** `192.168.127.12` | Client |
+| **03** | `TBZJQ1005718` | `00:90:E8:8F:CD:82` | 192.168.127.253 | `MOXA_CLIENT_03` | **Client 03:** `192.168.127.13` | Client |
+| **04** | `TBBBQ1005144` | `00:90:E8:A4:6B:8D` | 192.168.127.253 | `MOXA_CLIENT_04` | **Client 04:** `192.168.127.14` | Client |
+| **05** | `TBACQ1029625` | `00:90:E8:95:F0:70` | 192.168.127.253 | `MOXA_CLIENT_05` | **Client 05:** `192.168.127.15` | Client |
+| **06** | `TBZCQ1018491` | `00:90:E8:87:EA:83` | 192.168.127.253 | `MOXA_CLIENT_06` | **Client 06:** `192.168.127.16` | Client |
+| **--** | *Robot AGV E300* | *Bo điều khiển IPC* | -- | `AGV_E300_01` | **Robot AGV:** `192.168.127.7` | Thiết bị xe |
+| **--** | *Laptop kỹ sư* | *Card mạng RJ45/Wi-Fi*| -- | `ENGINEER_PC` | **Laptop:** `192.168.127.100` | Điều khiển |
+
+> ⚠️ **LƯU Ý PHẦN CỨNG & XUNG ĐỘT IP BẮT BUỘC:**
+> * **Không giữ IP mặc định `192.168.127.253`:** Cần đổi IP cho từng thiết bị theo bảng trên ngay khi đăng nhập để tránh 2 thiết bị cắm vào cùng mạng bị xung đột IP gây chập chờn.
 > * **Phải vặn đủ 2 Anten RP-SMA** vào cổng `ANT1` và `ANT2` trước khi cắm nguồn điện. Tuyệt đối không bật nguồn khi chưa gắn anten để tránh cháy tầng công suất phát RF.
 > * **Nguồn cấp:** 9 - 30 VDC (dùng jack terminal 3 chân V+, V-, Ground).
 
@@ -474,7 +480,7 @@ Thiết bị **MOXA AWK-1137C-EU** là dòng Access Point / Bridge / Client Wi-F
 2. Trên Laptop, đặt IP tĩnh cho card mạng:
    * IP Address: `192.168.127.100`
    * Subnet Mask: `255.255.255.0`
-3. Mở trình duyệt Web (Edge hoặc Chrome), truy cập: **`https://192.168.127.253/`**
+3. Mở trình duyệt Web (Edge, Chrome, Cốc Cốc), truy cập: **`https://192.168.127.253/`**
 4. Trình duyệt hiện cảnh báo chứng chỉ SSL ➔ Bấm **Advanced ➔ Proceed to 192.168.127.253 (unsafe)**.
 5. Đăng nhập mặc định của nhà máy:
    * **Account name:** `admin`
@@ -487,13 +493,13 @@ Thiết bị **MOXA AWK-1137C-EU** là dòng Access Point / Bridge / Client Wi-F
 
 #### Bước 1: Cài Đặt Thông Tin Thiết Bị & Địa Chỉ IP (Device Info & IP Settings)
 Bấm vào nút màu xanh **`Quick Setup`** tại trang chủ:
-* **Device name:** Đặt tên thiết bị (Ví dụ: `MOXA_AP_01` nếu làm trạm phát, hoặc `MOXA_AGV_01` nếu lắp trên robot).
+* **Device name:** Đặt tên thiết bị (Ví dụ: `MOXA_CLIENT_01` cho con số 1).
 * **Time zone:** Chọn `(GMT+07:00) Bangkok, Hanoi, Jakarta`.
 * **IP Settings:**
   * *IP address assignment:* Chọn **Static** (IP tĩnh cố định).
-  * *IP address:* Nhập địa chỉ IP mạng xưởng (Ví dụ: `192.168.31.251` cho AP 01).
+  * *IP address:* Nhập địa chỉ IP tương ứng (Ví dụ: `192.168.127.11` cho Client 01).
   * *Subnet mask:* `255.255.255.0`
-  * *Gateway:* `192.168.31.1` (IP Router mạng xưởng).
+  * *Gateway:* `192.168.127.1` (IP Trạm phát Master 1131A).
 * **User Settings:** Bỏ trống các ô mật khẩu nếu muốn giữ nguyên mặc định `moxa`.
 
 ![Màn hình Quick Setup Bước 1](images/moxa_step1_ip.png)
