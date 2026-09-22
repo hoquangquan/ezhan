@@ -457,18 +457,23 @@ Hệ thống mạng không dây nhà xưởng phục vụ hạm đội Robot AGV
   * **02 Bộ TP-LINK TL-AP1900DG** (Băng thông cao AC1900 3x3 MIMO, dải nguồn công nghiệp 12-48VDC).
 * **Cơ chế Chuyển vùng (Roaming):** Cả 5 trạm phát (1 Moxa + 4 TP-Link) đều phát **CHUNG TÊN SSID: `ESATECH_ROBOT`** và **CHUNG MẬT KHẨU: `168154727ESA`**. Robot AGV E300 và các hộp gọi khi di chuyển/hoạt động khắp xưởng sẽ **tự động bắt trạm phát gần nhất có sóng mạnh nhất** mà không bị ngắt quãng tín hiệu.
 
-#### Bảng Quy Hoạch IP Hạ Tầng Wi-Fi Phủ Sóng Xưởng (Dải Mạng 192.168.127.x)
+#### Bảng Quy Hoạch IP Thực Tế Toàn Bộ Thiết Bị Dự Án (Dải Mạng 192.168.127.x)
 
-| STT | Thiết Bị | Model | MAC / S/N | IP Tĩnh Quản Trị | Chế Độ (Mode) | DHCP Server | Vị Trí Lắp Đặt |
-| :---: | :--- | :--- | :--- | :---: | :---: | :---: | :--- |
-| **AP0** | **Master AP** | **MOXA AWK-1131A** | *(Tem Moxa)* | **`192.168.127.1`** | **AP Master** | **BẬT (Enable)** | Trung tâm xưởng / Cạnh Server |
-| **AP1** | **Trạm phụ 1** | **TP-LINK TL-AP300DG** | `98:97:CC:E2:22:3B` | **`192.168.127.2`** | **AP / Repeater** | **TẮT (Disable)** | Khu vực Cột xưởng 1 (Đầu xưởng) |
-| **AP2** | **Trạm phụ 2** | **TP-LINK TL-AP300DG** | `(Bộ số 2)` | **`192.168.127.3`** | **AP / Repeater** | **TẮT (Disable)** | Khu vực Cột xưởng 2 (Giữa xưởng) |
-| **AP3** | **Trạm phụ 3** | **TP-LINK TL-AP1900DG** | `3C:6A:48:2E:4F:3F` | **`192.168.127.4`** | **AP / Repeater** | **TẮT (Disable)** | Khu vực Cột xưởng 3 (Kho hàng) |
-| **AP4** | **Trạm phụ 4** | **TP-LINK TL-AP1900DG** | `(Bộ số 2)` | **`192.168.127.5`** | **AP / Repeater** | **TẮT (Disable)** | Khu vực Cột xưởng 4 (Cuối xưởng) |
-| **--** | *Robot AGV E300* | *Card Wi-Fi tích hợp* | -- | **`192.168.127.7`** | *Client nhận Wi-Fi* | -- | Di chuyển tự do khắp xưởng |
-| **--** | *Hộp gọi Callbox* | *Module Wi-Fi trạm* | -- | **`192.168.127.21`** | *Client nhận Wi-Fi* | -- | Lắp tại các bàn thao tác |
-| **--** | *Server / Laptop* | *Card mạng LAN RJ45* | -- | **`192.168.127.100`** | *Quản trị / RCS V2* | -- | Máy chủ Ezhan Dispatch |
+| STT | Thiết Bị | Model Phần Cứng | Địa Chỉ MAC / S/N | IP Thực Tế Vận Hành | Cổng Quản Trị / Dịch Vụ | Vai Trò & Vị Trí Lắp Đặt |
+| :---: | :--- | :--- | :--- | :---: | :---: | :--- |
+| **00** | **Master AP** | **MOXA AWK-1131A** | `06:90:E8:AC:23:C9` | **`192.168.127.1`** | `https://192.168.127.1` | **Trạm phát Master (DHCP Server)** - Treo trung tâm xưởng |
+| **01** | **Trạm phụ 1** | **TP-LINK TL-AP300DG** | `98:97:CC:E2:22:3B` | **`192.168.127.55`** | `http://192.168.127.55` | **Kích sóng WDS** - Cột xưởng 1 (Đầu xưởng) |
+| **02** | **Trạm phụ 2** | **TP-LINK TL-AP300DG** | `98:97:CC:E2:22:BE` | **`192.168.127.78`** | `http://192.168.127.78` | **Kích sóng WDS** - Cột xưởng 2 (Trạm sạc xe) |
+| **03** | **Trạm phụ 3** | **TP-LINK TL-AP1900DG** | `3C:6A:48:2E:4F:3F` | **`192.168.127.72`** | `http://192.168.127.72` | **Kích sóng WDS 3x3 MIMO** - Cột xưởng 3 (Kho hàng) |
+| **04** | **Trạm phụ 4** | **TP-LINK TL-AP1900DG** | `(Bộ số 2)` | **`192.168.127.88`** | `http://192.168.127.88` | **Kích sóng WDS 3x3 MIMO** - Cột xưởng 4 (Cuối xưởng) |
+| **--** | **Máy Chủ PC** | **Server / Laptop Điều Phối** | *Card LAN RJ45* | **`192.168.127.77`** | `http://127.0.0.1/` *(Port 80/8765)* | **Máy chủ Ezhan RCS V2** - Điều hành và quản lý AGV |
+| **--** | **Robot AGV** | **Robot AGV E300 (AMR003)** | *Wi-Fi tích hợp* | **`192.168.127.53`** | `http://192.168.127.53:9999/#/` | **Xe tự hành AGV E300** - Nhận nhiệm vụ và chạy tự động |
+| **--** | **Callbox 01** | **Hộp Gọi Cứng 3 Nút (K1-K3)** | *Module Wi-Fi* | **`192.168.127.79`** | WebSocket Port 8765 | Hộp gọi trạm thao tác số 1 |
+| **--** | **Callbox 02** | **Hộp Gọi Cứng 3 Nút (K1-K3)** | *Module Wi-Fi* | **`192.168.127.96`** | WebSocket Port 8765 | Hộp gọi trạm thao tác số 2 |
+| **--** | **Callbox 03** | **Hộp Gọi Cứng 3 Nút (K1-K3)** | *Module Wi-Fi* | **`192.168.127.87`** | WebSocket Port 8765 | Hộp gọi trạm thao tác số 3 |
+| **--** | **Callbox 04** | **Hộp Gọi Cứng 3 Nút (K1-K3)** | *Module Wi-Fi* | **`192.168.127.98`** | WebSocket Port 8765 | Hộp gọi trạm thao tác số 4 |
+| **--** | **Callbox 05** | **Hộp Gọi Cứng 3 Nút (K1-K3)** | *Module Wi-Fi* | **`192.168.127.57`** | WebSocket Port 8765 | Hộp gọi trạm thao tác số 5 |
+| **--** | **Callbox 06** | **Hộp Gọi Cứng 3 Nút (K1-K3)** | *Module Wi-Fi* | **`192.168.127.86`** | WebSocket Port 8765 | Hộp gọi trạm thao tác số 6 |
 
 > ⚠️ **NGUYÊN TẮC SỐNG CÒN KHI LẮP ĐẶT ĐA TRẠM PHÁT (MULTI-AP):**
 > 1. **Duy nhất Master MOXA 1131A bật DHCP Server:** Cả 4 bộ TP-Link bắt buộc phải **TẮT DHCP Server (Disable)** để toàn bộ xưởng nhận dải IP thống nhất từ trạm Master, tránh xung đột IP (IP Collision).

@@ -1181,84 +1181,143 @@
       <li><strong>Mô hình 2 - Bộ thu Wi-Fi Gắn trên Robot (Client Mode với Turbo Roaming):</strong> Gắn trực tiếp trong khoang điều khiển của AGV E300, cắm dây LAN vào bo máy tính công nghiệp của xe. Tính năng <strong>Turbo Roaming</strong> giúp xe tự động chuyển vùng giữa các trạm AP chỉ trong <strong>&lt; 150 ms</strong>, đảm bảo robot không bao giờ bị giật khựng hay rớt lệnh điều phối khi di chuyển qua các khu vực xưởng.</li>
     </ul>
 
-    <h4>Bảng Tổng Hợp Thiết Bị Hạ Tầng Wi-Fi Dự Án (Trạm Master MOXA 1131A & 4 Bộ Thu TP-LINK)</h4>
-    <p>Hệ thống Wi-Fi công nghiệp của dự án bao gồm <strong>01 Trạm phát Master (MOXA AWK-1131A)</strong> phát sóng toàn xưởng (SSID: <code>ESATECH_ROBOT</code>, Kênh 6, WPA2-Personal AES: <code>168154727ESA</code>, IP: <code>192.168.127.1</code>) và <strong>04 Thiết bị thu sóng TP-LINK Công Nghiệp (2 bộ TL-AP300DG & 2 bộ TL-AP1900DG)</strong> cấu hình ở chế độ <strong>Client (客户端)</strong> gắn trên robot AGV E300 và trạm gọi:</p>
+    <h4>Bảng Tổng Hợp Địa Chỉ IP Thực Tế 13 Thiết Bị Dự Án (Hạ Tầng Wi-Fi, Máy Chủ, Robot AGV & 6 Hộp Gọi)</h4>
+    <p>Toàn bộ hệ thống truyền thông không dây của nhà máy được đồng bộ trên dải mạng <strong><code>192.168.127.x</code></strong> (Mặt nạ mạng <code>255.255.255.0</code>, Gateway <code>192.168.127.1</code>). Dưới đây là bảng phân bổ địa chỉ IP thực tế chính thức đã triển khai và vận hành:</p>
 
     <table>
       <thead>
         <tr>
           <th style="width: 5%;">STT</th>
-          <th style="width: 20%;">Model Thiết Bị</th>
-          <th style="width: 18%;">Số Serial (S/N)</th>
-          <th style="width: 18%;">Địa Chỉ MAC</th>
-          <th style="width: 15%;">Tên Thiết Bị</th>
-          <th style="width: 14%;">IP Tĩnh Cấu Hình</th>
-          <th style="width: 10%;">Chế Độ</th>
+          <th style="width: 18%;">Thiết Bị</th>
+          <th style="width: 18%;">Model Phần Cứng</th>
+          <th style="width: 17%;">Địa Chỉ MAC / S/N</th>
+          <th style="width: 15%;">IP Thực Tế Vận Hành</th>
+          <th style="width: 14%;">Cổng / Dịch Vụ</th>
+          <th style="width: 13%;">Vai Trò Vận Hành</th>
         </tr>
       </thead>
       <tbody>
+        <!-- MASTER MOXA -->
         <tr style="background-color: #f6ffed;">
-          <td><strong>AP</strong></td>
+          <td><strong>00</strong></td>
+          <td><strong>Master AP</strong></td>
           <td><strong>MOXA AWK-1131A</strong></td>
-          <td><em>(Trạm Master)</em></td>
-          <td><em>(Theo tem AP)</em></td>
-          <td><code>MOXA_MASTER_AP</code></td>
-          <td><span class="badge badge-blue">Master AP</span> <code>192.168.127.1</code></td>
-          <td><strong>AP</strong></td>
+          <td><code>06:90:E8:AC:23:C9</code></td>
+          <td><span class="badge badge-blue">Master AP</span> <strong><code>192.168.127.1</code></strong></td>
+          <td><code>https://192.168.127.1</code></td>
+          <td><strong>Trạm Master (DHCP Server)</strong></td>
         </tr>
+        <!-- 4 TP-LINK REPEATERS -->
         <tr>
           <td><strong>01</strong></td>
-          <td><strong>TP-LINK TL-AP300DG</strong></td>
-          <td><code>1222018000145</code></td>
+          <td><strong>Trạm Phụ 1</strong></td>
+          <td>TP-LINK TL-AP300DG</td>
           <td><code>98:97:CC:E2:22:3B</code></td>
-          <td><code>TPLINK_CLIENT_01</code></td>
-          <td><span class="badge badge-green">Client 01</span> <code>192.168.127.11</code></td>
-          <td>Client</td>
+          <td><span class="badge badge-green">Repeater 1</span> <strong><code>192.168.127.55</code></strong></td>
+          <td><code>http://192.168.127.55</code></td>
+          <td>Kích sóng Cột 1 (Đầu xưởng)</td>
         </tr>
         <tr>
           <td><strong>02</strong></td>
-          <td><strong>TP-LINK TL-AP300DG</strong></td>
-          <td><code>(Bộ số 2)</code></td>
-          <td><code>(Theo tem máy 2)</code></td>
-          <td><code>TPLINK_CLIENT_02</code></td>
-          <td><span class="badge badge-green">Client 02</span> <code>192.168.127.12</code></td>
-          <td>Client</td>
+          <td><strong>Trạm Phụ 2</strong></td>
+          <td>TP-LINK TL-AP300DG</td>
+          <td><code>98:97:CC:E2:22:BE</code></td>
+          <td><span class="badge badge-green">Repeater 2</span> <strong><code>192.168.127.78</code></strong></td>
+          <td><code>http://192.168.127.78</code></td>
+          <td>Kích sóng Cột 2 (Trạm sạc)</td>
         </tr>
         <tr>
           <td><strong>03</strong></td>
-          <td><strong>TP-LINK TL-AP1900DG</strong></td>
-          <td><code>1232312000705</code></td>
+          <td><strong>Trạm Phụ 3</strong></td>
+          <td>TP-LINK TL-AP1900DG</td>
           <td><code>3C:6A:48:2E:4F:3F</code></td>
-          <td><code>TPLINK_CLIENT_03</code></td>
-          <td><span class="badge badge-green">Client 03</span> <code>192.168.127.13</code></td>
-          <td>Client</td>
+          <td><span class="badge badge-green">Repeater 3</span> <strong><code>192.168.127.72</code></strong></td>
+          <td><code>http://192.168.127.72</code></td>
+          <td>Kích sóng 3x3 MIMO (Kho)</td>
         </tr>
         <tr>
           <td><strong>04</strong></td>
-          <td><strong>TP-LINK TL-AP1900DG</strong></td>
-          <td><code>(Bộ số 2)</code></td>
-          <td><code>(Theo tem máy 4)</code></td>
-          <td><code>TPLINK_CLIENT_04</code></td>
-          <td><span class="badge badge-green">Client 04</span> <code>192.168.127.14</code></td>
-          <td>Client</td>
+          <td><strong>Trạm Phụ 4</strong></td>
+          <td>TP-LINK TL-AP1900DG</td>
+          <td><em>(Bộ số 2)</em></td>
+          <td><span class="badge badge-green">Repeater 4</span> <strong><code>192.168.127.88</code></strong></td>
+          <td><code>http://192.168.127.88</code></td>
+          <td>Kích sóng 3x3 MIMO (Cuối xưởng)</td>
         </tr>
-        <tr style="background-color: #f0f5ff;">
-          <td><strong>--</strong></td>
-          <td><em>Robot AGV E300</em></td>
-          <td><em>Bo IPC điều khiển</em></td>
-          <td>--</td>
-          <td><code>AGV_E300_01</code></td>
-          <td><span class="badge badge-blue">Robot AGV</span> <code>192.168.127.7</code></td>
-          <td>Thiết bị</td>
-        </tr>
+        <!-- SERVER PC -->
         <tr style="background-color: #fffbe6;">
           <td><strong>--</strong></td>
-          <td><em>Máy Chủ / Laptop Kỹ Sư</em></td>
-          <td><em>Card LAN RJ45/Wi-Fi</em></td>
-          <td>--</td>
-          <td><code>ENGINEER_PC</code></td>
-          <td><span class="badge badge-amber">Server PC</span> <code>192.168.127.100</code></td>
-          <td>Điều khiển</td>
+          <td><strong>Máy Chủ PC</strong></td>
+          <td>Server / Laptop Điều Phối</td>
+          <td><em>Card LAN RJ45</em></td>
+          <td><span class="badge badge-amber">Server PC</span> <strong><code>192.168.127.77</code></strong></td>
+          <td><code>http://127.0.0.1/</code></td>
+          <td><strong>Máy chủ Ezhan RCS V2</strong></td>
+        </tr>
+        <!-- ROBOT AGV -->
+        <tr style="background-color: #f0f5ff;">
+          <td><strong>--</strong></td>
+          <td><strong>Robot AGV</strong></td>
+          <td>Robot AGV E300 (AMR003)</td>
+          <td><em>Wi-Fi tích hợp</em></td>
+          <td><span class="badge badge-blue">Robot AGV</span> <strong><code>192.168.127.53</code></strong></td>
+          <td><code>http://...:9999/#/</code></td>
+          <td><strong>Xe tự hành vận chuyển hàng</strong></td>
+        </tr>
+        <!-- 6 CALLBOXES -->
+        <tr>
+          <td><strong>CB1</strong></td>
+          <td><strong>Hộp Gọi 01</strong></td>
+          <td>Callbox 3 Nút (K1-K3)</td>
+          <td><em>Module Wi-Fi</em></td>
+          <td><span class="badge badge-purple">Callbox 1</span> <strong><code>192.168.127.79</code></strong></td>
+          <td>WebSocket 8765</td>
+          <td>Trạm thao tác số 1</td>
+        </tr>
+        <tr>
+          <td><strong>CB2</strong></td>
+          <td><strong>Hộp Gọi 02</strong></td>
+          <td>Callbox 3 Nút (K1-K3)</td>
+          <td><em>Module Wi-Fi</em></td>
+          <td><span class="badge badge-purple">Callbox 2</span> <strong><code>192.168.127.96</code></strong></td>
+          <td>WebSocket 8765</td>
+          <td>Trạm thao tác số 2</td>
+        </tr>
+        <tr>
+          <td><strong>CB3</strong></td>
+          <td><strong>Hộp Gọi 03</strong></td>
+          <td>Callbox 3 Nút (K1-K3)</td>
+          <td><em>Module Wi-Fi</em></td>
+          <td><span class="badge badge-purple">Callbox 3</span> <strong><code>192.168.127.87</code></strong></td>
+          <td>WebSocket Port 8765</td>
+          <td>Trạm thao tác số 3</td>
+        </tr>
+        <tr>
+          <td><strong>CB4</strong></td>
+          <td><strong>Hộp Gọi 04</strong></td>
+          <td>Callbox 3 Nút (K1-K3)</td>
+          <td><em>Module Wi-Fi</em></td>
+          <td><span class="badge badge-purple">Callbox 4</span> <strong><code>192.168.127.98</code></strong></td>
+          <td>WebSocket Port 8765</td>
+          <td>Trạm thao tác số 4</td>
+        </tr>
+        <tr>
+          <td><strong>CB5</strong></td>
+          <td><strong>Hộp Gọi 05</strong></td>
+          <td>Callbox 3 Nút (K1-K3)</td>
+          <td><em>Module Wi-Fi</em></td>
+          <td><span class="badge badge-purple">Callbox 5</span> <strong><code>192.168.127.57</code></strong></td>
+          <td>WebSocket Port 8765</td>
+          <td>Trạm thao tác số 5</td>
+        </tr>
+        <tr>
+          <td><strong>CB6</strong></td>
+          <td><strong>Hộp Gọi 06</strong></td>
+          <td>Callbox 3 Nút (K1-K3)</td>
+          <td><em>Module Wi-Fi</em></td>
+          <td><span class="badge badge-purple">Callbox 6</span> <strong><code>192.168.127.86</code></strong></td>
+          <td>WebSocket Port 8765</td>
+          <td>Trạm thao tác số 6</td>
         </tr>
       </tbody>
     </table>
