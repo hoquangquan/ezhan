@@ -1181,94 +1181,94 @@
       <li><strong>Mô hình 2 - Bộ thu Wi-Fi Gắn trên Robot (Client Mode với Turbo Roaming):</strong> Gắn trực tiếp trong khoang điều khiển của AGV E300, cắm dây LAN vào bo máy tính công nghiệp của xe. Tính năng <strong>Turbo Roaming</strong> giúp xe tự động chuyển vùng giữa các trạm AP chỉ trong <strong>&lt; 150 ms</strong>, đảm bảo robot không bao giờ bị giật khựng hay rớt lệnh điều phối khi di chuyển qua các khu vực xưởng.</li>
     </ul>
 
-    <h4>Bảng Tổng Hợp 6 Thiết Bị MOXA Dự Án (Serial & Địa Chỉ MAC Thực Tế)</h4>
-    <p>Hệ thống Wi-Fi công nghiệp của dự án bao gồm <strong>01 Trạm phát Master (MOXA AWK-1131A)</strong> phát sóng xưởng (SSID: <code>ESATECH_ROBOT</code>, Kênh 6, WPA2-Personal AES: <code>168154727ESA</code>, IP: <code>192.168.127.1</code> hoặc <code>192.168.127.250</code>) và <strong>06 Thiết bị thu sóng (MOXA AWK-1137C-EU)</strong> cấu hình ở chế độ <strong>Client</strong> gắn trên AGV hoặc thiết bị trạm thuộc dải mạng <code>192.168.127.x/24</code>:</p>
+    <h4>Bảng Tổng Hợp Thiết Bị Hạ Tầng Wi-Fi Dự Án (Trạm Master MOXA 1131A & 4 Bộ Thu TP-LINK)</h4>
+    <p>Hệ thống Wi-Fi công nghiệp của dự án bao gồm <strong>01 Trạm phát Master (MOXA AWK-1131A)</strong> phát sóng toàn xưởng (SSID: <code>ESATECH_ROBOT</code>, Kênh 6, WPA2-Personal AES: <code>168154727ESA</code>, IP: <code>192.168.127.1</code>) và <strong>04 Thiết bị thu sóng TP-LINK Công Nghiệp (2 bộ TL-AP300DG & 2 bộ TL-AP1900DG)</strong> cấu hình ở chế độ <strong>Client (客户端)</strong> gắn trên robot AGV E300 và trạm gọi:</p>
 
     <table>
       <thead>
         <tr>
-          <th style="width: 6%;">STT</th>
+          <th style="width: 5%;">STT</th>
+          <th style="width: 20%;">Model Thiết Bị</th>
           <th style="width: 18%;">Số Serial (S/N)</th>
-          <th style="width: 22%;">Địa Chỉ MAC Cố Định</th>
-          <th style="width: 18%;">Tên Thiết Bị</th>
-          <th style="width: 24%;">IP Tĩnh Cấu Hình (192.168.127.x)</th>
-          <th style="width: 12%;">Chế Độ</th>
+          <th style="width: 18%;">Địa Chỉ MAC</th>
+          <th style="width: 15%;">Tên Thiết Bị</th>
+          <th style="width: 14%;">IP Tĩnh Cấu Hình</th>
+          <th style="width: 10%;">Chế Độ</th>
         </tr>
       </thead>
       <tbody>
+        <tr style="background-color: #f6ffed;">
+          <td><strong>AP</strong></td>
+          <td><strong>MOXA AWK-1131A</strong></td>
+          <td><em>(Trạm Master)</em></td>
+          <td><em>(Theo tem AP)</em></td>
+          <td><code>MOXA_MASTER_AP</code></td>
+          <td><span class="badge badge-blue">Master AP</span> <code>192.168.127.1</code></td>
+          <td><strong>AP</strong></td>
+        </tr>
         <tr>
           <td><strong>01</strong></td>
-          <td><code>TBBFQ1015595</code></td>
-          <td><code>00:90:E8:AA:B8:82</code></td>
-          <td><code>MOXA_CLIENT_01</code></td>
+          <td><strong>TP-LINK TL-AP300DG</strong></td>
+          <td><code>1222018000145</code></td>
+          <td><code>98:97:CC:E2:22:3B</code></td>
+          <td><code>TPLINK_CLIENT_01</code></td>
           <td><span class="badge badge-green">Client 01</span> <code>192.168.127.11</code></td>
           <td>Client</td>
         </tr>
         <tr>
           <td><strong>02</strong></td>
-          <td><code>TBZJQ1006012</code></td>
-          <td><code>00:90:E8:8F:CE:AB</code></td>
-          <td><code>MOXA_CLIENT_02</code></td>
+          <td><strong>TP-LINK TL-AP300DG</strong></td>
+          <td><code>(Bộ số 2)</code></td>
+          <td><code>(Theo tem máy 2)</code></td>
+          <td><code>TPLINK_CLIENT_02</code></td>
           <td><span class="badge badge-green">Client 02</span> <code>192.168.127.12</code></td>
           <td>Client</td>
         </tr>
         <tr>
           <td><strong>03</strong></td>
-          <td><code>TBZJQ1005718</code></td>
-          <td><code>00:90:E8:8F:CD:82</code></td>
-          <td><code>MOXA_CLIENT_03</code></td>
+          <td><strong>TP-LINK TL-AP1900DG</strong></td>
+          <td><code>1232312000705</code></td>
+          <td><code>3C:6A:48:2E:4F:3F</code></td>
+          <td><code>TPLINK_CLIENT_03</code></td>
           <td><span class="badge badge-green">Client 03</span> <code>192.168.127.13</code></td>
           <td>Client</td>
         </tr>
         <tr>
           <td><strong>04</strong></td>
-          <td><code>TBBBQ1005144</code></td>
-          <td><code>00:90:E8:A4:6B:8D</code></td>
-          <td><code>MOXA_CLIENT_04</code></td>
+          <td><strong>TP-LINK TL-AP1900DG</strong></td>
+          <td><code>(Bộ số 2)</code></td>
+          <td><code>(Theo tem máy 4)</code></td>
+          <td><code>TPLINK_CLIENT_04</code></td>
           <td><span class="badge badge-green">Client 04</span> <code>192.168.127.14</code></td>
           <td>Client</td>
         </tr>
-        <tr>
-          <td><strong>05</strong></td>
-          <td><code>TBACQ1029625</code></td>
-          <td><code>00:90:E8:95:F0:70</code></td>
-          <td><code>MOXA_CLIENT_05</code></td>
-          <td><span class="badge badge-green">Client 05</span> <code>192.168.127.15</code></td>
-          <td>Client</td>
-        </tr>
-        <tr>
-          <td><strong>06</strong></td>
-          <td><code>TBZCQ1018491</code></td>
-          <td><code>00:90:E8:87:EA:83</code></td>
-          <td><code>MOXA_CLIENT_06</code></td>
-          <td><span class="badge badge-green">Client 06</span> <code>192.168.127.16</code></td>
-          <td>Client</td>
-        </tr>
-        <tr>
+        <tr style="background-color: #f0f5ff;">
           <td><strong>--</strong></td>
           <td><em>Robot AGV E300</em></td>
-          <td><em>Bo điều khiển IPC</em></td>
+          <td><em>Bo IPC điều khiển</em></td>
+          <td>--</td>
           <td><code>AGV_E300_01</code></td>
           <td><span class="badge badge-blue">Robot AGV</span> <code>192.168.127.7</code></td>
-          <td>Thiết bị xe</td>
+          <td>Thiết bị</td>
         </tr>
-        <tr>
+        <tr style="background-color: #fffbe6;">
           <td><strong>--</strong></td>
-          <td><em>Laptop Kỹ Sư</em></td>
-          <td><em>Card LAN/Wi-Fi</em></td>
+          <td><em>Máy Chủ / Laptop Kỹ Sư</em></td>
+          <td><em>Card LAN RJ45/Wi-Fi</em></td>
+          <td>--</td>
           <td><code>ENGINEER_PC</code></td>
-          <td><span class="badge badge-amber">Laptop PC</span> <code>192.168.127.100</code></td>
+          <td><span class="badge badge-amber">Server PC</span> <code>192.168.127.100</code></td>
           <td>Điều khiển</td>
         </tr>
       </tbody>
     </table>
 
     <div class="alert alert-warning">
-      <strong>⚠️ LƯU Ý PHẦN CỨNG & XUNG ĐỘT IP BẮT BUỘC TRƯỚC KHI CẤP NGUỒN:</strong>
+      <strong>⚠️ LƯU Ý PHẦN CỨNG & NGUỒN CẤP TP-LINK CÔNG NGHIỆP:</strong>
       <ul>
-        <li><strong>Không giữ lại IP mặc định <code>192.168.127.253</code>:</strong> Cần đổi IP cho từng bộ Moxa ngay khi cấu hình theo bảng trên để tránh xung đột IP gây ngắt quãng mạng không dây.</li>
-        <li><strong>Phải lắp đủ 2 Anten RP-SMA</strong> vào cổng <code>ANT1</code> và <code>ANT2</code> trước khi cắm nguồn điện. Nếu cấp nguồn khi chưa vặn anten, công suất sóng phản xạ ngược có thể làm hỏng tầng khuếch đại công suất RF của thiết bị.</li>
-        <li><strong>Nguồn cấp:</strong> 9 đến 30 VDC (dùng jack terminal 3 chân V+, V-, Ground). Có thể đấu nguồn từ ắc quy/nguồn phụ xe AGV hoặc adapter công nghiệp.</li>
+        <li><strong>Nguồn cấp:</strong> Cả 2 dòng TP-Link TL-AP300DG và TL-AP1900DG đều hỗ trợ dải điện áp công nghiệp <strong>12 - 48VDC</strong> (đấu vào cọc domino xanh lá) hoặc cấp nguồn qua cổng mạng PoE 48V. Khi lắp trên xe AGV E300, có thể trích nguồn <strong>24VDC</strong> của xe đấu trực tiếp vào domino.</li>
+        <li><strong>Phải lắp đủ anten:</strong> Vặn đủ râu anten vào tất cả các cổng của TP-Link trước khi cấp điện để đảm bảo độ nhạy thu phát sóng và bảo vệ mạch công suất RF.</li>
+        <li><strong>Chuyển chế độ hoạt động:</strong> Mặc định xuất xưởng thiết bị ghi <em>"默认模式: AP"</em>. Bắt buộc phải đăng nhập web quản trị (<code>http://192.168.1.254</code> hoặc <code>http://tplogin.cn</code>) để chuyển sang chế độ <strong>`Client` (客户端)</strong>.</li>
       </ul>
     </div>
 
@@ -1462,7 +1462,53 @@
         <li>Nhìn sang cột menu bên trái, bấm vào mục: <strong><code>Save Configuration</code></strong> ➔ Bấm nút <strong><code>Save</code></strong> (đợi thanh tiến trình chạy 100% để ghi vào bộ nhớ Flash).</li>
         <li>Bấm tiếp vào mục: <strong><code>Restart</code></strong> ➔ Bấm nút <strong><code>Restart</code></strong> để khởi động lại module MOXA.</li>
       </ol>
-      <p>Sau khi khởi động lại (đèn Ready chuyển sang xanh lá ổn định), thiết bị sẽ chính thức chạy với địa chỉ IP mới <code>192.168.31.xxx</code> đã đặt!</p>
+      <p>Sau khi khởi động lại (đèn Ready chuyển sang xanh lá ổn định), thiết bị sẽ chính thức chạy với địa chỉ IP mới <code>192.168.127.1</code> đã đặt!</p>
+    </div>
+
+    <!-- PHẦN 11.5: HƯỚNG DẪN CẤU HÌNH TP-LINK CÔNG NGHIỆP THÀNH TRẠM PHÁT PHỤ / KÍCH SÓNG -->
+    <h3>11.5. Hướng Dẫn Cấu Hình 4 Bộ TP-LINK Công Nghiệp Làm Trạm Phát Phụ / Kích Sóng Phủ Kín Xưởng</h3>
+    <p>Tùy theo điều kiện kéo dây cáp mạng trong nhà xưởng, kỹ thuật viên lựa chọn 1 trong 2 phương án triển khai sau cho 4 bộ TP-Link:</p>
+
+    <div class="step-card" style="border-left: 4px solid #1677ff; background-color: #f0f7ff;">
+      <h4 style="color: #0958d9;">🌟 PHƯƠNG ÁN 1 (KHUYÊN DÙNG CÔNG NGHIỆP): KÉO CÁP LAN TỪ SWITCH VỀ TỪNG BỘ (AP MODE)</h4>
+      <p><em>Giải pháp ổn định tuyệt đối: Băng thông tối đa, ping &lt; 2ms, robot di chuyển liên tục không trễ lệnh.</em></p>
+      <ol>
+        <li><strong>Đăng nhập ban đầu:</strong> Cắm cáp mạng từ Laptop vào cổng LAN TP-Link. Đặt IP Laptop <code>192.168.1.100</code> ➔ Mở trình duyệt vào <strong><code>http://192.168.1.254</code></strong> (hoặc <code>http://tplogin.cn</code>) ➔ Tạo mật khẩu quản trị ban đầu.</li>
+        <li><strong>Chế độ hoạt động (工作模式):</strong> Giữ nguyên chế độ mặc định của máy: <strong><code>AP模式</code> (AP Mode)</strong>.</li>
+        <li><strong>Cài đặt Wi-Fi (Trùng 100% với Master Moxa 1131A):</strong>
+          <ul>
+            <li>Vào <strong><code>无线设置</code> (Wireless Settings)</strong>:</li>
+            <li><strong>Tên Wi-Fi (SSID):</strong> Nhập chính xác <strong><code>ESATECH_ROBOT</code></strong>.</li>
+            <li><strong>Bảo mật:</strong> <code>WPA2-PSK (AES)</code>.</li>
+            <li><strong>Mật khẩu:</strong> <strong><code>168154727ESA</code></strong>.</li>
+            <li><strong>Kênh truyền (Channel):</strong> Đặt xen kẽ các kênh không trùng nhau để tránh can nhiễu sóng: Moxa 1131A (Kênh 6), TP-Link 1 (Kênh 1), TP-Link 2 (Kênh 11), TP-Link 3 (Kênh 1), TP-Link 4 (Kênh 6 / 5GHz).</li>
+          </ul>
+        </li>
+        <li><strong>Đổi IP tĩnh & TẮT DHCP Server:</strong>
+          <ul>
+            <li>Vào <strong><code>网络设置</code> ➔ <code>LAN口设置</code></strong>: Đặt IP tĩnh theo bảng (<code>192.168.127.2</code> đến <code>.5</code>), Subnet Mask <code>255.255.255.0</code>, Gateway <code>192.168.127.1</code>.</li>
+            <li>Vào <strong><code>DHCP服务器</code> (DHCP Server)</strong>: <strong>BẮT BUỘC CHỌN TẮT (不启用 / Disable)</strong> để tránh xung đột cấp phát IP.</li>
+          </ul>
+        </li>
+        <li><strong>Đấu nối xưởng:</strong> Cắm dây mạng từ Switch xưởng vào cổng LAN của bộ TP-Link, cấp nguồn 24VDC tại cột xưởng.</li>
+      </ol>
+    </div>
+
+    <div class="step-card" style="border-left: 4px solid #52c41a; background-color: #f6ffed; margin-top: 15px;">
+      <h4 style="color: #237804;">📡 PHƯƠNG ÁN 2: KÍCH SÓNG KHÔNG DÂY (REPEATER / WDS) - KHÔNG CẦN KÉO CÁP MẠNG</h4>
+      <p><em>Phù hợp cho các vị trí cột xưởng xa khó đi dây cáp mạng, chỉ cần cắm nguồn 24VDC tại chỗ.</em></p>
+      <ol>
+        <li><strong>Đăng nhập ban đầu:</strong> Kết nối Laptop vào TP-Link qua <code>http://192.168.1.254</code> như trên.</li>
+        <li><strong>Chuyển chế độ sang Kích sóng (中继 / Repeater):</strong> Vào menu <strong><code>工作模式</code> (Working Mode)</strong> ➔ Chuyển sang <strong><code>中继模式</code> (Repeater / Range Extender)</strong> hoặc <strong><code>WDS无线桥接模式</code></strong>.</li>
+        <li><strong>Quét và bắt sóng Wi-Fi từ trạm Master Moxa:</strong> Bấm <strong><code>扫描</code> (Scan)</strong> ➔ Chọn sóng <strong><code>ESATECH_ROBOT</code></strong> ➔ Nhập mật khẩu <strong><code>168154727ESA</code></strong> ➔ Bấm Lưu.</li>
+        <li><strong>Đổi IP LAN & Tắt DHCP:</strong> Đổi IP LAN sang dải <code>192.168.127.x</code> (<code>192.168.127.2</code> đến <code>.5</code>), tắt DHCP Server trên TP-Link.</li>
+        <li><strong>Lắp đặt cột xưởng:</strong> Treo module TP-Link lên cột xưởng ở vị trí vẫn bắt được sóng của trạm Master Moxa (tối thiểu 2-3 vạch sóng) để phát tiếp ra vùng xa hơn.</li>
+      </ol>
+    </div>
+
+    <div class="alert alert-success" style="margin-top: 15px;">
+      <strong>✅ CƠ CHẾ HOẠT ĐỘNG CHUYỂN VÙNG TỰ ĐỘNG (SEAMLESS ROAMING):</strong>
+      <p>Cả 5 trạm (1 Master Moxa 1131A + 4 trạm vệ tinh TP-Link) đều phát chung một mạng Wi-Fi <strong><code>ESATECH_ROBOT</code></strong>. Robot AGV E300 và Hộp gọi Callbox khi di chuyển khắp xưởng sẽ <strong>tự động chuyển vùng (Roaming) mượt mà</strong> sang trạm phát có sóng mạnh nhất gần nó nhất, đảm bảo hệ thống vận hành 24/7 liên tục không bị gián đoạn!</p>
     </div>
 
     <div class="footer">

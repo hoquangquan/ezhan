@@ -448,31 +448,32 @@ Ngay tại giao diện Web RCS, người vận hành có thể điều khiển x
 
 Thiết bị **MOXA AWK-1137C-EU** là dòng Access Point / Bridge / Client Wi-Fi công nghiệp chuẩn 802.11a/b/g/n, đóng vai trò hạ tầng mạng không dây huyết mạch kết nối giữa **Máy chủ Ezhan RCS V2**, **Hạm đội AGV E300** và **Các Hộp gọi Callbox**.
 
-### 11.1. Vai Trò Kỹ Thuật & Danh Sách 6 Thiết Bị MOXA trong Dự Án
+### 11.1. Kiến Trúc Mạng Wi-Fi Phủ Sóng Toàn Xưởng (1 Master AP + 4 Trạm Phát Phụ TP-LINK)
 
-* **Chế độ Access Point (AP - Trạm phát sóng Wi-Fi cố định):** Lắp đặt cố định trên cột xưởng hoặc trần nhà, kết nối cáp LAN về Switch mạng nhà xưởng để phủ sóng Wi-Fi cho toàn khu vực vận hành.
-* **Chế độ Client (Bộ thu Wi-Fi trên xe AGV với Turbo Roaming):** Gắn trực tiếp trên robot AGV E300, cắm dây LAN vào máy tính công nghiệp của robot. Tính năng **Turbo Roaming** giúp robot chuyển vùng giữa các trạm AP chỉ trong **< 150 ms**, đảm bảo xe không bị mất lệnh hay gián đoạn lộ trình khi di chuyển khắp xưởng.
+Hệ thống mạng không dây nhà xưởng phục vụ hạm đội Robot AGV E300 và các hộp gọi Callbox được thiết kế theo mô hình **Phủ sóng đa điểm (Multi-AP Seamless Roaming)** gồm:
+* **01 Trạm phát Master trung tâm (MOXA AWK-1131A):** Lắp tại trung tâm nhà xưởng hoặc phòng máy chủ điều hành, IP `192.168.127.1`, phát mạng Wi-Fi chính `ESATECH_ROBOT` (Kênh 6, WPA2-Personal AES: `168154727ESA`) và đóng vai trò máy chủ cấp phát IP (DHCP Server).
+* **04 Trạm phát phụ mở rộng / kích sóng (TP-LINK Công Nghiệp):** Lắp đặt cố định trên các cột/tường ở 4 góc xưởng để mở rộng độ phủ sóng Wi-Fi, triệt tiêu hoàn toàn các vùng "chết" sóng:
+  * **02 Bộ TP-LINK TL-AP300DG** (Vỏ nhôm DIN-rail, dải nguồn công nghiệp 12-48VDC).
+  * **02 Bộ TP-LINK TL-AP1900DG** (Băng thông cao AC1900 3x3 MIMO, dải nguồn công nghiệp 12-48VDC).
+* **Cơ chế Chuyển vùng (Roaming):** Cả 5 trạm phát (1 Moxa + 4 TP-Link) đều phát **CHUNG TÊN SSID: `ESATECH_ROBOT`** và **CHUNG MẬT KHẨU: `168154727ESA`**. Robot AGV E300 và các hộp gọi khi di chuyển/hoạt động khắp xưởng sẽ **tự động bắt trạm phát gần nhất có sóng mạnh nhất** mà không bị ngắt quãng tín hiệu.
 
-#### Bảng Tổng Hợp & Quy Hoạch 6 Thiết Bị MOXA AWK-1137C (Kết Nối Trạm Chính AWK-1131A)
+#### Bảng Quy Hoạch IP Hạ Tầng Wi-Fi Phủ Sóng Xưởng (Dải Mạng 192.168.127.x)
 
-* **Trạm phát Wi-Fi Master (AP):** **MOXA AWK-1131A** (`192.168.127.1` hoặc `.250`), SSID: `ESATECH_ROBOT`, Kênh 6 (20MHz), Bảo mật WPA2-Personal AES: `168154727ESA`.
-* **6 Bộ thu sóng (Client):** **MOXA AWK-1137C-EU** cấu hình chế độ **Client** kết nối về SSID `ESATECH_ROBOT`:
+| STT | Thiết Bị | Model | MAC / S/N | IP Tĩnh Quản Trị | Chế Độ (Mode) | DHCP Server | Vị Trí Lắp Đặt |
+| :---: | :--- | :--- | :--- | :---: | :---: | :---: | :--- |
+| **AP0** | **Master AP** | **MOXA AWK-1131A** | *(Tem Moxa)* | **`192.168.127.1`** | **AP Master** | **BẬT (Enable)** | Trung tâm xưởng / Cạnh Server |
+| **AP1** | **Trạm phụ 1** | **TP-LINK TL-AP300DG** | `98:97:CC:E2:22:3B` | **`192.168.127.2`** | **AP / Repeater** | **TẮT (Disable)** | Khu vực Cột xưởng 1 (Đầu xưởng) |
+| **AP2** | **Trạm phụ 2** | **TP-LINK TL-AP300DG** | `(Bộ số 2)` | **`192.168.127.3`** | **AP / Repeater** | **TẮT (Disable)** | Khu vực Cột xưởng 2 (Giữa xưởng) |
+| **AP3** | **Trạm phụ 3** | **TP-LINK TL-AP1900DG** | `3C:6A:48:2E:4F:3F` | **`192.168.127.4`** | **AP / Repeater** | **TẮT (Disable)** | Khu vực Cột xưởng 3 (Kho hàng) |
+| **AP4** | **Trạm phụ 4** | **TP-LINK TL-AP1900DG** | `(Bộ số 2)` | **`192.168.127.5`** | **AP / Repeater** | **TẮT (Disable)** | Khu vực Cột xưởng 4 (Cuối xưởng) |
+| **--** | *Robot AGV E300* | *Card Wi-Fi tích hợp* | -- | **`192.168.127.7`** | *Client nhận Wi-Fi* | -- | Di chuyển tự do khắp xưởng |
+| **--** | *Hộp gọi Callbox* | *Module Wi-Fi trạm* | -- | **`192.168.127.21`** | *Client nhận Wi-Fi* | -- | Lắp tại các bàn thao tác |
+| **--** | *Server / Laptop* | *Card mạng LAN RJ45* | -- | **`192.168.127.100`** | *Quản trị / RCS V2* | -- | Máy chủ Ezhan Dispatch |
 
-| STT | Số Serial (S/N) | Địa Chỉ MAC Cố Định | IP Mặc Định | Tên Thiết Bị Gợi Ý | Quy Hoạch IP Tĩnh Thực Tế (Dải 192.168.127.x) | Chế Độ (Mode) |
-| :---: | :--- | :--- | :---: | :--- | :--- | :---: |
-| **01** | `TBBFQ1015595` | `00:90:E8:AA:B8:82` | 192.168.127.253 | `MOXA_CLIENT_01` | **Client 01:** `192.168.127.11` | Client |
-| **02** | `TBZJQ1006012` | `00:90:E8:8F:CE:AB` | 192.168.127.253 | `MOXA_CLIENT_02` | **Client 02:** `192.168.127.12` | Client |
-| **03** | `TBZJQ1005718` | `00:90:E8:8F:CD:82` | 192.168.127.253 | `MOXA_CLIENT_03` | **Client 03:** `192.168.127.13` | Client |
-| **04** | `TBBBQ1005144` | `00:90:E8:A4:6B:8D` | 192.168.127.253 | `MOXA_CLIENT_04` | **Client 04:** `192.168.127.14` | Client |
-| **05** | `TBACQ1029625` | `00:90:E8:95:F0:70` | 192.168.127.253 | `MOXA_CLIENT_05` | **Client 05:** `192.168.127.15` | Client |
-| **06** | `TBZCQ1018491` | `00:90:E8:87:EA:83` | 192.168.127.253 | `MOXA_CLIENT_06` | **Client 06:** `192.168.127.16` | Client |
-| **--** | *Robot AGV E300* | *Bo điều khiển IPC* | -- | `AGV_E300_01` | **Robot AGV:** `192.168.127.7` | Thiết bị xe |
-| **--** | *Laptop kỹ sư* | *Card mạng RJ45/Wi-Fi*| -- | `ENGINEER_PC` | **Laptop:** `192.168.127.100` | Điều khiển |
-
-> ⚠️ **LƯU Ý PHẦN CỨNG & XUNG ĐỘT IP BẮT BUỘC:**
-> * **Không giữ IP mặc định `192.168.127.253`:** Cần đổi IP cho từng thiết bị theo bảng trên ngay khi đăng nhập để tránh 2 thiết bị cắm vào cùng mạng bị xung đột IP gây chập chờn.
-> * **Phải vặn đủ 2 Anten RP-SMA** vào cổng `ANT1` và `ANT2` trước khi cắm nguồn điện. Tuyệt đối không bật nguồn khi chưa gắn anten để tránh cháy tầng công suất phát RF.
-> * **Nguồn cấp:** 9 - 30 VDC (dùng jack terminal 3 chân V+, V-, Ground).
+> ⚠️ **NGUYÊN TẮC SỐNG CÒN KHI LẮP ĐẶT ĐA TRẠM PHÁT (MULTI-AP):**
+> 1. **Duy nhất Master MOXA 1131A bật DHCP Server:** Cả 4 bộ TP-Link bắt buộc phải **TẮT DHCP Server (Disable)** để toàn bộ xưởng nhận dải IP thống nhất từ trạm Master, tránh xung đột IP (IP Collision).
+> 2. **Phát chung SSID & Mật khẩu:** Tất cả các trạm phát đặt chung SSID: `ESATECH_ROBOT`, Password: `168154727ESA`, chuẩn WPA2-Personal (AES) để thiết bị di chuyển tự do roaming.
+> 3. **Nguồn cấp:** Đấu nguồn 12 - 48VDC công nghiệp (tận dụng nguồn tủ điện xưởng 24VDC) vào cọc domino xanh của các bộ TP-Link.
 
 ### 11.2. Kết Nối Ban Đầu & Đăng Nhập Trang Quản Trị Web MOXA
 
@@ -592,7 +593,66 @@ Tại màn hình Bước 2-1:
 > 1. Nhìn cột menu bên trái, bấm vào mục: **`Save Configuration` ➔ Bấm nút `Save`** (chờ thanh tiến trình lưu vào bộ nhớ Flash hoàn tất 100%).
 > 2. Bấm tiếp vào mục: **`Restart` ➔ Bấm nút `Restart`** để module MOXA nạp lại cấu hình mới.
 
-Sau khi khởi động lại, anh cắm Moxa vào switch mạng xưởng và truy cập vào thiết bị bằng địa chỉ IP tĩnh mới (Ví dụ: `https://192.168.31.251/`).
+Sau khi khởi động lại, anh cắm Moxa vào switch mạng xưởng và truy cập vào thiết bị bằng địa chỉ IP tĩnh mới (Ví dụ: `https://192.168.127.1/`).
+
+### 11.5. Hướng Dẫn Cấu Hình 4 Bộ TP-LINK Công Nghiệp Làm Trạm Phát Mở Rộng / Kích Sóng Xưởng
+
+Tùy theo điều kiện hạ tầng dây cáp mạng của nhà xưởng, kỹ thuật viên có thể lựa chọn 1 trong 2 phương án triển khai sau cho 4 bộ TP-Link:
+
+---
+
+#### 🌟 PHƯƠNG ÁN 1 (KHUYÊN DÙNG CÔNG NGHIỆP): KÉO CÁP MẠNG TỪ SWITCH VỀ TỪNG BỘ (AP MODE)
+Đây là giải pháp đạt hiệu suất cao nhất: Băng thông tối đa, không trễ ping, robot di chuyển khắp xưởng với tốc độ kết nối cực nhanh.
+
+1. **Đăng nhập thiết bị ban đầu:**
+   * Cắm cáp mạng từ Laptop vào cổng LAN của TP-Link. Đặt IP Laptop: `192.168.1.100` / `255.255.255.0`.
+   * Mở trình duyệt gõ: **`http://192.168.1.254`** (hoặc `http://tplogin.cn`).
+   * Tạo mật khẩu quản trị ban đầu (Ví dụ: `Admin@123` hoặc `168154727ESA`).
+2. **Chế độ hoạt động (工作模式):**
+   * Giữ nguyên chế độ mặc định của tem máy là **`AP模式` (AP Mode)**.
+3. **Cài đặt Tên Wi-Fi & Mật khẩu (Phải trùng 100% với Master Moxa):**
+   * Vào mục **`无线设置` (Wireless Settings)**:
+     * **SSID (Tên mạng):** Nhập chính xác **`ESATECH_ROBOT`**.
+     * **Bảo mật:** Chọn `WPA2-PSK` (AES).
+     * **Mật khẩu (PSK Password):** Nhập chính xác **`168154727ESA`**.
+     * **Kênh truyền (Channel):** Chia xen kẽ các kênh không trùng nhau để tránh can nhiễu sóng:
+       - Moxa 1131A: Kênh 6
+       - TP-Link 1 (`192.168.127.2`): Kênh 1
+       - TP-Link 2 (`192.168.127.3`): Kênh 11
+       - TP-Link 3 (`192.168.127.4`): Kênh 1
+       - TP-Link 4 (`192.168.127.5`): Kênh 6 (hoặc bật phát 5GHz)
+4. **Đổi IP tĩnh & TẮT DHCP Server:**
+   * Vào **`网络设置` ➔ `LAN口设置`**:
+     * Đặt IP tĩnh theo bảng: `192.168.127.2` (đến `.5`), Mask `255.255.255.0`, Gateway `192.168.127.1`.
+   * Vào mục **`DHCP服务器` (DHCP Server)**:
+     * **BẮT BUỘC CHỌN:** **`不启用` / `Disable` (TẮT)**.
+5. **Đấu nối xưởng:**
+   * Cắm dây mạng từ Switch xưởng vào cổng LAN của bộ TP-Link, cấp nguồn 24VDC tại cột xưởng.
+
+---
+
+#### 📡 PHƯƠNG ÁN 2: KÍCH SÓNG KHÔNG DÂY (REPEATER / WDS) - KHÔNG CẦN KÉO CÁP MẠNG
+Phương án này phù hợp cho những vị trí cột xưởng xa không thể kéo dây cáp LAN, chỉ cần cấp nguồn 24VDC tại chỗ:
+
+1. **Đăng nhập thiết bị ban đầu:**
+   * Kết nối vào TP-Link qua `http://192.168.1.254` như Bước 1 ở trên.
+2. **Chuyển chế độ sang Kích sóng (中继 / Repeater):**
+   * Vào menu **`工作模式` (Working Mode)**:
+   * Chuyển sang chế độ: **`中继模式` (Repeater / Range Extender)** hoặc **`WDS无线桥接模式`**.
+3. **Quét và bắt sóng Wi-Fi từ trạm Master Moxa:**
+   * Bấm nút **`扫描` (Quét sóng / Scan)** ➔ Chọn Wi-Fi **`ESATECH_ROBOT`**.
+   * Nhập mật khẩu Wi-Fi: **`168154727ESA`**.
+   * Thiết bị sẽ tự động thu sóng từ trạm Master Moxa 1131A và phát lặp lại mạng `ESATECH_ROBOT` ra khu vực xung quanh cột xưởng đó.
+4. **Đổi IP quản trị & Tắt DHCP:**
+   * Đổi IP LAN sang dải `192.168.127.x` (Ví dụ `192.168.127.2` đến `.5`).
+   * Tắt DHCP Server trên TP-Link để xe AGV nhận IP từ trạm Master Moxa 1131A.
+5. **Lắp đặt:** Treo thiết bị lên cột xưởng ở vị trí vẫn bắt được sóng của trạm Master (tối thiểu 2-3 vạch sóng) để phát tiếp ra vùng xa hơn.
+
+---
+
+#### Kiểm Tra Hoạt Động Của Xe AGV E300 Khi Di Chuyển Khắp Xưởng:
+* Xe **AGV E300** và **Hộp gọi Callbox** chỉ cần bắt Wi-Fi `ESATECH_ROBOT` mật khẩu `168154727ESA`.
+* Khi xe AGV di chuyển từ đầu xưởng đến cuối xưởng, card Wi-Fi của xe sẽ **tự động chuyển trạm (Roaming)** mượt mà giữa Moxa 1131A và 4 bộ TP-Link, đảm bảo lúc nào sóng cũng căng đét và không bao giờ mất kết nối điều khiển!
 
 ---
 
