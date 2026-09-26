@@ -1181,68 +1181,153 @@
       <li><strong>Mô hình 2 - Bộ thu Wi-Fi Gắn trên Robot (Client Mode với Turbo Roaming):</strong> Gắn trực tiếp trong khoang điều khiển của AGV E300, cắm dây LAN vào bo máy tính công nghiệp của xe. Tính năng <strong>Turbo Roaming</strong> giúp xe tự động chuyển vùng giữa các trạm AP chỉ trong <strong>&lt; 150 ms</strong>, đảm bảo robot không bao giờ bị giật khựng hay rớt lệnh điều phối khi di chuyển qua các khu vực xưởng.</li>
     </ul>
 
-    <h4>Bảng Tổng Hợp 6 Thiết Bị MOXA Dự Án (Serial & Địa Chỉ MAC Thực Tế)</h4>
+    <h4>Bảng Tổng Hợp Địa Chỉ IP Thực Tế 13 Thiết Bị Dự Án (Hạ Tầng Wi-Fi, Máy Chủ, Robot AGV & 6 Hộp Gọi)</h4>
+    <p>Toàn bộ hệ thống truyền thông không dây của nhà máy được đồng bộ trên dải mạng <strong><code>192.168.127.x</code></strong> (Mặt nạ mạng <code>255.255.255.0</code>, Gateway <code>192.168.127.1</code>). Dưới đây là bảng phân bổ địa chỉ IP thực tế chính thức đã triển khai và vận hành:</p>
+
     <table>
       <thead>
         <tr>
-          <th style="width: 8%;">STT</th>
-          <th style="width: 22%;">Số Serial (S/N)</th>
-          <th style="width: 25%;">Địa Chỉ MAC Cố Định</th>
-          <th style="width: 22%;">IP Mặc Định</th>
-          <th style="width: 23%;">Quy Hoạch Đề Xuất (Mạng 192.168.31.x)</th>
+          <th style="width: 5%;">STT</th>
+          <th style="width: 18%;">Thiết Bị</th>
+          <th style="width: 18%;">Model Phần Cứng</th>
+          <th style="width: 17%;">Địa Chỉ MAC / S/N</th>
+          <th style="width: 15%;">IP Thực Tế Vận Hành</th>
+          <th style="width: 14%;">Cổng / Dịch Vụ</th>
+          <th style="width: 13%;">Vai Trò Vận Hành</th>
         </tr>
       </thead>
       <tbody>
+        <!-- MASTER MOXA -->
+        <tr style="background-color: #f6ffed;">
+          <td><strong>00</strong></td>
+          <td><strong>Master AP</strong></td>
+          <td><strong>MOXA AWK-1131A</strong></td>
+          <td><code>06:90:E8:AC:23:C9</code></td>
+          <td><span class="badge badge-blue">Master AP</span> <strong><code>192.168.127.1</code></strong></td>
+          <td><code>https://192.168.127.1</code></td>
+          <td><strong>Trạm Master (DHCP Server)</strong></td>
+        </tr>
+        <!-- 4 TP-LINK REPEATERS -->
         <tr>
           <td><strong>01</strong></td>
-          <td><code>TBBFQ1015595</code></td>
-          <td><code>00:90:E8:AA:B8:82</code></td>
-          <td>192.168.127.253</td>
-          <td><span class="badge badge-blue">AP 01</span> <code>192.168.31.251</code></td>
+          <td><strong>Trạm Phụ 1</strong></td>
+          <td>TP-LINK TL-AP300DG</td>
+          <td><code>98:97:CC:E2:22:3B</code></td>
+          <td><span class="badge badge-green">Repeater 1</span> <strong><code>192.168.127.55</code></strong></td>
+          <td><code>http://192.168.127.55</code></td>
+          <td>Kích sóng Cột 1 (Đầu xưởng)</td>
         </tr>
         <tr>
           <td><strong>02</strong></td>
-          <td><code>TBZJQ1006012</code></td>
-          <td><code>00:90:E8:8F:CE:AB</code></td>
-          <td>192.168.127.253</td>
-          <td><span class="badge badge-blue">AP 02</span> <code>192.168.31.252</code></td>
+          <td><strong>Trạm Phụ 2</strong></td>
+          <td>TP-LINK TL-AP300DG</td>
+          <td><code>98:97:CC:E2:22:BE</code></td>
+          <td><span class="badge badge-green">Repeater 2</span> <strong><code>192.168.127.78</code></strong></td>
+          <td><code>http://192.168.127.78</code></td>
+          <td>Kích sóng Cột 2 (Trạm sạc)</td>
         </tr>
         <tr>
           <td><strong>03</strong></td>
-          <td><code>TBZJQ1005718</code></td>
-          <td><code>00:90:E8:8F:CD:82</code></td>
-          <td>192.168.127.253</td>
-          <td><span class="badge badge-blue">AP 03</span> <code>192.168.31.253</code></td>
+          <td><strong>Trạm Phụ 3</strong></td>
+          <td>TP-LINK TL-AP1900DG</td>
+          <td><code>3C:6A:48:2E:4F:3F</code></td>
+          <td><span class="badge badge-green">Repeater 3</span> <strong><code>192.168.127.72</code></strong></td>
+          <td><code>http://192.168.127.72</code></td>
+          <td>Kích sóng 3x3 MIMO (Kho)</td>
         </tr>
         <tr>
           <td><strong>04</strong></td>
-          <td><code>TBBBQ1005144</code></td>
-          <td><code>00:90:E8:A4:6B:8D</code></td>
-          <td>192.168.127.253</td>
-          <td><span class="badge badge-green">Client AGV 01</span> <code>192.168.31.254</code></td>
+          <td><strong>Trạm Phụ 4</strong></td>
+          <td>TP-LINK TL-AP1900DG</td>
+          <td><em>(Bộ số 2)</em></td>
+          <td><span class="badge badge-green">Repeater 4</span> <strong><code>192.168.127.88</code></strong></td>
+          <td><code>http://192.168.127.88</code></td>
+          <td>Kích sóng 3x3 MIMO (Cuối xưởng)</td>
+        </tr>
+        <!-- SERVER PC -->
+        <tr style="background-color: #fffbe6;">
+          <td><strong>--</strong></td>
+          <td><strong>Máy Chủ PC</strong></td>
+          <td>Server / Laptop Điều Phối</td>
+          <td><em>Card LAN RJ45</em></td>
+          <td><span class="badge badge-amber">Server PC</span> <strong><code>192.168.127.77</code></strong></td>
+          <td><code>http://127.0.0.1/</code></td>
+          <td><strong>Máy chủ Ezhan RCS V2</strong></td>
+        </tr>
+        <!-- ROBOT AGV -->
+        <tr style="background-color: #f0f5ff;">
+          <td><strong>--</strong></td>
+          <td><strong>Robot AGV</strong></td>
+          <td>Robot AGV E300 (AMR003)</td>
+          <td><em>Wi-Fi tích hợp</em></td>
+          <td><span class="badge badge-blue">Robot AGV</span> <strong><code>192.168.127.53</code></strong></td>
+          <td><code>http://...:9999/#/</code></td>
+          <td><strong>Xe tự hành vận chuyển hàng</strong></td>
+        </tr>
+        <!-- 6 CALLBOXES -->
+        <tr>
+          <td><strong>CB1</strong></td>
+          <td><strong>Hộp Gọi 01</strong></td>
+          <td>Callbox 3 Nút (K1-K3)</td>
+          <td><em>Module Wi-Fi</em></td>
+          <td><span class="badge badge-purple">Callbox 1</span> <strong><code>192.168.127.79</code></strong></td>
+          <td>WebSocket 8765</td>
+          <td>Trạm thao tác số 1</td>
         </tr>
         <tr>
-          <td><strong>05</strong></td>
-          <td><code>TBACQ1029625</code></td>
-          <td><code>00:90:E8:95:F0:70</code></td>
-          <td>192.168.127.253</td>
-          <td><span class="badge badge-green">Client AGV 02</span> <code>192.168.31.255</code></td>
+          <td><strong>CB2</strong></td>
+          <td><strong>Hộp Gọi 02</strong></td>
+          <td>Callbox 3 Nút (K1-K3)</td>
+          <td><em>Module Wi-Fi</em></td>
+          <td><span class="badge badge-purple">Callbox 2</span> <strong><code>192.168.127.96</code></strong></td>
+          <td>WebSocket 8765</td>
+          <td>Trạm thao tác số 2</td>
         </tr>
         <tr>
-          <td><strong>06</strong></td>
-          <td><code>TBZCQ1018491</code></td>
-          <td><code>00:90:E8:87:EA:83</code></td>
-          <td>192.168.127.253</td>
-          <td><span class="badge badge-amber">Dự phòng / AP 04</span> <code>192.168.31.256</code></td>
+          <td><strong>CB3</strong></td>
+          <td><strong>Hộp Gọi 03</strong></td>
+          <td>Callbox 3 Nút (K1-K3)</td>
+          <td><em>Module Wi-Fi</em></td>
+          <td><span class="badge badge-purple">Callbox 3</span> <strong><code>192.168.127.87</code></strong></td>
+          <td>WebSocket Port 8765</td>
+          <td>Trạm thao tác số 3</td>
+        </tr>
+        <tr>
+          <td><strong>CB4</strong></td>
+          <td><strong>Hộp Gọi 04</strong></td>
+          <td>Callbox 3 Nút (K1-K3)</td>
+          <td><em>Module Wi-Fi</em></td>
+          <td><span class="badge badge-purple">Callbox 4</span> <strong><code>192.168.127.98</code></strong></td>
+          <td>WebSocket Port 8765</td>
+          <td>Trạm thao tác số 4</td>
+        </tr>
+        <tr>
+          <td><strong>CB5</strong></td>
+          <td><strong>Hộp Gọi 05</strong></td>
+          <td>Callbox 3 Nút (K1-K3)</td>
+          <td><em>Module Wi-Fi</em></td>
+          <td><span class="badge badge-purple">Callbox 5</span> <strong><code>192.168.127.57</code></strong></td>
+          <td>WebSocket Port 8765</td>
+          <td>Trạm thao tác số 5</td>
+        </tr>
+        <tr>
+          <td><strong>CB6</strong></td>
+          <td><strong>Hộp Gọi 06</strong></td>
+          <td>Callbox 3 Nút (K1-K3)</td>
+          <td><em>Module Wi-Fi</em></td>
+          <td><span class="badge badge-purple">Callbox 6</span> <strong><code>192.168.127.86</code></strong></td>
+          <td>WebSocket Port 8765</td>
+          <td>Trạm thao tác số 6</td>
         </tr>
       </tbody>
     </table>
 
     <div class="alert alert-warning">
-      <strong>⚠️ LƯU Ý PHẦN CỨNG BẮT BUỘC TRƯỚC KHI CẤP NGUỒN:</strong>
+      <strong>⚠️ LƯU Ý PHẦN CỨNG & NGUỒN CẤP TP-LINK CÔNG NGHIỆP:</strong>
       <ul>
-        <li><strong>Phải lắp đủ 2 Anten RP-SMA</strong> vào cổng <code>ANT1</code> và <code>ANT2</code> trước khi cắm nguồn điện. Nếu cấp nguồn khi chưa vặn anten, công suất sóng phản xạ ngược có thể làm hỏng tầng khuếch đại công suất RF của thiết bị.</li>
-        <li><strong>Nguồn cấp:</strong> 9 đến 30 VDC (dùng jack terminal 3 chân V+, V-, Ground). Có thể đấu nguồn từ ắc quy/nguồn phụ xe AGV hoặc adapter công nghiệp.</li>
+        <li><strong>Nguồn cấp:</strong> Cả 2 dòng TP-Link TL-AP300DG và TL-AP1900DG đều hỗ trợ dải điện áp công nghiệp <strong>12 - 48VDC</strong> (đấu vào cọc domino xanh lá) hoặc cấp nguồn qua cổng mạng PoE 48V. Khi lắp trên xe AGV E300, có thể trích nguồn <strong>24VDC</strong> của xe đấu trực tiếp vào domino.</li>
+        <li><strong>Phải lắp đủ anten:</strong> Vặn đủ râu anten vào tất cả các cổng của TP-Link trước khi cấp điện để đảm bảo độ nhạy thu phát sóng và bảo vệ mạch công suất RF.</li>
+        <li><strong>Chuyển chế độ hoạt động:</strong> Mặc định xuất xưởng thiết bị ghi <em>"默认模式: AP"</em>. Bắt buộc phải đăng nhập web quản trị (<code>http://192.168.1.254</code> hoặc <code>http://tplogin.cn</code>) để chuyển sang chế độ <strong>`Client` (客户端)</strong>.</li>
       </ul>
     </div>
 
@@ -1279,10 +1364,9 @@
       <li><strong>IP Settings:</strong>
         <ul>
           <li><em>IP address assignment:</em> Chọn <strong>Static</strong> (IP tĩnh cố định).</li>
-          <li><em>IP address:</em> Nhập địa chỉ IP thuộc dải mạng nhà máy (Ví dụ: <code>192.168.31.251</code> cho AP 1).<br>
-          <em>*Lưu ý: Nếu đang cắm cáp LAN trực tiếp cấu hình thử nghiệm, có thể giữ nguyên <code>192.168.127.253</code> và đổi sang dải mạng xưởng ở bước hoàn tất cuối cùng.</em></li>
+          <li><em>IP address:</em> Nhập địa chỉ IP tương ứng theo bảng quy hoạch (Ví dụ: <code>192.168.127.11</code> cho Client 01).</li>
           <li><em>Subnet mask:</em> <code>255.255.255.0</code></li>
-          <li><em>Gateway:</em> <code>192.168.31.1</code> (Địa chỉ router mạng xưởng).</li>
+          <li><em>Gateway:</em> <code>192.168.127.1</code> (Địa chỉ IP của Trạm phát Master AWK-1131A).</li>
         </ul>
       </li>
       <li><strong>User Settings:</strong> Bỏ trống các ô mật khẩu nếu muốn giữ nguyên mật khẩu mặc định (<code>moxa</code>).</li>
@@ -1437,7 +1521,53 @@
         <li>Nhìn sang cột menu bên trái, bấm vào mục: <strong><code>Save Configuration</code></strong> ➔ Bấm nút <strong><code>Save</code></strong> (đợi thanh tiến trình chạy 100% để ghi vào bộ nhớ Flash).</li>
         <li>Bấm tiếp vào mục: <strong><code>Restart</code></strong> ➔ Bấm nút <strong><code>Restart</code></strong> để khởi động lại module MOXA.</li>
       </ol>
-      <p>Sau khi khởi động lại (đèn Ready chuyển sang xanh lá ổn định), thiết bị sẽ chính thức chạy với địa chỉ IP mới <code>192.168.31.xxx</code> đã đặt!</p>
+      <p>Sau khi khởi động lại (đèn Ready chuyển sang xanh lá ổn định), thiết bị sẽ chính thức chạy với địa chỉ IP mới <code>192.168.127.1</code> đã đặt!</p>
+    </div>
+
+    <!-- PHẦN 11.5: HƯỚNG DẪN CẤU HÌNH TP-LINK CÔNG NGHIỆP THÀNH TRẠM PHÁT PHỤ / KÍCH SÓNG -->
+    <h3>11.5. Hướng Dẫn Cấu Hình 4 Bộ TP-LINK Công Nghiệp Làm Trạm Phát Phụ / Kích Sóng Phủ Kín Xưởng</h3>
+    <p>Tùy theo điều kiện kéo dây cáp mạng trong nhà xưởng, kỹ thuật viên lựa chọn 1 trong 2 phương án triển khai sau cho 4 bộ TP-Link:</p>
+
+    <div class="step-card" style="border-left: 4px solid #1677ff; background-color: #f0f7ff;">
+      <h4 style="color: #0958d9;">🌟 PHƯƠNG ÁN 1 (KHUYÊN DÙNG CÔNG NGHIỆP): KÉO CÁP LAN TỪ SWITCH VỀ TỪNG BỘ (AP MODE)</h4>
+      <p><em>Giải pháp ổn định tuyệt đối: Băng thông tối đa, ping &lt; 2ms, robot di chuyển liên tục không trễ lệnh.</em></p>
+      <ol>
+        <li><strong>Đăng nhập ban đầu:</strong> Cắm cáp mạng từ Laptop vào cổng LAN TP-Link. Đặt IP Laptop <code>192.168.1.100</code> ➔ Mở trình duyệt vào <strong><code>http://192.168.1.254</code></strong> (hoặc <code>http://tplogin.cn</code>) ➔ Tạo mật khẩu quản trị ban đầu.</li>
+        <li><strong>Chế độ hoạt động (工作模式):</strong> Giữ nguyên chế độ mặc định của máy: <strong><code>AP模式</code> (AP Mode)</strong>.</li>
+        <li><strong>Cài đặt Wi-Fi (Trùng 100% với Master Moxa 1131A):</strong>
+          <ul>
+            <li>Vào <strong><code>无线设置</code> (Wireless Settings)</strong>:</li>
+            <li><strong>Tên Wi-Fi (SSID):</strong> Nhập chính xác <strong><code>ESATECH_ROBOT</code></strong>.</li>
+            <li><strong>Bảo mật:</strong> <code>WPA2-PSK (AES)</code>.</li>
+            <li><strong>Mật khẩu:</strong> <strong><code>168154727ESA</code></strong>.</li>
+            <li><strong>Kênh truyền (Channel):</strong> Đặt xen kẽ các kênh không trùng nhau để tránh can nhiễu sóng: Moxa 1131A (Kênh 6), TP-Link 1 (Kênh 1), TP-Link 2 (Kênh 11), TP-Link 3 (Kênh 1), TP-Link 4 (Kênh 6 / 5GHz).</li>
+          </ul>
+        </li>
+        <li><strong>Đổi IP tĩnh & TẮT DHCP Server:</strong>
+          <ul>
+            <li>Vào <strong><code>网络设置</code> ➔ <code>LAN口设置</code></strong>: Đặt IP tĩnh theo bảng (<code>192.168.127.2</code> đến <code>.5</code>), Subnet Mask <code>255.255.255.0</code>, Gateway <code>192.168.127.1</code>.</li>
+            <li>Vào <strong><code>DHCP服务器</code> (DHCP Server)</strong>: <strong>BẮT BUỘC CHỌN TẮT (不启用 / Disable)</strong> để tránh xung đột cấp phát IP.</li>
+          </ul>
+        </li>
+        <li><strong>Đấu nối xưởng:</strong> Cắm dây mạng từ Switch xưởng vào cổng LAN của bộ TP-Link, cấp nguồn 24VDC tại cột xưởng.</li>
+      </ol>
+    </div>
+
+    <div class="step-card" style="border-left: 4px solid #52c41a; background-color: #f6ffed; margin-top: 15px;">
+      <h4 style="color: #237804;">📡 PHƯƠNG ÁN 2: KÍCH SÓNG KHÔNG DÂY (REPEATER / WDS) - KHÔNG CẦN KÉO CÁP MẠNG</h4>
+      <p><em>Phù hợp cho các vị trí cột xưởng xa khó đi dây cáp mạng, chỉ cần cắm nguồn 24VDC tại chỗ.</em></p>
+      <ol>
+        <li><strong>Đăng nhập ban đầu:</strong> Kết nối Laptop vào TP-Link qua <code>http://192.168.1.254</code> như trên.</li>
+        <li><strong>Chuyển chế độ sang Kích sóng (中继 / Repeater):</strong> Vào menu <strong><code>工作模式</code> (Working Mode)</strong> ➔ Chuyển sang <strong><code>中继模式</code> (Repeater / Range Extender)</strong> hoặc <strong><code>WDS无线桥接模式</code></strong>.</li>
+        <li><strong>Quét và bắt sóng Wi-Fi từ trạm Master Moxa:</strong> Bấm <strong><code>扫描</code> (Scan)</strong> ➔ Chọn sóng <strong><code>ESATECH_ROBOT</code></strong> ➔ Nhập mật khẩu <strong><code>168154727ESA</code></strong> ➔ Bấm Lưu.</li>
+        <li><strong>Đổi IP LAN & Tắt DHCP:</strong> Đổi IP LAN sang dải <code>192.168.127.x</code> (<code>192.168.127.2</code> đến <code>.5</code>), tắt DHCP Server trên TP-Link.</li>
+        <li><strong>Lắp đặt cột xưởng:</strong> Treo module TP-Link lên cột xưởng ở vị trí vẫn bắt được sóng của trạm Master Moxa (tối thiểu 2-3 vạch sóng) để phát tiếp ra vùng xa hơn.</li>
+      </ol>
+    </div>
+
+    <div class="alert alert-success" style="margin-top: 15px;">
+      <strong>✅ CƠ CHẾ HOẠT ĐỘNG CHUYỂN VÙNG TỰ ĐỘNG (SEAMLESS ROAMING):</strong>
+      <p>Cả 5 trạm (1 Master Moxa 1131A + 4 trạm vệ tinh TP-Link) đều phát chung một mạng Wi-Fi <strong><code>ESATECH_ROBOT</code></strong>. Robot AGV E300 và Hộp gọi Callbox khi di chuyển khắp xưởng sẽ <strong>tự động chuyển vùng (Roaming) mượt mà</strong> sang trạm phát có sóng mạnh nhất gần nó nhất, đảm bảo hệ thống vận hành 24/7 liên tục không bị gián đoạn!</p>
     </div>
 
     <div class="footer">
