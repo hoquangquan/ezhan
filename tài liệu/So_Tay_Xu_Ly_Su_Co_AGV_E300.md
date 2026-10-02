@@ -413,3 +413,32 @@ Nếu nhà máy bắt buộc phải cắm cố định dây mạng LAN giữa m�
 ---
 
 *(Tài liệu này được biên soạn chuẩn xác theo cấu trúc mã nguồn Ezhan RCS V2 và hệ điều hành AGV E300 - Bản quyền ESATECH © 2026).*
+
+
+## 17. TÌNH HUỐNG 17: AGV mất kết nối hoặc chập chờn khi di chuyển qua các trạm Wi-Fi phụ (TP-Link WDS)
+
+### 🔴 Hiện tượng:
+* Xe AGV đang chạy bình thường nhưng khi đi xa trạm phát Wi-Fi gốc (Moxa AWK-1131A) và đi vào vùng của các trạm phát phụ (như TP-Link TL-AP1900DG / TL-AP300DG), xe đột ngột bị mất kết nối với phần mềm điều khiển trung tâm (RCS).
+* Ping mạng từ máy tính đến AGV hoặc trạm phát phụ hiển thị độ trễ rất cao (trên 1000ms), rớt gói tin (Request timed out), hoặc IP của xe bị nhảy sang một dải IP lạ không thuộc cấu hình ban đầu.
+* Kiểm tra danh sách thiết bị (无线客户端) trên giao diện Web quản trị của trạm phát phụ thấy các cục Wi-Fi phụ đang bắt sóng nối đuôi nhau (Daisy-chain).
+
+### 🧐 2 Nguyên nhân cốt lõi:
+1. **Lỗi Xung đột cấp phát IP (Rogue DHCP Server):** Chế độ "Smart DHCP" (智能DHCP服务器) trên các trạm phát FAT AP của TP-Link vẫn đang bật. Khi kết nối WDS không dây bị trễ một vài phần nghìn giây, cục TP-Link lầm tưởng hệ thống mạng gốc đã sập nên tự ý đứng ra cấp phát dải IP mới cho AGV. Khiến AGV đi lạc sang một dải mạng khác và ngắt liên lạc hoàn toàn với Server.
+2. **Sai mô hình cấu hình WDS (Bắt chéo sóng của nhau):** Khi thiết lập cầu nối WDS (无线桥接), kỹ thuật viên chỉ dò bắt theo Tên mạng Wi-Fi (SSID) mà không đối chiếu địa chỉ MAC (BSSID). Do các trạm phụ phát cùng tên SSID với trạm gốc, chúng đã vô tình kết nối nối tiếp vào nhau thay vì kết nối tập trung về cục Moxa gốc, làm băng thông suy giảm và độ trễ tăng vọt lên hàng chục lần.
+
+### 🛠 Phương án khắc phục triệt để:
+
+#### Bước 1: Tắt hoàn toàn DHCP trên TẤT CẢ các trạm phát phụ
+* Đăng nhập vào trang cấu hình Web của **TỪNG** cục TP-Link.
+* Chuyển đến mục **Hệ thống (系统) -> Mạng LAN**.
+* Bắt buộc **TẮT bỏ dấu tick** ở ô "Smart DHCP" (智能DHCP服务器: Bỏ tick 启用).
+* Chuyển Kiểu kết nối (连接方式) sang **IP Tĩnh (静态IP)** và cấp cho mỗi cục 1 IP cố định riêng biệt (VD: 192.168.1.2, 192.168.1.3...) nằm cùng dải với Moxa để tiện quản lý và tránh bị reset. Lưu lại cấu hình.
+
+#### Bước 2: Thiết lập lại Cầu nối WDS theo Mô hình Ngôi sao (Star Topology)
+* Vào mục **Không dây (无线) -> Cài đặt WDS (WDS设置)**.
+* Nhấn nút **Thay đổi cầu nối (更改桥接)** để quét lại danh sách mạng.
+* Trong danh sách mạng quét được, **tuyệt đối CHỈ CHỌN kết nối vào mạng có địa chỉ MAC trùng khớp 100% với địa chỉ MAC của cục Moxa gốc**. (Không chọn dựa trên Tên SSID).
+* Nhập đúng Mật khẩu Wi-Fi của Moxa.
+* Tại phần Cài đặt nâng cao, chọn **CỐ ĐỊNH Kênh phát (Channel)** giống hệt với kênh của Moxa (Ví dụ: Kênh 6), không để chế độ Auto.
+* Lưu cấu hình. Kiểm tra lại bảng "Thiết bị kết nối" trên trang chủ của TP-Link để đảm bảo không có cục TP-Link nào khác đang kết nối nối đuôi vào cục hiện tại.
+

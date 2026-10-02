@@ -493,6 +493,10 @@
         <span><span class="num">16.</span> <a href="#th16">Lỗi Bản quyền RCS (LICENSE VERIFICATION FAILED - MAC đổi)</a></span>
         <span class="toc-page">Trang 17</span>
       </div>
+      <div class="toc-item">
+        <span><span class="num">17.</span> <a href="#th17">AGV mất kết nối hoặc chập chờn khi qua trạm Wi-Fi phụ (TP-Link)</a></span>
+        <span class="toc-page">Trang 18</span>
+      </div>
     </div>
   </section>
 
@@ -1197,6 +1201,47 @@ Put the license code into config/license.key and restart.
           <li>Khi hãng gửi lại chuỗi bản quyền mới, mở file <strong><code>Robot Central Dispatch System Project2\config\license.key</code></strong>, xóa nội dung cũ, dán mã mới vào và lưu lại (Ctrl + S).</li>
           <li>Chạy lại <code>start.bat</code> ➔ Hệ thống sẽ chạy ổn định vĩnh viễn trên đường truyền mạng LAN có dây.</li>
         </ol>
+      </div>
+    </div>
+  </article>
+
+  <!-- Situation 17 -->
+  <article class="situation-card" id="th17">
+    <div class="situation-header">
+      <div class="situation-title">17. AGV mất kết nối hoặc mạng bị chập chờn khi chạy qua các trạm Wi-Fi phụ (TP-Link WDS)</div>
+      <span class="situation-tag">Mức độ: Hạ tầng Mạng</span>
+    </div>
+    <div class="situation-body">
+      <div class="block block-symptom">
+        <span class="block-tag">HIỆN TƯỢNG THỰC TẾ</span>
+        <ul>
+          <li>Xe AGV đang chạy bình thường nhưng khi đi xa trạm phát gốc (Moxa) và vào vùng trạm phát phụ (như TP-Link TL-AP1900DG / 300DG), xe đột ngột bị mất kết nối với phần mềm điều khiển.</li>
+          <li>Ping mạng từ máy tính đến AGV hoặc trạm phát phụ hiển thị độ trễ rất cao (> 1000ms), rớt gói tin (Request timed out), hoặc IP của xe bị nhảy sang một dải IP lạ.</li>
+          <li>Kiểm tra danh sách thiết bị (无线客户端) trên Web quản trị của trạm phát phụ thấy các cục Wi-Fi phụ đang bắt sóng nối đuôi nhau (Daisy-chain).</li>
+        </ul>
+      </div>
+      <div class="block block-cause">
+        <span class="block-tag">2 NGUYÊN NHÂN CỐT LÕI</span>
+        <ol>
+          <li><strong>Lỗi Xung đột cấp phát IP (Rogue DHCP Server):</strong> Chế độ "Smart DHCP" (智能DHCP服务器) trên các trạm FAT AP của TP-Link vẫn đang bật. Khi kết nối WDS bị trễ, cục TP-Link lầm tưởng mạng gốc sập nên tự ý cấp phát IP mới sai dải cho AGV. Khiến AGV đi lạc sang một dải mạng khác và ngắt liên lạc với Server.</li>
+          <li><strong>Sai mô hình cấu hình WDS (Bắt chéo sóng):</strong> Khi cấu hình WDS (无线桥接), người dùng chỉ dò bắt theo Tên Wi-Fi (SSID) mà không đối chiếu địa chỉ MAC (BSSID). Do các trạm phụ phát cùng tên SSID, chúng đã vô tình kết nối nối tiếp vào nhau thay vì kết nối tập trung về cục Moxa gốc, làm băng thông suy giảm trầm trọng.</li>
+        </ol>
+      </div>
+      <div class="block block-solution">
+        <span class="block-tag">PHƯƠNG ÁN KHẮC PHỤC TRIỆT ĐỂ</span>
+        <h4 class="sub-step">Bước 1: Tắt hoàn toàn DHCP trên TẤT CẢ các trạm phát phụ</h4>
+        <ul>
+          <li>Đăng nhập trang cấu hình Web của <strong>TỪNG</strong> cục TP-Link. Vào mục <strong>Hệ thống (系统) &rarr; Mạng LAN</strong>.</li>
+          <li>Bắt buộc <strong>TẮT bỏ dấu tick</strong> ở ô "Smart DHCP" (<code>智能DHCP服务器: Bỏ tick 启用</code>).</li>
+          <li>Chuyển Kiểu kết nối (<code>连接方式</code>) sang <strong>IP Tĩnh (静态IP)</strong> và cấp 1 IP cố định riêng biệt (VD: 192.168.1.2, 192.168.1.3...) nằm cùng dải với Moxa để dễ quản lý. Lưu lại cấu hình.</li>
+        </ul>
+        <h4 class="sub-step">Bước 2: Sửa lại Cầu nối WDS theo Mô hình Ngôi sao (Star Topology)</h4>
+        <ul>
+          <li>Vào mục <strong>Không dây (无线) &rarr; Cài đặt WDS (WDS设置)</strong>. Nhấn <strong>Thay đổi cầu nối (更改桥接)</strong>.</li>
+          <li>Trong danh sách quét được, <strong>tuyệt đối CHỈ CHỌN mạng có địa chỉ MAC trùng khớp với địa chỉ MAC của cục Moxa gốc</strong> (Không chọn theo Tên SSID).</li>
+          <li>Nhập đúng mật khẩu của Moxa. Chọn <strong>CỐ ĐỊNH Kênh phát (Channel)</strong> giống hệt với kênh của Moxa (Ví dụ: Kênh 6), không để Auto.</li>
+          <li>Lưu cấu hình. Kiểm tra lại bảng "Thiết bị kết nối" trên trang chủ để đảm bảo không có cục TP-Link nào khác đang nối đuôi vào cục hiện tại.</li>
+        </ul>
       </div>
     </div>
   </article>
