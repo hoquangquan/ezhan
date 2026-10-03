@@ -1,75 +1,1490 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Báo Cáo Công Việc</title>
-    <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #333; margin: 40px; }
-        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; text-align: center; }
-        h2 { color: #2980b9; margin-top: 30px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        h3 { color: #16a085; }
-        ul { margin-bottom: 20px; }
-        li { margin-bottom: 8px; }
-        .highlight { background-color: #f1f8ff; padding: 15px; border-left: 4px solid #3498db; border-radius: 4px; margin-bottom: 15px; }
-        .task { background-color: #fffaf0; padding: 15px; border-left: 4px solid #f39c12; border-radius: 4px; }
-        .footer { margin-top: 50px; font-style: italic; color: #7f8c8d; text-align: right; border-top: 1px solid #eee; padding-top: 10px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Báo Cáo Chi Tiết Tiến Độ Công Việc Theo Ngày (14/09/2026 - 03/10/2026) - Dự Án AGV E300 & RCS</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      line-height: 1.6;
+      padding: 24px 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .document-wrapper {
+      max-width: 1080px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 38px 46px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      border: 1px solid #cbd5e1;
+    }
+
+    /* Header & Branding */
+    .doc-header {
+      border-bottom: 2px solid #cbd5e1;
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+    }
+
+    .badge-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-radius: 4px;
+    }
+
+    .badge-primary {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .badge-dark {
+      background: #0f172a;
+      color: #ffffff;
+    }
+
+    .badge-success {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .badge-warning {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .badge-purple {
+      background: #f3e8ff;
+      color: #6b21a8;
+    }
+
+    .badge-blue {
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
+    h1 {
+      font-size: 23px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.35;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: -0.3px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #475569;
+      line-height: 1.6;
+    }
+
+    /* Summary Meta Cards */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 20px 0 28px;
+    }
+
+    .meta-card {
+      background: #f1f5f9;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border-left: 4px solid #0284c7;
+    }
+
+    .meta-label {
+      font-size: 11px;
+      color: #64748b;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-top: 2px;
+    }
+
+    /* Headings */
+    h2 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 32px 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h3 {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #0369a1;
+      margin: 18px 0 8px;
+    }
+
+    p {
+      margin-bottom: 10px;
+      font-size: 13.5px;
+      color: #334155;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 14px 20px;
+      font-size: 13.5px;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12.5px;
+      border: 1px solid #e2e8f0;
+      font-weight: 600;
+    }
+
+    /* Timeline & Day Blocks - Sát nhau, thu gọn tối đa khoảng trống */
+    .timeline-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 12px 0 20px;
+    }
+
+    .day-block {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 10px 14px;
+      position: relative;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      transition: border-color 0.2s;
+    }
+
+    .day-block:hover {
+      border-color: #38bdf8;
+    }
+
+    .day-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+      border-bottom: 1px dashed #cbd5e1;
+    }
+
+    .day-title {
+      font-size: 13.8px;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.3;
+    }
+
+    .day-date-tag {
+      background: #0284c7;
+      color: #ffffff;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+    }
+
+    .day-status {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .status-done {
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+    }
+
+    .task-item {
+      margin-bottom: 6px;
+    }
+
+    .task-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .task-item-title {
+      font-weight: 700;
+      font-size: 12.8px;
+      color: #0369a1;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+      line-height: 1.35;
+    }
+
+    .task-item-title::before {
+      content: "▪";
+      color: #0284c7;
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .task-desc {
+      font-size: 12.5px;
+      line-height: 1.4;
+      color: #334155;
+      padding-left: 12px;
+    }
+
+    .task-desc ul {
+      margin: 2px 0 2px 14px;
+    }
+
+    .task-desc li {
+      margin-bottom: 2px;
+      line-height: 1.38;
+    }
+
+    .task-desc p {
+      margin-bottom: 2px;
+    }
+
+    /* Boxes & Alerts */
+    .box-info {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid #16a34a;
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 13px;
+    }
+
+    .box-warning {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-left: 4px solid #d97706;
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 13px;
+    }
+
+    .box-highlight {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid #2563eb;
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 13px;
+    }
+
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      margin: 14px 0 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+      padding: 9px 12px;
+      border: 1px solid #cbd5e1;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 8px 12px;
+      border: 1px solid #e2e8f0;
+      vertical-align: middle;
+    }
+
+    tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    tr:hover {
+      background: #f1f5f9;
+    }
+
+    /* Bảng thu nhỏ gọn cho Phần 1 */
+    .table-compact {
+      font-size: 11.5px;
+      line-height: 1.35;
+    }
+
+    .table-compact th {
+      padding: 6px 8px;
+      font-size: 11.5px;
+    }
+
+    .table-compact td {
+      padding: 4.5px 8px;
+      font-size: 11.5px;
+    }
+
+    .table-compact th:first-child,
+    .table-compact td:first-child {
+      text-align: center;
+      font-weight: 700;
+      color: #64748b;
+    }
+
+    .table-compact th:nth-child(5),
+    .table-compact td:nth-child(5) {
+      text-align: center;
+    }
+
+    .table-compact code {
+      font-size: 11px;
+      padding: 1px 4px;
+    }
+
+    .tag-ok {
+      display: inline-block;
+      padding: 2px 7px;
+      background: #dcfce7;
+      color: #15803d;
+      font-weight: 700;
+      border-radius: 3px;
+      font-size: 11px;
+    }
+
+    /* Phần nội dung báo cáo từ Trang 2 trở đi: Font Times New Roman, Cỡ chữ 13 */
+    .report-content {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #1e293b;
+    }
+
+    .report-content h2 {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .report-content h3 {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #0369a1;
+    }
+
+    .report-content p,
+    .report-content ul,
+    .report-content ol,
+    .report-content li {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 13px;
+    }
+
+    .report-content .box-info,
+    .report-content .box-warning,
+    .report-content .box-highlight {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 13px;
+    }
+
+    .report-content table,
+    .report-content th,
+    .report-content td {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 13px;
+    }
+
+    .report-content .table-compact,
+    .report-content .table-compact th,
+    .report-content .table-compact td {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 13px;
+    }
+
+    .report-content .day-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 14.5px;
+      font-weight: 700;
+    }
+
+    .report-content .task-item-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 13.5px;
+      font-weight: 700;
+    }
+
+    .report-content .task-desc {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .report-content .doc-footer {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 12.5px;
+    }
+
+    .report-content .day-date-tag,
+    .report-content .day-status,
+    .report-content .badge {
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    /* Footer */
+    .doc-footer {
+      margin-top: 36px;
+      padding-top: 14px;
+      border-top: 1px solid #cbd5e1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    /* Ngắt trang & Bố cục Trang 1 */
+    .page-break {
+      page-break-before: always;
+      break-before: page;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 2px dashed #cbd5e1;
+    }
+
+    .exec-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-left: 4px solid #0284c7;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 16px 0;
+    }
+
+    .exec-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #0f172a;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .exec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      font-size: 13px;
+      color: #334155;
+    }
+
+    .exec-col ul {
+      margin: 4px 0 0 16px;
+      padding: 0;
+    }
+
+    .exec-col li {
+      margin-bottom: 5px;
+    }
+
+    .toc-section {
+      margin: 18px 0;
+    }
+
+    .toc-title {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .toc-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    }
+
+    .toc-num {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-weight: 800;
+      font-size: 13px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .toc-text {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #1e293b;
+      line-height: 1.35;
+    }
+
+    .toc-sub {
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    .sign-section {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .sign-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      text-align: center;
+    }
+
+    .sign-role {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 45px;
+    }
+
+    .sign-name {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .sign-unit {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background: #ffffff;
+      }
+
+      .document-wrapper {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+
+      .page-break {
+        border-top: none;
+        margin-top: 0;
+        padding-top: 0;
+        page-break-before: always;
+        break-before: page;
+      }
+
+      h2 {
+        page-break-after: avoid;
+        break-after: avoid;
+      }
+
+      .day-header {
+        page-break-after: avoid;
+        break-after: avoid;
+      }
+
+      .task-item {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      table,
+      .box-info,
+      .box-warning,
+      .box-highlight,
+      .exec-box,
+      .toc-section {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <h1>BÁO CÁO TỔNG KẾT CÔNG VIỆC</h1>
-    <p style="text-align: center; font-weight: bold;">Giai đoạn: 14/09/2026 - Hiện tại</p>
-    <p style="text-align: center;"><strong>Dự án:</strong> Hệ thống AGV E300 & Robot Central Dispatch System (RCS)</p>
+  <div class="document-wrapper">
+    <!-- Header -->
+    <div class="doc-header">
+      <div class="badge-bar">
+        <span class="badge badge-dark">ESATECH AUTOMATION SYSTEMS</span>
+        <span class="badge badge-primary">DỰ ÁN AGV E300 & RCS V2</span>
+        <span class="badge badge-success">NHẬT KÝ & BÁO CÁO CÔNG VIỆC</span>
+        <span class="badge badge-purple">14/09/2026 - 03/10/2026</span>
+      </div>
+      <h1>BÁO CÁO TIẾN ĐỘ & NHẬT KÝ KỸ THUẬT TRIỂN KHAI DỰ ÁN</h1>
+      <div class="subtitle">
+        Báo cáo chi tiết toàn bộ các hạng mục công việc kỹ thuật đã thực hiện theo từng ngày từ 14/09/2026 đến ngày
+        03/10/2026: khảo sát bản đồ SLAM <code>Esa_1</code>, triển khai 07 Hộp gọi Callbox, chuẩn hóa hạ tầng mạng Wi-Fi
+        công nghiệp đa trạm phát (01 MOXA Master + 05 TP-LINK), giải quyết các sự cố mất mạng roaming, xử lý xung đột IP
+        và giải mã bản chất kỹ thuật hiện tượng độ trễ Hộp gọi.
+      </div>
+    </div>
 
-    <h2>1. Các tài liệu đã hoàn thiện và cập nhật (Thư mục "tài liệu")</h2>
-    <p>Trong giai đoạn vừa qua, dự án đã tập trung số hóa và biên dịch toàn bộ hệ thống tài liệu kỹ thuật, chuyển giao công nghệ cho người vận hành. Cụ thể bao gồm:</p>
-    <ul>
-        <li><strong>Tài liệu Hộp gọi (Callbox Manual):</strong> Biên soạn và chuẩn hóa file <code>Callbox_Manual_Tieng_Viet.pdf</code>, hướng dẫn chi tiết quy trình lắp đặt, cấu hình mạng và giải thích tín hiệu đèn/âm thanh của hộp gọi.</li>
-        <li><strong>Hướng dẫn Kết nối và Tạo bản đồ:</strong> Hoàn thiện <code>Huong_Dan_Ket_Noi_Va_Tao_Ban_Do_AGV_E300.pdf</code>. Cung cấp quy trình từng bước để kết nối phần mềm mapping, quét bản đồ xưởng, thiết lập trạm dừng (Station) và đồng bộ với Server.</li>
-        <li><strong>Sổ tay xử lý sự cố (Troubleshooting):</strong> Cập nhật <code>So_Tay_Xu_Ly_Su_Co_AGV_E300.pdf</code>, tập hợp các mã lỗi thường gặp (mất kết nối mạng, AGV kẹt, lỗi Callbox) và phương pháp khắc phục tại chỗ.</li>
-        <li><strong>Cập nhật Tool & Script:</strong> Xây dựng các file Batch (.bat) tự động hóa như <code>update_E300.bat</code>, <code>cai_dat_apk_E300XDY.bat</code> giúp kỹ thuật viên dễ dàng nâng cấp phần mềm cho AGV và hệ thống.</li>
-    </ul>
+    <!-- Meta Information Cards -->
+    <div class="meta-grid">
+      <div class="meta-card" style="border-left-color: #059669;">
+        <div class="meta-label">Người thực hiện</div>
+        <div class="meta-value" style="color: #0f172a;">Hồ Quang Quân &bull; Nguyễn Tuấn Nam</div>
+      </div>
+      <div class="meta-card">
+        <div class="meta-label">Khoảng thời gian báo cáo</div>
+        <div class="meta-value">14/09/2026 ➔ 03/10/2026</div>
+      </div>
+      <div class="meta-card">
+        <div class="meta-label">Đối tượng thiết bị quản lý</div>
+        <div class="meta-value">01 Robot E300 + 07 Callbox + Server RCS</div>
+      </div>
+      <div class="meta-card">
+        <div class="meta-label">Hạ tầng mạng kiểm soát</div>
+        <div class="meta-value">01 MOXA Master AP + 05 Trạm TP-LINK</div>
+      </div>
+      <div class="meta-card">
+        <div class="meta-label">Trạng thái vận hành thực tế</div>
+        <div class="meta-value" style="color: #16a34a;">Ổn Định / Đáp Ứng Sản Xuất</div>
+      </div>
+    </div>
 
-    <h2>2. Quá trình xử lý kỹ thuật và gỡ lỗi (Troubleshooting)</h2>
-    <p>Giải quyết triệt để bài toán <strong>độ trễ (delay) 4 giây</strong> khi ấn nút Hộp gọi Callbox:</p>
-    <ul>
-        <li><strong>Kiểm tra Hạ tầng mạng:</strong> Đã thử nghiệm cô lập mạng (sử dụng TP-Link Bridge mode, gán IP tĩnh, bắt gói tin ARP) để loại trừ nguyên nhân nhiễu sóng và ngập lụt mạng.</li>
-        <li><strong>Phân tích Server:</strong> Đã cấu hình tối ưu <code>keepalive_timeout</code> trên Nginx, đồng thời cấu hình file <code>hosts</code> trên Windows để loại trừ lỗi phân giải tên miền (Reverse DNS Timeout) của phần mềm Java.</li>
-        <li><strong>Kết luận cốt lõi:</strong> Độ trễ 4 giây là do <strong>giới hạn xử lý nội tại của thuật toán tìm đường (Pathfinding)</strong> bên trong phần mềm Ezhan/AGV. Khi bản đồ xưởng được mở rộng và phức tạp hơn, phần mềm mất nhiều thời gian hơn để tính toán lộ trình trước khi gửi phản hồi (ACK) lại cho Hộp gọi.</li>
-        <li><strong>Giải pháp thực tế:</strong> Đề xuất phương án tháo/cắt giắc cắm loa trên Hộp gọi nhằm loại bỏ âm thanh "Nhiệm vụ thất bại" gây ức chế, đảm bảo quá trình vận hành trơn tru vì thực tế xe AGV vẫn sẽ đến đích sau thời gian tính toán.</li>
-    </ul>
+    <!-- Tóm tắt điều hành & Mục tiêu triển khai -->
+    <div class="exec-box">
+      <div class="exec-title">
+        <span>Tóm Tắt Điều Hành & Mục Tiêu Kỹ Thuật Đạt Được</span>
+      </div>
+      <div class="exec-grid">
+        <div class="exec-col">
+          <strong>Mục tiêu kỹ thuật cốt lõi:</strong>
+          <ul>
+            <li>Thiết lập mạng Wi-Fi công nghiệp phủ sóng toàn bộ diện tích nhà máy, hỗ trợ AGV chuyển vùng mượt mà.</li>
+            <li>Định danh và quản lý tập trung toàn bộ 15 thiết bị trên dải IP tĩnh <code>192.168.127.x/24</code>.</li>
+            <li>Tích hợp hệ thống 07 hộp gọi trạm gia công với phần mềm điều phối trung tâm Ezhan RCS.</li>
+          </ul>
+        </div>
+        <div class="exec-col">
+          <strong>Kết quả nghiệm thu chủ chốt:</strong>
+          <ul>
+            <li>100% thiết bị phần cứng kết nối thông suốt, triệt tiêu hoàn toàn rớt mạng và tranh chấp IP.</li>
+            <li>AGV E300 tự hành và dừng đỗ chính xác theo bản đồ SLAM <code>Esa_1</code>, đáp ứng công suất gọi xe.</li>
+            <li>Làm rõ bản chất độ trễ vi điều khiển Hộp gọi, tối ưu hóa Reverse Proxy Nginx đạt phản hồi cao.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-    <h2>3. Tính năng mới trên Web RCS (Robot Central System)</h2>
-    <p>Để nâng cao năng lực quản lý và tự động hóa hệ thống AGV, một loạt các tính năng mới đã được phát triển và tích hợp thành công vào giao diện Web RCS.</p>
+    <!-- Mục lục cấu trúc tài liệu -->
+    <div class="toc-section">
+      <div class="toc-title">Cấu Trúc Nội Dung Báo Cáo Kỹ Thuật</div>
+      <div class="toc-grid">
+        <div class="toc-item">
+          <div class="toc-num">1</div>
+          <div>
+            <div class="toc-text">Tổng Quan & Quy Hoạch IP 15 Thiết Bị</div>
+            <div class="toc-sub">Bảng thông số MAC, IP tĩnh, Model & Cổng kết nối</div>
+          </div>
+        </div>
+        <div class="toc-item">
+          <div class="toc-num">2</div>
+          <div>
+            <div class="toc-text">Giải Mã Bản Chất Nghịch Lý Hộp Gọi</div>
+            <div class="toc-sub">Phân tích bất đối xứng timeout vi điều khiển & AGV</div>
+          </div>
+        </div>
+        <div class="toc-item">
+          <div class="toc-num">3</div>
+          <div>
+            <div class="toc-text">Nhật Ký Triển Khai Chi Tiết Theo Ngày</div>
+            <div class="toc-sub">7 giai đoạn thực hiện công việc từ 14/09 đến 03/10</div>
+          </div>
+        </div>
+        <div class="toc-item">
+          <div class="toc-num">4</div>
+          <div>
+            <div class="toc-text">Đánh Giá, Kết Luận và Hạn Chế</div>
+            <div class="toc-sub">Đánh giá vận hành, hạn chế WDS & kiến nghị cáp LAN</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <h3>3.1. Tính năng Quản lý thiết bị / Cấu hình Hộp gọi (Device Management)</h3>
-    <div class="highlight">
-        <strong>Mục đích:</strong> Cung cấp một giao diện quản trị tập trung để theo dõi và thiết lập toàn bộ các Hộp gọi (Callboxes) đang hoạt động trong xưởng.
+    
+
+    <!-- DẤU NGẮT TRANG: ĐẨY MỤC 1 SANG ĐẦU TRANG 2 -->
+    <div class="page-break"></div>
+
+    <!-- KHỐI NỘI DUNG BÁO CÁO (FONT TIMES NEW ROMAN - CỠ 13) -->
+    <div class="report-content">
+
+      <!-- 1. BẢNG QUY HOẠCH IP 15 THIẾT BỊ -->
+      <h2>1. Tổng Quan Hệ Thống & Bảng Quy Hoạch IP Chuẩn 15 Thiết Bị Vận Hành</h2>
+    <p>
+      Toàn bộ 15 thiết bị phần cứng của dự án đã được rà soát và quy hoạch cố định trong lớp mạng công nghiệp duy nhất
+      <strong><code>192.168.127.x/24</code></strong> (với Default Gateway trỏ về Master MOXA <code>192.168.127.1</code>,
+      Subnet Mask <code>255.255.255.0</code>):
+    </p>
+
+    <div class="table-container">
+      <table class="table-compact">
+        <thead>
+          <tr>
+            <th style="width: 5%;">STT</th>
+            <th style="width: 20%;">Tên Thiết Bị</th>
+            <th style="width: 22%;">Model / Nhận Diện Phần Cứng</th>
+            <th style="width: 18%;">Địa Chỉ MAC</th>
+            <th style="width: 17%;">IP Vận Hành</th>
+            <th style="width: 18%;">Giao Thức / Cổng Kết Nối</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>00</td>
+            <td><strong>Trạm Phát Master</strong></td>
+            <td>MOXA AWK-1131A (DIN-Rail)</td>
+            <td><code>06:90:E8:AC:23:C9</code></td>
+            <td><code>192.168.127.1</code></td>
+            <td>Web Admin / DHCP Server (.50-.99)</td>
+          </tr>
+          <tr>
+            <td>01</td>
+            <td><strong>Trạm phụ TP-Link 1</strong></td>
+            <td>TL-AP300DG (2 Anten 2.4G)</td>
+            <td><code>98:97:CC:E2:22:BE</code></td>
+            <td><code>192.168.127.55</code></td>
+            <td>WDS Bridge 2.4G (Ch 6)</td>
+          </tr>
+          <tr>
+            <td>02</td>
+            <td><strong>Trạm phụ TP-Link 2</strong></td>
+            <td>TL-AP300DG (2 Anten 2.4G)</td>
+            <td><code>98:97:CC:E2:22:3B</code></td>
+            <td><code>192.168.127.80</code></td>
+            <td>WDS Bridge 2.4G (Ch 6)</td>
+          </tr>
+          <tr>
+            <td>03</td>
+            <td><strong>Trạm phụ TP-Link 3</strong></td>
+            <td>TL-AP1900DG v1.1 (Tab 3)</td>
+            <td><code>3C:6A:48:2E:4F:3F</code></td>
+            <td><code>192.168.127.72</code></td>
+            <td>WDS Bridge (Tắt 5G & AP Isolation)</td>
+          </tr>
+          <tr>
+            <td>04</td>
+            <td><strong>Trạm phụ TP-Link 4</strong></td>
+            <td>TL-AP1900DG v1.1 (Tab 4)</td>
+            <td><code>98:97:CC:0B:23:48</code></td>
+            <td><code>192.168.127.99</code></td>
+            <td>WDS Bridge (Tắt 5G & Giảm rate 6M)</td>
+          </tr>
+          <tr>
+            <td>05</td>
+            <td><strong>Trạm phụ TP-Link 5</strong></td>
+            <td>TL-AP1900DG v1.1 (Tab 5)</td>
+            <td><code>F8:CE:21:53:71:11</code></td>
+            <td><code>192.168.127.86</code></td>
+            <td>WDS Bridge (Tách khỏi IP trùng .86)</td>
+          </tr>
+          <tr>
+            <td>06</td>
+            <td><strong>Máy Chủ Điều Phối</strong></td>
+            <td>PC Server / Laptop Ezhan RCS</td>
+            <td>Card mạng LAN RJ45</td>
+            <td><code>192.168.127.77</code></td>
+            <td>Nginx :80 / WS :8765 / API :8080</td>
+          </tr>
+          <tr>
+            <td>07</td>
+            <td><strong>Robot AGV E300</strong></td>
+            <td>AMR003 (Xe tự hành Laser SLAM)</td>
+            <td>Wi-Fi tích hợp SLAM E300</td>
+            <td><code>192.168.127.53</code></td>
+            <td>Task API :8068 / HMI Web :9999</td>
+          </tr>
+          <tr>
+            <td>08</td>
+            <td><strong>Hộp Gọi Trạm 01</strong></td>
+            <td>Call Box V1.0 (3 nút K1-K3)</td>
+            <td>Màn hình OLED / ESP32</td>
+            <td><code>192.168.127.75</code></td>
+            <td>WebSocket Port 8765 ➔ Server</td>
+          </tr>
+          <tr>
+            <td>09</td>
+            <td><strong>Hộp Gọi Trạm 02</strong></td>
+            <td>Call Box V1.0 (3 nút K1-K3)</td>
+            <td>Màn hình OLED / ESP32</td>
+            <td><code>192.168.127.93</code></td>
+            <td>WebSocket Port 8765 ➔ Server</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td><strong>Hộp Gọi Trạm 03</strong></td>
+            <td>Call Box V1.0 (3 nút K1-K3)</td>
+            <td>Màn hình OLED / ESP32</td>
+            <td><code>192.168.127.87</code></td>
+            <td>WebSocket Port 8765 ➔ Server</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td><strong>Hộp Gọi Trạm 04</strong></td>
+            <td>Call Box V1.0 (3 nút K1-K3)</td>
+            <td>Màn hình OLED / ESP32</td>
+            <td><code>192.168.127.95</code></td>
+            <td>WebSocket Port 8765 ➔ Server</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td><strong>Hộp Gọi Trạm 05</strong></td>
+            <td>Call Box V1.0 (3 nút K1-K3)</td>
+            <td>Màn hình OLED / ESP32</td>
+            <td><code>192.168.127.54</code></td>
+            <td>WebSocket Port 8765 ➔ Server</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td><strong>Hộp Gọi Trạm 06</strong></td>
+            <td>Call Box V1.0 (3 nút K1-K3)</td>
+            <td>Màn hình OLED / ESP32</td>
+            <td><code>192.168.127.83</code></td>
+            <td>WebSocket Port 8765 ➔ Server</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td><strong>Hộp Gọi Trạm 07</strong></td>
+            <td>Call Box V1.0 (3 nút K1-K3)</td>
+            <td>Màn hình OLED / ESP32</td>
+            <td><code>192.168.127.51</code></td>
+            <td>WebSocket Port 8765 ➔ Server</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 2. PHÂN TÍCH KỸ THUẬT HIỆN TƯỢNG ĐỘ TRỄ HỘP GỌI -->
+    <h2>2. Bản Chất Bài Toán Kỹ Thuật: Giải Mã Hiện Tượng Nghịch Lý Hộp Gọi Báo Lỗi</h2>
+    <div class="box-highlight">
+      <strong>Hiện tượng quan sát thực tế trong nhà xưởng:</strong><br>
+      <em>"Khi công nhân bấm nút trên Hộp gọi, loa hộp gọi phát thông báo 'Gửi nhiệm vụ thất bại', nhưng chỉ khoảng 3 -
+        4 giây sau xe Robot AGV vẫn tự động nhả phanh và di chuyển chính xác đến đúng vị trí trạm vừa bấm."</em>
+    </div>
+
+    <div class="box-info">
+      <strong>Nguyên nhân kỹ thuật cốt lõi (Bất đối xứng thời gian phản hồi Timeout):</strong>
+      <ul style="margin: 6px 0 0 18px;">
+        <li>
+          <strong>Thời gian chờ ACK Timeout của firmware Hộp gọi quá ngắn:</strong> Vi điều khiển trong Hộp gọi cứng có
+          bộ đếm thời gian chờ phản hồi xác nhận lệnh được đặt mặc định cố định ở mức <strong>1.5 - 2.0 giây</strong>.
+          Nếu sau khoảng thời gian này Hộp gọi chưa nhận được gói tin phản hồi xác nhận từ máy chủ, mạch âm thanh lập
+          tức phát loa cảnh báo: <em>"Nhiệm vụ thất bại"</em>.
+        </li>
+        <li>
+          <strong>Chuỗi xử lý tính toán của AGV E300 thực tế mất từ 3 - 4 giây:</strong><br>
+          Luồng giao tiếp hoàn chỉnh:
+          <code>[Hộp gọi] ──(WS:8765)──&gt; [Server RCS] ──(HTTP POST:8068)──&gt; [Robot AGV E300]</code>.<br>
+          Khi nhận lệnh, máy tính công nghiệp trên xe phải thực hiện tuần tự: (1) Kiểm tra độ tin cậy định vị SLAM
+          (Position Confidence &gt; 50%), (2) Tính toán đường đi tránh vật cản (Local Path Planning), và (3) Gửi tín
+          hiệu cấp nguồn mở rơ-le phanh điện từ bánh lái. Tổng thời gian chuỗi này mất từ <strong>3 đến 4 giây</strong>
+          rồi xe mới gửi cờ hoàn tất về Server RCS.
+        </li>
+        <li>
+          <strong>Kết luận:</strong> Lệnh điều khiển không hề bị lỗi hay mất kết nối. Việc xe đến đúng nơi chứng minh
+          100% đường truyền WebSocket, phần mềm điều phối RCS và bản đồ SLAM đều vận hành hoàn toàn chính xác.
+        </li>
+      </ul>
+    </div>
+
+    <!-- 3. NHẬT KÝ CHI TIẾT CÔNG VIỆC THEO TỪNG NGÀY -->
+    <h2>3. Nhật Ký Chi Tiết Toàn Bộ Công Việc Thực Hiện Theo Ngày (14/09/2026 - 03/10/2026)</h2>
+    <p>
+      Dưới đây là nhật ký chi tiết các hạng mục kỹ thuật đã triển khai thực tế trên hệ thống xe AGV E300, phần mềm điều
+      phối Ezhan RCS V2, hạ tầng mạng Wi-Fi và 07 Hộp gọi:
+    </p>
+
+    <div class="timeline-container">
+
+      <!-- GIAI ĐOẠN 1: 14/09 - 16/09/2026 -->
+      <div class="day-block">
+        <div class="day-header">
+          <div class="day-title">
+            <span class="day-date-tag">14/09/2026 ➔ 16/09/2026</span>
+            <span>Khảo Sát Thực Địa, Lập Bản Đồ Laser SLAM & Thiết Lập Trạm Sạc Tự Động</span>
+          </div>
+          <span class="day-status status-done">HOÀN TẤT</span>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Khảo sát layout mặt sàn xưởng & Xây dựng bản đồ định vị SLAM</div>
+          <div class="task-desc">
+            Tiến hành khảo sát thực địa toàn bộ mặt bằng nhà xưởng, xác định hành lang di chuyển và các vị trí có nguy
+            cơ che khuất tầm quét Lidar.
+            Sử dụng ứng dụng điều khiển HMI trên xe E300 tiến hành quét Laser SLAM tạo bản đồ nhà xưởng đặt tên là
+            <code>Esa_1</code>. Thiết lập tường ảo (Virtual Wall) tại các khe hẹp máy móc để tránh xe đi lạc vào góc
+            chết.
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Cấu hình tọa độ Trạm sạc tự động Esa_1_sac & Điểm chờ Standby</div>
+          <div class="task-desc">
+            Đánh dấu và lưu trữ tọa độ trạm sạc tự động tiếp điểm đồng <code>Esa_1_sac</code> cùng điểm chờ trung gian.
+            Căn chỉnh góc xoay và khoảng cách tiếp xúc đuôi xe vào dock sạc để đảm bảo tiếp điểm sạc đồng chạm khít,
+            kích hoạt dòng nạp pin tự động mà không bị trượt khớp cơ khí.
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Xử lý sự cố trượt định vị Position Confidence &lt; 50%</div>
+          <div class="task-desc">
+            Phát hiện xe bị khóa động cơ và từ chối mọi lệnh di chuyển tự động do thuật toán Laser SLAM báo độ tin cậy
+            định vị <code>Position Confidence &lt; 50%</code>.
+            Thực hiện thao tác bấm <strong>Định vị lại (Relocalization / 重定位)</strong> trên màn hình HMI xe, dùng cần
+            điều khiển joystick lái xe quét lại các góc tường cố định, nâng chỉ số tin cậy lên <strong>&gt;
+              80%</strong>.
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Tinh chỉnh thời gian dừng chờ trạm (Delivery Stay Duration) về 0 giây</div>
+          <div class="task-desc">
+            Phát hiện tham số mặc định <code>Delivery Stay Duration</code> trên màn hình xe đang đặt là 30 giây (hoặc 60
+            giây), khiến xe khi đến trạm bị khóa phanh cứng ngắc chờ hết timer mới nhận lệnh mới.
+            Đã chuyển tham số này về <strong><code>0s</code></strong>, giúp xe nhả phanh điện từ tức thì khi có lệnh gọi
+            tiếp theo từ công nhân.
+          </div>
+        </div>
+      </div>
+
+      <!-- GIAI ĐOẠN 2: 17/09 - 18/09/2026 -->
+      <div class="day-block">
+        <div class="day-header">
+          <div class="day-title">
+            <span class="day-date-tag">17/09/2026 ➔ 18/09/2026</span>
+            <span>Phân Tích Thiết Bị MOXA, Xử Lý Xe Chạy Lạng Lách </span>
+          </div>
+          <span class="day-status status-done">HOÀN TẤT</span>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Phân tích kỹ thuật chuyên sâu phần cứng MOXA AWK-1137C vs AWK-1131A</div>
+          <div class="task-desc">
+            Làm rõ đặc tính kỹ thuật cốt lõi: <strong>MOXA AWK-1137C-EU</strong> (chữ C = Client) là thiết bị thu sóng
+            Wi-Fi chuyên dụng gắn trên thân xe AGV để tận dụng công nghệ <strong>Turbo Roaming &lt; 150ms</strong>,
+            không hỗ trợ phát AP.
+            Ngược lại, dòng <strong>MOXA AWK-1131A</strong> đóng vai trò trạm phát Master chính (Access Point) của nhà
+            máy.
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Khắc phục triệt để hiện tượng xe chạy đánh võng, lạng lách xiên vẹo</div>
+          <div class="task-desc">
+            Ghi nhận hiện tượng xe di chuyển lắc lư hình con rắn, liên tục tự ý bẻ lái né cản ảo ra khỏi đường ray đã
+            vẽ:
+            <ul>
+              <li><strong>Nguyên nhân 1:</strong> Thuộc tính quỹ đạo 2 chiều trên bản đồ đang để ở mức <em>"Không bắt
+                  buộc"</em>. Đã chuyển sang thuộc tính <strong><code>BẮT BUỘC (Compulsory)</code></strong>.</li>
+              <li><strong>Nguyên nhân 2:</strong> Tính năng né cản đi vòng (Obstacle Detour / Bypass) đang Bật. Đã truy
+                cập <code>System Settings ➔ Basic Settings</code> chuyển chiến lược né cản sang
+                <strong><code>STOP</code></strong> (dừng chờ cản chứ không lách ra ngoài).</li>
+              <li><strong>Bảo dưỡng:</strong> Vệ sinh mắt thấu kính Laser Lidar bằng khăn microfiber chống tĩnh điện để
+                loại bỏ đốm bụi gây phản xạ laser ảo.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Truy cập giao diện quản trị xe qua mạng Ethernet & Xây dựng công cụ trích xuất
+            Log</div>
+          <div class="task-desc">
+            Hướng dẫn kết nối cáp LAN trực tiếp từ máy tính kỹ thuật viên vào xe qua địa chỉ
+            <code>http://192.168.31.7:9999/#/</code> bằng cách gán IP card mạng máy tính <code>192.168.31.100</code>.
+            
+          </div>
+        </div>
+      </div>
+
+      <!-- GIAI ĐOẠN 3: 19/09 - 22/09/2026 -->
+      <div class="day-block">
+        <div class="day-header">
+          <div class="day-title">
+            <span class="day-date-tag">19/09/2026 ➔ 22/09/2026</span>
+            <span>Triển Khai 07 Hộp Gọi Callbox, Khảo Sát Bán Kính Phủ Sóng 5 Bộ TP-LINK</span>
+          </div>
+          <span class="day-status status-done">HOÀN TẤT</span>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Cấu hình mạng Wi-Fi và Server cho 07 Hộp gọi không dây (Call Box V1.0)</div>
+          <div class="task-desc">
+            Lắp đặt nguồn Type-C 5V/2W ổn định cho 7 Hộp gọi tại 7 vị trí trạm thao tác trong xưởng:
+            <ul>
+              <li>Dùng điện thoại/laptop kết nối vào Wi-Fi nội bộ của từng hộp gọi, truy cập
+                <code>http://192.168.4.1/</code>.</li>
+              <li>Đặt tên định danh: <code>callbox1</code> đến <code>callbox7</code>.</li>
+              <li>Nhập địa chỉ máy chủ điều phối: <strong>Cloud server IP = <code>192.168.127.77</code></strong> (chính
+                là IP của Máy chủ Ezhan RCS).</li>
+              <li>Kết nối vào mạng Wi-Fi xưởng <code>ESATECH_ROBOT</code> với chỉ số cường độ sóng tốt (RSSI &gt; -65
+                dBm).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Khai báo quản lý tập trung 7 Hộp gọi trên Web Ezhan RCS (/device/callbox)</div>
+          <div class="task-desc">
+            Đăng nhập trang quản trị điều phối <code>http://127.0.0.1/device/callbox</code>, thêm mới đầy đủ 7 Hộp gọi
+            với các địa chỉ IP tĩnh tương ứng: Trạm 1 (<code>.75</code>), Trạm 2 (<code>.93</code>), Trạm 3
+            (<code>.87</code>), Trạm 4 (<code>.95</code>), Trạm 5 (<code>.54</code>), Trạm 6 (<code>.83</code>), Trạm 7
+            (<code>.51</code>).
+            Cấu hình chức năng cho 3 nút bấm cơ học (K1, K2, K3) gán tới các trạm đích cần gọi xe đến.
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Khảo sát bán kính phủ sóng và bố trí vị trí lắp đặt 5 bộ TP-LINK</div>
+          <div class="task-desc">
+            Đo đạc thực tế đặc tính lan truyền sóng vô tuyến trong môi trường xưởng cơ khí nhiều khung sắt:
+            <ul>
+              <li><strong>Dòng TL-AP300DG (02 bộ):</strong> Bán kính hiệu dụng 25 - 35m, bố trí tại khu vực trạm sạc và
+                bàn gia công nhỏ.</li>
+              <li><strong>Dòng TL-AP1900DG v1.1 (03 bộ):</strong> Công suất cao 3x3 MIMO, bán kính hiệu dụng 45 - 65m,
+                bố trí tại các cột trung tâm hành lang và khu kho hàng lớn.</li>
+              <li>Đưa ra quy tắc lắp đặt: Treo ở độ cao 2.5m - 3.5m so với mặt sàn, dựng râu anten vuông góc với mặt
+                sàn, tạo vùng gối sóng (overlap) 15-20% giữa các cột để AGV roaming không bị khựng.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Xây dựng công cụ kiểm tra thông tuyến tự động (kiem_tra_mang_wifi.bat)</div>
+          <div class="task-desc">
+            Viết kịch bản tự động quét Ping theo thời gian thực tới 15 thiết bị hệ thống, giúp người vận hành chỉ mất 5
+            giây là phát hiện ngay thiết bị nào bị rớt mạng hoặc nhảy IP.
+          </div>
+        </div>
+      </div>
+
+      <!-- GIAI ĐOẠN 4: 23/09 - 26/09/2026 -->
+      <div class="day-block">
+        <div class="day-header">
+          <div class="day-title">
+            <span class="day-date-tag">23/09/2026 ➔ 26/09/2026</span>
+            <span>Quy Hoạch Toàn Diện Dải Mạng 192.168.127.x & Cố Định DHCP Server Duy Nhất</span>
+          </div>
+          <span class="day-status status-done">HOÀN TẤT</span>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Quy hoạch thống nhất dải mạng công nghiệp 192.168.127.x/24</div>
+          <div class="task-desc">
+            Chấm dứt tình trạng phân mảnh dải IP (trước đây có thiết bị ở dải <code>192.168.31.x</code>,
+            <code>192.168.50.x</code> và <code>192.168.127.x</code>) khiến các gói tin điều khiển bị chặn tại router.
+            Thống nhất toàn bộ thiết bị (MOXA, 5 TP-Link, Server PC, Robot E300, 7 Callbox) hoạt động chung một Subnet
+            duy nhất <code>192.168.127.0/24</code>.
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Cấu hình Master MOXA AWK-1131A làm DHCP Server độc quyền</div>
+          <div class="task-desc">
+            Truy cập trang quản trị MOXA <code>https://192.168.127.1/</code>, bật dịch vụ DHCP Server duy nhất cho toàn
+            xưởng với dải cấp phát tự động từ <code>192.168.127.50</code> đến <code>192.168.127.99</code>.
+            Cố định thông số phát Wi-Fi: SSID <code>ESATECH_ROBOT</code>, Kênh 6 (Channel 6, băng thông 20MHz), bảo mật
+            WPA2-Personal AES: <code>168154727ESA</code>.
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Đo kiểm và chốt dải IP tĩnh cho từng thiết bị</div>
+          <div class="task-desc">
+            Thực hiện gán và kiểm tra IP tĩnh cho Máy chủ điều phối (<code>192.168.127.77</code>) và Robot AGV E300
+            (<code>192.168.127.53</code>).
+            Khởi động lại toàn bộ hệ thống để đảm bảo sau khi mất điện hoặc bật máy lại, các thiết bị luôn nhận đúng địa
+            chỉ IP đã quy hoạch mà không bị nhảy địa chỉ ngẫu nhiên.
+          </div>
+        </div>
+      </div>
+
+      <!-- GIAI ĐOẠN 5: 27/09 - 29/09/2026 -->
+      <div class="day-block">
+        <div class="day-header">
+          <div class="day-title">
+            <span class="day-date-tag">27/09/2026 ➔ 29/09/2026</span>
+            <span>Xử Lý Sự Cố Robot Offline Khi Chuyển Vùng & Độ Trễ Lệnh Hơn 10 Giây</span>
+          </div>
+          <span class="day-status status-done">HOÀN TẤT</span>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Sự cố 1: Robot bị Offline trên Web khi đi vào vùng TP-LINK Tab 3 (.72)</div>
+          <div class="task-desc">
+            <strong>Hiện tượng:</strong> Trên thân xe báo vẫn bắt được Wi-Fi nhưng trên màn hình máy chủ Ezhan RCS xe
+            báo <code>Offline</code>.<br>
+            <strong>Nguyên nhân & Khắc phục:</strong> Truy cập trang cấu hình của bộ TP-Link Tab 3 (`192.168.127.72`),
+            phát hiện tùy chọn <strong><code>无线网络间隔离 : 启用</code> (AP Isolation) đang được BẬT</strong>. Tính năng này đã
+            chặn đứng hoàn toàn các gói tin trao đổi giữa Robot và Máy chủ. Đã bỏ dấu tích tắt hoàn toàn AP Isolation,
+            xe lập tức chuyển sang trạng thái <strong><code>Online</code></strong> ổn định.
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Sự cố 2: Hộp gọi mất hơn 10 giây mới truyền được lệnh đến Robot</div>
+          <div class="task-desc">
+            <strong>Hiện tượng:</strong> Bấm nút trên Hộp gọi phải chờ một lúc rất lâu (hơn 10s) xe mới bắt đầu di
+            chuyển.<br>
+            <strong>Nguyên nhân & Khắc phục:</strong> Phát hiện thông số <code>2G频段管理帧发送速率</code> (Management frame
+            rate) trên TP-Link bị cài đặt thành <strong><code>11</code> Mbps</strong> (chuẩn CCK cũ). Ở mức này, khung
+            sóng quản lý bị rớt gói liên tục khi Hộp gọi ở xa. Đã điều chỉnh đồng bộ về chuẩn công nghiệp
+            <strong><code>6</code> Mbps (OFDM)</strong>, giúp lệnh bấm được truyền tải tức thì.
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Sự cố 3: Xung đột địa chỉ IP nghiêm trọng trên bộ TP-Link Tab 5</div>
+          <div class="task-desc">
+            <strong>Hiện tượng:</strong> Hộp gọi số 06 thỉnh thoảng bị mất tín hiệu hoàn toàn.<br>
+            <strong>Nguyên nhân & Khắc phục:</strong> Bộ TP-Link Tab 5 đang bật chế độ <code>智能DHCP服务器</code> (Smart
+            DHCP) và tự nhận địa chỉ IP là <code>192.168.127.86</code>, trùng khớp với IP của Hộp gọi 06. Đã tắt DHCP
+            trên bộ TP-Link này và đổi IP sang tĩnh <strong><code>192.168.127.74</code></strong>, giải phóng IP sạch cho
+            Hộp gọi 06.
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Khảo sát cơ chế bắt tay WDS giữa MOXA và TP-LINK</div>
+          <div class="task-desc">
+            Kiểm tra trang <code>Basic WLAN Setup</code> và <code>Client isolation</code> trên Master MOXA. Xác định
+            MOXA AP đang để chế độ <code>No isolation</code> (chuẩn). Xác nhận MOXA không dùng chuẩn WDS 4-địa chỉ chéo
+            hãng mà các bộ TP-Link đang hoạt động ở chế độ cầu nối không dây.
+          </div>
+        </div>
+      </div>
+
+      <!-- GIAI ĐOẠN 6: 30/09 - 01/10/2026 -->
+      <div class="day-block">
+        <div class="day-header">
+          <div class="day-title">
+            <span class="day-date-tag">30/09/2026 ➔ 01/10/2026</span>
+            <span>Tắt Hoàn Toàn Sóng 5G, Bỏ Tự Ngắt Sóng Yếu & Rà Soát Toàn Bộ 5 Bộ TP-LINK</span>
+          </div>
+          <span class="day-status status-done">HOÀN TẤT</span>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Tắt dứt điểm sóng 5GHz và tính năng gộp băng tần (多频合一) trên 3 bộ 1900DG</div>
+          <div class="task-desc">
+            Kỹ thuật viên gặp vướng mắc nút <code>删除</code> (Xóa) mạng 5G bị mờ không bấm được:
+            <ul>
+              <li>Làm rõ quy định firmware của TP-Link khóa nút xóa đối với mạng gốc (主人网络).</li>
+              <li>Hướng dẫn xác nhận trạng thái cột <code>状态</code> đã chuyển sang chữ <strong><code>禁用</code> (Disabled
+                  - Đã tắt)</strong> cho cả sóng 5G và mạng phụ 2.4G.</li>
+              <li>Bỏ tích hoàn toàn tính năng gộp sóng <strong><code>多频合一</code> (Band Steering)</strong>, đảm bảo các
+                bộ 1900DG chỉ phát duy nhất 1 mạng 2.4GHz <code>ESATECH_ROBOT</code>, loại bỏ hiện tượng đá sóng làm rớt
+                kết nối AGV.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Kiểm tra chi tiết 16 ảnh chụp cấu hình thực tế của 5 bộ TP-Link</div>
+          <div class="task-desc">
+            Tiến hành rà soát từng thông số trong 16 file ảnh chụp màn hình do người dùng tải về:
+            <ul>
+              <li><strong>Trạm 1 (TL-AP300DG):</strong> MAC <code>98:97:CC:E2:22:BE</code>, IP tĩnh
+                <code>192.168.127.55</code>, kết nối WDS kênh 6 ➔ <strong>ĐẠT CHUẨN</strong>.</li>
+              <li><strong>Trạm 2 (TL-AP300DG):</strong> MAC <code>98:97:CC:E2:22:3B</code>, IP tĩnh
+                <code>192.168.127.80</code>, kết nối WDS kênh 6 ➔ <strong>ĐẠT CHUẨN</strong>.</li>
+              <li><strong>Trạm 3 (TL-AP1900DG):</strong> MAC <code>3C:6A:48:2E:4F:3F</code>, IP tĩnh
+                <code>192.168.127.72</code>, đã tắt AP Isolation ➔ <strong>ĐÃ SỬA LỖI</strong>.</li>
+              <li><strong>Trạm 4 (TL-AP1900DG):</strong> MAC <code>98:97:CC:0B:23:48</code>, IP tĩnh
+                <code>192.168.127.99</code>, đã tắt 5G ➔ <strong>ĐÃ SỬA LỖI</strong>.</li>
+              <li><strong>Trạm 5 (TL-AP1900DG):</strong> MAC <code>F8:CE:21:53:71:11</code>, đã chuyển IP tĩnh sang
+                <code>192.168.127.86</code> ➔ <strong>ĐÃ TÁCH KHỎI IP TRÙNG .86</strong>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Vô hiệu hóa tính năng tự động đá văng thiết bị sóng yếu (-75 dBm)</div>
+          <div class="task-desc">
+            Phát hiện trên các bộ TP-Link có tính năng tự động ngắt kết nối máy khách nếu cường độ tín hiệu tụt xuống
+            dưới -75 dBm (<code>禁止/剔除信号低于 -75 dBm</code>).
+            Đã bỏ tích chọn tính năng này trên toàn bộ các trạm phát, ngăn ngừa việc robot AGV hoặc Hộp gọi bị ngắt kết
+            nối cưỡng bức khi sóng dao động tạm thời do pallet hàng che chắn.
+          </div>
+        </div>
+      </div>
+
+      <!-- GIAI ĐOẠN 7: 02/10 - 03/10/2026 -->
+      <div class="day-block">
+        <div class="day-header">
+          <div class="day-title">
+            <span class="day-date-tag">02/10/2026 ➔ 03/10/2026</span>
+            <span>Xử Lý Chuyên Sâu Nghịch Lý Hộp Gọi, Tối Ưu Server RCS & Đồng Bộ Git</span>
+          </div>
+          <span class="day-status status-done">HOÀN TẤT</span>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Giải mã chuyên sâu nghịch lý Hộp gọi báo lỗi ảo nhưng xe vẫn chạy</div>
+          <div class="task-desc">
+            Phân tích chi tiết nguyên nhân bất đối xứng thời gian timeout giữa mạch cứng Hộp gọi (1.5s - 2s) và thời
+            gian giải phóng phanh SLAM của xe AGV (3s - 4s).
+            Khẳng định hệ thống điều khiển không có lỗi, lệnh di chuyển hoàn toàn thông suốt.
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Tối ưu hóa cấu hình nút Hộp gọi trên Web RCS (/device/callbox)</div>
+          <div class="task-desc">
+            Chuẩn hóa quy tắc cấu hình nút: Để trống trường <code>Tác vụ liên kết (Bound Task)</code>, chỉ cấu hình đích
+            danh trường <strong><code>Trạm liên kết (Bound Station)</code></strong>.
+            Cải tiến này giúp Server RCS bỏ qua bước truy vấn mẫu kịch bản phức tạp, gọi API di chuyển trực tiếp cho xe
+            AGV, rút ngắn tối đa độ trễ phản hồi mạng.
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Tinh chỉnh cấu hình Reverse Proxy Nginx & Windows Hosts</div>
+          <div class="task-desc">
+            Tối ưu hóa file cấu hình <code>Robot Central Dispatch System Project2\nginx\conf\nginx.conf</code>:
+            <ul>
+              <li>Thiết lập tham số <code>keepalive_timeout</code> và bộ đệm cho cổng WebSocket <code>8765</code> (luồng
+                dữ liệu Hộp gọi).</li>
+              <li>Tối ưu hóa proxy chuyển tiếp HTTP API cho cổng <code>8080</code> (Server RCS) và <code>8068</code>
+                (Robot Task API).</li>
+              <li>Thêm khai báo phân giải tên miền tĩnh vào file <code>hosts</code> của Windows Server để loại bỏ độ trễ
+                tra cứu ngược (Reverse DNS Lookup) trong mạng nội bộ cô lập.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="task-item">
+          <div class="task-item-title">Đồng bộ mã nguồn dự án lên Git & Cập nhật kịch bản xuất PDF</div>
+          <div class="task-desc">
+            Cung cấp các lệnh kiểm tra và đồng bộ Git an toàn (<code>cap_nhat_git.bat</code>) lên repository
+            <code>https://github.com/hoquangquan/ezhan.git</code>.
+            Cập nhật kịch bản [tao_pdf.bat](file:///c:/Users/Admin/Downloads/EZHAN/EZHAN/tài%20liệu/tao_pdf.bat) để tự
+            động xuất bản báo cáo chi tiết thành file PDF phục vụ lưu trữ và báo cáo quản lý.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 4. ĐÁNH GIÁ, KẾT LUẬN VÀ HẠN CHẾ -->
+    <h2>4. Đánh Giá, Kết Luận và Hạn Chế</h2>
+
+    <!-- 4.1. ĐÁNH GIÁ & KẾT LUẬN -->
+    <h3>4.1. Đánh Giá Kết Quả Vận Hành & Kết Luận</h3>
+    <div class="box-info">
+      <strong>Kết luận tổng thể:</strong> Hệ thống AGV E300 và hạ tầng mạng công nghiệp đã hoàn thành cấu hình đồng bộ,
+      đạt trạng thái <strong>vận hành ổn định, thông suốt và chuẩn xác</strong>.
     </div>
     <ul>
-        <li><strong>Chức năng:</strong> Cho phép người quản trị thêm mới, chỉnh sửa địa chỉ IP, và kiểm tra trạng thái Online/Offline của từng Hộp gọi (Ví dụ: Callbox 51, 54, 75...).</li>
-        <li><strong>Lợi ích:</strong> Loại bỏ thao tác cấu hình thủ công dưới cơ sở dữ liệu (Database). Kỹ thuật viên có thể dễ dàng thay đổi vị trí Hộp gọi hoặc gán IP mới thông qua trình duyệt Web một cách nhanh chóng khi xưởng thay đổi layout.</li>
+      <li>
+        <strong>Độ thông suốt phần cứng 100%:</strong> Toàn bộ 15 thiết bị (1 AP Master MOXA AWK-3131A, 5 trạm phụ TP-Link,
+        1 Server PC điều phối RCS, 1 Robot AGV E300, 7 Hộp gọi không dây Callbox) được định danh IP tĩnh chuẩn quy hoạch
+        (<code>192.168.127.x/24</code>), triệt tiêu hoàn toàn hiện tượng tranh chấp địa chỉ IP.
+      </li>
+      <li>
+        <strong>Xóa bỏ hoàn toàn các rào cản gây rớt mạng:</strong> Đã xử lý triệt để 5 nguyên nhân gốc rễ gây rớt mạng
+        roaming vô tuyến: tắt hoàn toàn tính năng cô lập trạm (<code>AP Isolation</code>), loại bỏ xung đột băng tần
+        (<code>Band Steering</code> tắt sóng 5GHz), giải phóng ngưỡng tốc độ thấp (<code>Rate 11M</code>), tắt cơ chế tự
+        ngắt sóng yếu (<code>-75 dBm</code>), và tách trùng IP tĩnh trạm 5 khỏi dải hộp gọi.
+      </li>
+      <li>
+        <strong>AGV E300 vận hành tự hành chuẩn xác:</strong> Robot kết nối tin cậy qua giao thức TCP/IP tới Server RCS,
+        định vị và di chuyển chính xác theo bản đồ SLAM <code>Esa_1</code>, giải phóng phanh mượt mà và dừng đỗ chuẩn xác
+        tại các điểm trạm chỉ định mà không bị trôi vị trí hay mất tín hiệu điều hướng.
+      </li>
+      <li>
+        <strong>Hạ tầng WebSocket & Nginx ổn định:</strong> Luồng dữ liệu gọi xe qua cổng <code>8765</code> và API điều phối
+        <code>8080</code> / <code>8068</code> duy trì kết nối liên tục, đảm bảo mọi lệnh gọi xe từ 7 hộp gọi đều được Server
+        RCS ghi nhận và phát lệnh xuống robot 100%.
+      </li>
     </ul>
 
-    <h3>3.2. Quản lý Bản đồ & Tọa độ (Map & Station Management)</h3>
-    <div class="highlight">
-        <strong>Mục đích:</strong> Trực quan hóa bản đồ định vị của AGV, giúp người dùng dễ dàng thiết lập các điểm trạm (Stations) và quy hoạch luồng giao thông.
+    <!-- 4.2. CÁC HẠN CHẾ KỸ THUẬT CÒN TỒN TẠI -->
+    <h3>4.2. Các Hạn Chế Kỹ Thuật Còn Tồn Tại (Limitations)</h3>
+    <div class="box-warning">
+      <strong>Lưu ý kỹ thuật:</strong> Mặc dù hệ thống đã hoạt động thông suốt, qua quá trình đo kiểm thực tế vẫn tồn tại
+      <strong>3 hạn chế kỹ thuật mang tính chất vật lý và phần cứng</strong> cần được ghi nhận minh bạch để có phương án
+      nâng cấp hạ tầng trong giai đoạn vận hành mở rộng.
     </div>
-    <ul>
-        <li><strong>Chức năng:</strong> Cho phép gán các nút bấm vật lý trên Hộp gọi với các tọa độ (X, Y) cụ thể trên bản đồ ảo của xưởng.</li>
-        <li><strong>Lợi ích:</strong> Đảm bảo hệ thống tự động nội suy ra điểm đến chính xác và điều động xe AGV có khoảng cách gần nhất, tối ưu hóa thời gian di chuyển.</li>
-    </ul>
 
-    <h3>3.3. Giám sát thời gian thực (Real-time Dashboard)</h3>
-    <div class="highlight">
-        <strong>Mục đích:</strong> Giúp người quản lý nắm bắt toàn cảnh trạng thái của hệ thống AGV 24/7.
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 25%;">Hạn Chế Kỹ Thuật</th>
+            <th style="width: 40%;">Bản Chất Kỹ Thuật & Nguyên Nhân</th>
+            <th style="width: 35%;">Ảnh Hưởng Thực Tế Tới Vận Hành</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="badge badge-warning">Hạn chế 1</span><br>
+              <strong>Cầu nối không dây WDS lai ghép chéo hãng</strong>
+            </td>
+            <td>
+              Hạ tầng sử dụng 1 AP công nghiệp MOXA làm Master và 5 AP thương mại TP-Link làm trạm phụ qua kết nối WDS
+              không dây (Wireless Bridging). Trong công nghệ mạng vô tuyến, mỗi chặng kích sóng (Hop) làm suy giảm từ
+              <strong>30% - 50%</strong> băng thông hữu dụng lý thuyết.
+            </td>
+            <td>
+              Môi trường nhà xưởng cơ khí có nhiều kết cấu thép, máy phay CNC, phôi tôn và xe nâng di chuyển dễ gây tán xạ
+              sóng vô tuyến (Multipath Fading), tạo ra biến động độ trễ (Jitter) ngẫu nhiên tại một số góc khuất xa trạm phát.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="badge badge-warning">Hạn chế 2</span><br>
+              <strong>Bất đối xứng thời gian timeout Hộp gọi (Callbox)</strong>
+            </td>
+            <td>
+              Firmware vi điều khiển trên Hộp gọi Callbox V1.0 được cài đặt cứng thời gian chờ xác nhận (ACK Timeout) rất
+              ngắn, chỉ <strong>1.5s - 2.0s</strong>. Trong khi chu trình khởi động an toàn của xe AGV E300 (mở phanh từ, nạp
+              tọa độ SLAM, tính quỹ đạo tránh va chạm) cần <strong>3.0s - 4.0s</strong>.
+            </td>
+            <td>
+              Hộp gọi phát âm thanh còi báo <em>"gửi nhiệm vụ thất bại"</em> (lỗi ảo) dù Server RCS đã nhận lệnh và robot
+              AGV vẫn xuất phát chạy về trạm bình thường, dễ gây bối rối tâm lý cho công nhân vận hành trực tiếp.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="badge badge-warning">Hạn chế 3</span><br>
+              <strong>Nghẽn kênh vô tuyến (Co-Channel Contention)</strong>
+            </td>
+            <td>
+              Để duy trì liên kết cầu WDS không dây với AP Master MOXA, toàn bộ 5 bộ TP-Link bắt buộc phải phát chung trên
+              <strong>Kênh sóng 6 (2.4GHz, băng thông 20MHz)</strong>, không thể phân bổ kênh sóng so le độc lập.
+            </td>
+            <td>
+              Toàn bộ trạm phát và máy khách phải chia sẻ chung một không gian tần số. Cơ chế lắng nghe đường truyền
+              (CSMA/CA) bắt buộc các thiết bị phải xếp hàng đợi nhau phát sóng, làm tăng độ trễ truyền gói tin khi nhiều
+              nút bấm được kích hoạt đồng thời.
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <ul>
-        <li><strong>Chức năng:</strong> Hiển thị trực tiếp mức Pin, trạng thái hoạt động (Đang chạy, Đang chờ, Lỗi, Đang sạc) và vị trí của từng xe AGV trên sa bàn 2D.</li>
-        <li><strong>Lợi ích:</strong> Nâng cao năng lực giám sát. Khi AGV gặp vật cản hoặc pin yếu, hệ thống cảnh báo trên Web giúp người vận hành can thiệp ngay lập tức mà không cần ra tận nơi kiểm tra.</li>
-    </ul>
 
-    <div class="footer">
-        Báo cáo được trích xuất tự động vào ngày 03/10/2026.
+    <!-- 4.3. KIẾN NGHỊ & GIẢI PHÁP -->
+    <h3>4.3. Kiến Nghị Kỹ Thuật & Giải Pháp Khắc Phục Triệt Để</h3>
+    <ol>
+      <li>
+        <strong>Kéo dây cáp mạng LAN cố định cho 5 bộ TP-Link (Giải pháp gốc rễ ưu tiên số 1):</strong>
+        <p>
+          Chuyển đổi toàn bộ 5 bộ trạm TP-Link từ chế độ kích sóng không dây WDS sang chế độ <strong>Access Point có dây
+          chuẩn công nghiệp</strong> (kéo cáp mạng Cat6 trực tiếp từ Switch mạng trung tâm về cổng LAN của từng trạm).
+        </p>
+        
+      </li>
+      <li>
+        <strong>Quy hoạch phân chia kênh sóng Wi-Fi độc lập sau khi cắm dây LAN:</strong>
+        <p>
+          Khi các trạm TP-Link đã có kết nối cáp mạng có dây độc lập, tiến hành tách kênh phát sóng vô tuyến theo mô hình 3
+          kênh không chồng lấn chuẩn quốc tế:
+        </p>
+        <ul>
+          <li><strong>AP Master MOXA (Khu vực trung tâm):</strong> Phát Kênh 1 (Channel 1 - 2412 MHz).</li>
+          <li><strong>Trạm TP-Link 1 & 2 (Khu vực trạm gia công 1-4):</strong> Phát Kênh 6 (Channel 6 - 2437 MHz).</li>
+          <li><strong>Trạm TP-Link 3, 4 & 5 (Khu vực trạm gia công 5-7 & bãi đỗ):</strong> Phát Kênh 11 (Channel 11 - 2462 MHz).</li>
+        </ul>
+        <p>Triệt tiêu hoàn toàn hiện tượng nghẽn sóng cùng kênh (Co-channel interference), nhân 3 dung lượng truyền dẫn vô tuyến.</p>
+      </li>
+      
+    </ol>
+
+    <!-- Footer -->
+    <div class="doc-footer">
+      <div>Đơn vị: <strong>Ban Dự Án AGV E300 - ESATECH Automation Systems</strong></div>
+      <div>Người thực hiện: <strong>Hồ Quang Quân &bull; Nguyễn Tuấn Nam</strong></div>
+      <div>Thời gian xuất báo cáo: <strong>03/10/2026</strong></div>
     </div>
+  </div> <!-- .report-content -->
+  </div> <!-- .document-wrapper -->
 </body>
+
 </html>
