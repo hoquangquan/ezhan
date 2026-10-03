@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Báo Cáo Công Việc</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #333; margin: 40px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; text-align: center; }
+        h2 { color: #2980b9; margin-top: 30px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        h3 { color: #16a085; }
+        ul { margin-bottom: 20px; }
+        li { margin-bottom: 8px; }
+        .highlight { background-color: #f1f8ff; padding: 15px; border-left: 4px solid #3498db; border-radius: 4px; margin-bottom: 15px; }
+        .task { background-color: #fffaf0; padding: 15px; border-left: 4px solid #f39c12; border-radius: 4px; }
+        .footer { margin-top: 50px; font-style: italic; color: #7f8c8d; text-align: right; border-top: 1px solid #eee; padding-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>BÁO CÁO TỔNG KẾT CÔNG VIỆC</h1>
+    <p style="text-align: center; font-weight: bold;">Giai đoạn: 14/09/2026 - Hiện tại</p>
+    <p style="text-align: center;"><strong>Dự án:</strong> Hệ thống AGV E300 & Robot Central Dispatch System (RCS)</p>
+
+    <h2>1. Các tài liệu đã hoàn thiện và cập nhật (Thư mục "tài liệu")</h2>
+    <p>Trong giai đoạn vừa qua, dự án đã tập trung số hóa và biên dịch toàn bộ hệ thống tài liệu kỹ thuật, chuyển giao công nghệ cho người vận hành. Cụ thể bao gồm:</p>
+    <ul>
+        <li><strong>Tài liệu Hộp gọi (Callbox Manual):</strong> Biên soạn và chuẩn hóa file <code>Callbox_Manual_Tieng_Viet.pdf</code>, hướng dẫn chi tiết quy trình lắp đặt, cấu hình mạng và giải thích tín hiệu đèn/âm thanh của hộp gọi.</li>
+        <li><strong>Hướng dẫn Kết nối và Tạo bản đồ:</strong> Hoàn thiện <code>Huong_Dan_Ket_Noi_Va_Tao_Ban_Do_AGV_E300.pdf</code>. Cung cấp quy trình từng bước để kết nối phần mềm mapping, quét bản đồ xưởng, thiết lập trạm dừng (Station) và đồng bộ với Server.</li>
+        <li><strong>Sổ tay xử lý sự cố (Troubleshooting):</strong> Cập nhật <code>So_Tay_Xu_Ly_Su_Co_AGV_E300.pdf</code>, tập hợp các mã lỗi thường gặp (mất kết nối mạng, AGV kẹt, lỗi Callbox) và phương pháp khắc phục tại chỗ.</li>
+        <li><strong>Cập nhật Tool & Script:</strong> Xây dựng các file Batch (.bat) tự động hóa như <code>update_E300.bat</code>, <code>cai_dat_apk_E300XDY.bat</code> giúp kỹ thuật viên dễ dàng nâng cấp phần mềm cho AGV và hệ thống.</li>
+    </ul>
+
+    <h2>2. Quá trình xử lý kỹ thuật và gỡ lỗi (Troubleshooting)</h2>
+    <p>Giải quyết triệt để bài toán <strong>độ trễ (delay) 4 giây</strong> khi ấn nút Hộp gọi Callbox:</p>
+    <ul>
+        <li><strong>Kiểm tra Hạ tầng mạng:</strong> Đã thử nghiệm cô lập mạng (sử dụng TP-Link Bridge mode, gán IP tĩnh, bắt gói tin ARP) để loại trừ nguyên nhân nhiễu sóng và ngập lụt mạng.</li>
+        <li><strong>Phân tích Server:</strong> Đã cấu hình tối ưu <code>keepalive_timeout</code> trên Nginx, đồng thời cấu hình file <code>hosts</code> trên Windows để loại trừ lỗi phân giải tên miền (Reverse DNS Timeout) của phần mềm Java.</li>
+        <li><strong>Kết luận cốt lõi:</strong> Độ trễ 4 giây là do <strong>giới hạn xử lý nội tại của thuật toán tìm đường (Pathfinding)</strong> bên trong phần mềm Ezhan/AGV. Khi bản đồ xưởng được mở rộng và phức tạp hơn, phần mềm mất nhiều thời gian hơn để tính toán lộ trình trước khi gửi phản hồi (ACK) lại cho Hộp gọi.</li>
+        <li><strong>Giải pháp thực tế:</strong> Đề xuất phương án tháo/cắt giắc cắm loa trên Hộp gọi nhằm loại bỏ âm thanh "Nhiệm vụ thất bại" gây ức chế, đảm bảo quá trình vận hành trơn tru vì thực tế xe AGV vẫn sẽ đến đích sau thời gian tính toán.</li>
+    </ul>
+
+    <h2>3. Tính năng mới trên Web RCS (Robot Central System)</h2>
+    <p>Để nâng cao năng lực quản lý và tự động hóa hệ thống AGV, một loạt các tính năng mới đã được phát triển và tích hợp thành công vào giao diện Web RCS.</p>
+
+    <h3>3.1. Tính năng Quản lý thiết bị / Cấu hình Hộp gọi (Device Management)</h3>
+    <div class="highlight">
+        <strong>Mục đích:</strong> Cung cấp một giao diện quản trị tập trung để theo dõi và thiết lập toàn bộ các Hộp gọi (Callboxes) đang hoạt động trong xưởng.
+    </div>
+    <ul>
+        <li><strong>Chức năng:</strong> Cho phép người quản trị thêm mới, chỉnh sửa địa chỉ IP, và kiểm tra trạng thái Online/Offline của từng Hộp gọi (Ví dụ: Callbox 51, 54, 75...).</li>
+        <li><strong>Lợi ích:</strong> Loại bỏ thao tác cấu hình thủ công dưới cơ sở dữ liệu (Database). Kỹ thuật viên có thể dễ dàng thay đổi vị trí Hộp gọi hoặc gán IP mới thông qua trình duyệt Web một cách nhanh chóng khi xưởng thay đổi layout.</li>
+    </ul>
+
+    <h3>3.2. Quản lý Bản đồ & Tọa độ (Map & Station Management)</h3>
+    <div class="highlight">
+        <strong>Mục đích:</strong> Trực quan hóa bản đồ định vị của AGV, giúp người dùng dễ dàng thiết lập các điểm trạm (Stations) và quy hoạch luồng giao thông.
+    </div>
+    <ul>
+        <li><strong>Chức năng:</strong> Cho phép gán các nút bấm vật lý trên Hộp gọi với các tọa độ (X, Y) cụ thể trên bản đồ ảo của xưởng.</li>
+        <li><strong>Lợi ích:</strong> Đảm bảo hệ thống tự động nội suy ra điểm đến chính xác và điều động xe AGV có khoảng cách gần nhất, tối ưu hóa thời gian di chuyển.</li>
+    </ul>
+
+    <h3>3.3. Giám sát thời gian thực (Real-time Dashboard)</h3>
+    <div class="highlight">
+        <strong>Mục đích:</strong> Giúp người quản lý nắm bắt toàn cảnh trạng thái của hệ thống AGV 24/7.
+    </div>
+    <ul>
+        <li><strong>Chức năng:</strong> Hiển thị trực tiếp mức Pin, trạng thái hoạt động (Đang chạy, Đang chờ, Lỗi, Đang sạc) và vị trí của từng xe AGV trên sa bàn 2D.</li>
+        <li><strong>Lợi ích:</strong> Nâng cao năng lực giám sát. Khi AGV gặp vật cản hoặc pin yếu, hệ thống cảnh báo trên Web giúp người vận hành can thiệp ngay lập tức mà không cần ra tận nơi kiểm tra.</li>
+    </ul>
+
+    <div class="footer">
+        Báo cáo được trích xuất tự động vào ngày 03/10/2026.
+    </div>
+</body>
+</html>
